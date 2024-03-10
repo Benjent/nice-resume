@@ -20,10 +20,4 @@ import Preview from './components/Preview.vue'
     flex: 1;
     height: 100%;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
 </style>
