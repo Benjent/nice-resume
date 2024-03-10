@@ -1,12 +1,8 @@
 <script setup lang="ts">
-// import { ref } from 'vue'
 import { storeToRefs } from "pinia"
 import { useResumeStore } from "../stores/resume"
 
-// defineProps<{ msg: string }>()
-
-// const count = ref(0)
-const { address, drivingLicense, email, gitHub, linkedIn, name, phone, title, website } = storeToRefs(useResumeStore())
+const { address, drivingLicense, email, gitHub, linkedIn, name, phone, title, website, workExperience } = storeToRefs(useResumeStore())
 </script>
 
 <template>
@@ -24,6 +20,21 @@ const { address, drivingLicense, email, gitHub, linkedIn, name, phone, title, we
             <div v-if="website">{{ website }}</div>
             <div v-if="linkedIn">{{ linkedIn }}</div>
             <div v-if="gitHub">{{ gitHub }}</div>
+        </div>
+
+        <div>
+            <ul>
+                <li v-for="job in workExperience">
+                    <div>{{ job.position }}</div>
+                    <div>{{ job.company }}</div>
+                    <div>{{ job.period }}</div>
+                    <div>{{ job.location }}</div>
+                    <div>{{ job.description }}</div>
+                    <ul>
+                        <li v-for="task in job.tasks">{{ task }}</li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </aside>
 </template>

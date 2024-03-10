@@ -1,19 +1,42 @@
 <script setup lang="ts">
-// import { ref } from 'vue'
 import { storeToRefs } from "pinia"
 import { useResumeStore } from "../stores/resume"
+import { type WorkExperience } from "../types"
 import Category from './Category.vue'
 
-// defineProps<{ msg: string }>()
+const { address, drivingLicense, email, gitHub, linkedIn, name, phone, title, website, workExperience } = storeToRefs(useResumeStore())
 
-const { address, drivingLicense, email, gitHub, linkedIn, name, phone, title, website } = storeToRefs(useResumeStore())
+function addJob() {
+    const experience: WorkExperience = {
+        position: "",
+        company: "",
+        period: "",
+        location: "",
+        description: "",
+        tasks: [],
+    }
 
-// const count = ref(0)
+    workExperience.value.push(experience)
+}
+
+function deleteJob(experienceIndex: number) {
+    workExperience.value.splice(experienceIndex, 1)
+}
+
+function addTask(experienceIndex: number) {
+    const experience = workExperience.value[experienceIndex]
+    experience.tasks.push("")
+}
+
+function deleteTask(experienceIndex: number, taskIndex: number) {
+    const experience = workExperience.value[experienceIndex]
+    experience.tasks.splice(taskIndex, 1)
+}
 </script>
 
 <template>
     <main class="editor">
-        <Category>
+        <Category heading="Personal details">
             <label>
                 Name
                 <input v-model="name" />
@@ -51,10 +74,53 @@ const { address, drivingLicense, email, gitHub, linkedIn, name, phone, title, we
                 <input v-model="title" />
             </label>
         </Category>
+        <Category heading="Work experience">
+            <ul>
+                <li v-for="job, jobIndex in workExperience" class="editor__experience">
+                    <button @click="() => deleteJob(jobIndex)">Remove</button>
+                    <label>
+                        Position
+                        <input v-model="job.position" />
+                    </label>
+                    <label>
+                        Company
+                        <input v-model="job.company" />
+                    </label>
+                    <label>
+                        Period
+                        <input v-model="job.period" />
+                    </label>
+                    <label>
+                        Location
+                        <input v-model="job.location" />
+                    </label>
+                    <label>
+                        Description
+                        <input v-model="job.description" />
+                    </label>
+                    <label>
+                        Tasks
+                        <ul>
+                            <li v-for="task, taskIndex in job.tasks">
+                                <input v-model="job.tasks[taskIndex]" />
+                                <button @click="() => deleteTask(jobIndex, taskIndex)">Remove</button>
+                            </li>
+                        </ul>
+                        <button @click="() => addTask(jobIndex)">Add task</button>
+                    </label>
+                </li>
+            </ul>
+            <button @click="addJob">Add experience</button>
+        </Category>
     </main>
 </template>
 
 <style scoped>
 .editor {
+}
+
+.editor__experience {
+    display: flex;
+    flex-direction: column;
 }
 </style>
