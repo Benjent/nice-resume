@@ -52,7 +52,7 @@ function deleteTraining(educationIndex: number) {
 
 <template>
     <main class="editor">
-        <Category heading="Personal details">
+        <Category heading="Personal details" class="editor__section">
             <label>
                 Name
                 <input v-model="name" />
@@ -90,7 +90,7 @@ function deleteTraining(educationIndex: number) {
                 <input v-model="title" />
             </label>
         </Category>
-        <Category heading="Work experience">
+        <Category heading="Work experience" class="editor__section">
             <ul>
                 <li v-for="job, jobIndex in workExperience" class="editor__experience">
                     <button @click="() => deleteJob(jobIndex)">Remove</button>
@@ -128,7 +128,7 @@ function deleteTraining(educationIndex: number) {
             </ul>
             <button @click="addJob">Add experience</button>
         </Category>
-        <Category heading="Education">
+        <Category heading="Education" class="editor__section">
             <ul>
                 <li v-for="training, trainingIndex in education" class="editor__experience">
                     <button @click="() => deleteTraining(trainingIndex)">Remove</button>
@@ -161,6 +161,17 @@ function deleteTraining(educationIndex: number) {
 
 <style scoped>
 .editor {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    place-items: center;
+    overflow-y: scroll;
+    height: 100%;
+}
+
+.editor__section {
+    width: 100%;
+    max-width: 42rem;
 }
 
 .editor__experience {
