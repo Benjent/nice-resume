@@ -12,18 +12,18 @@ const { address, drivingLicense, email, gitHub, linkedIn, name, phone, title, we
 <template>
     <aside class="preview">
         <div>
-            <h1>{{ name }}</h1>
-            <h2>{{ title }}</h2>
+            <h1 v-if="name">{{ name }}</h1>
+            <h2 v-if="title">{{ title }}</h2>
         </div>
-        <div>{{ drivingLicense }}</div>
-        <div>{{ address }}</div>
-        <div>{{ email }}</div>
-        <div>{{ phone }}</div>
+        <div v-if="drivingLicense">{{ drivingLicense }}</div>
+        <div v-if="address">{{ address }}</div>
+        <div v-if="email">{{ email }}</div>
+        <div v-if="phone">{{ phone }}</div>
 
         <div>
-            <div>{{ website }}</div>
-            <div>{{ linkedIn }}</div>
-            <div>{{ gitHub }}</div>
+            <div v-if="website">{{ website }}</div>
+            <div v-if="linkedIn">{{ linkedIn }}</div>
+            <div v-if="gitHub">{{ gitHub }}</div>
         </div>
     </aside>
 </template>
