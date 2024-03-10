@@ -2,7 +2,7 @@
 import { storeToRefs } from "pinia"
 import { useResumeStore } from "../stores/resume"
 
-const { address, drivingLicense, email, gitHub, linkedIn, name, phone, title, website, workExperience } = storeToRefs(useResumeStore())
+const { address, drivingLicense, education, email, gitHub, linkedIn, name, phone, title, website, workExperience } = storeToRefs(useResumeStore())
 </script>
 
 <template>
@@ -33,6 +33,18 @@ const { address, drivingLicense, email, gitHub, linkedIn, name, phone, title, we
                     <ul>
                         <li v-for="task in job.tasks">{{ task }}</li>
                     </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div>
+            <ul>
+                <li v-for="training in education">
+                    <div>{{ training.diploma }}</div>
+                    <div>{{ training.institution }}</div>
+                    <div>{{ training.period }}</div>
+                    <div>{{ training.location }}</div>
+                    <div>{{ training.description }}</div>
                 </li>
             </ul>
         </div>

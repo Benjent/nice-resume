@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia"
 import { useResumeStore } from "../stores/resume"
-import { type WorkExperience } from "../types"
+import { type Education, type WorkExperience } from "../types"
 import Category from './Category.vue'
 
-const { address, drivingLicense, email, gitHub, linkedIn, name, phone, title, website, workExperience } = storeToRefs(useResumeStore())
+const { address, drivingLicense, education, email, gitHub, linkedIn, name, phone, title, website, workExperience } = storeToRefs(useResumeStore())
 
 function addJob() {
     const experience: WorkExperience = {
@@ -31,6 +31,22 @@ function addTask(experienceIndex: number) {
 function deleteTask(experienceIndex: number, taskIndex: number) {
     const experience = workExperience.value[experienceIndex]
     experience.tasks.splice(taskIndex, 1)
+}
+
+function addTraining() {
+    const training: Education = {
+        diploma: "",
+        institution: "",
+        period: "",
+        location: "",
+        description: "",
+    }
+
+    education.value.push(training)
+}
+
+function deleteTraining(educationIndex: number) {
+    education.value.splice(educationIndex, 1)
 }
 </script>
 
@@ -111,6 +127,34 @@ function deleteTask(experienceIndex: number, taskIndex: number) {
                 </li>
             </ul>
             <button @click="addJob">Add experience</button>
+        </Category>
+        <Category heading="Education">
+            <ul>
+                <li v-for="training, trainingIndex in education" class="editor__experience">
+                    <button @click="() => deleteTraining(trainingIndex)">Remove</button>
+                    <label>
+                        Diploma
+                        <input v-model="training.diploma" />
+                    </label>
+                    <label>
+                        Institution
+                        <input v-model="training.institution" />
+                    </label>
+                    <label>
+                        Period
+                        <input v-model="training.period" />
+                    </label>
+                    <label>
+                        Location
+                        <input v-model="training.location" />
+                    </label>
+                    <label>
+                        Description
+                        <input v-model="training.description" />
+                    </label>
+                </li>
+            </ul>
+            <button @click="addTraining">Add education</button>
         </Category>
     </main>
 </template>

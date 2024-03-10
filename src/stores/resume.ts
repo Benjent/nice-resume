@@ -15,6 +15,7 @@ export const useResumeStore = defineStore("resume", () => {
     const website = ref("")
 
     const workExperience = ref([])
+    const education = ref([])
 
-    return { address, drivingLicense, email, gitHub, linkedIn, name, phone, title, website, workExperience }
+    return { address, drivingLicense, education, email, gitHub, linkedIn, name, phone, title, website, workExperience }
 })
