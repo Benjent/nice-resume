@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia"
 import { useResumeStore } from "../stores/resume"
+import { moveDown, moveUp, remove } from "../utils/array"
 import { type Education, type WorkExperience } from "../types"
 import Category from './Category.vue'
+import ListActions from './ListActions.vue'
 
 const { address, drivingLicense, education, email, gitHub, linkedIn, name, phone, title, website, workExperience } = storeToRefs(useResumeStore())
 
@@ -17,10 +19,6 @@ function addJob() {
     }
 
     workExperience.value.push(experience)
-}
-
-function deleteJob(experienceIndex: number) {
-    workExperience.value.splice(experienceIndex, 1)
 }
 
 function addTask(experienceIndex: number) {
@@ -55,70 +53,75 @@ function deleteTraining(educationIndex: number) {
         <Category heading="Personal details" class="editor__section">
             <label>
                 Name
-                <input v-model="name" />
-            </label>
-            <label>
-                Email
-                <input v-model="email" />
-            </label>
-            <label>
-                Phone
-                <input v-model="phone" />
-            </label>
-            <label>
-                Address
-                <input v-model="address" />
-            </label>
-            <label>
-                LinkedIn
-                <input v-model="linkedIn" />
-            </label>
-            <label>
-                GitHub
-                <input v-model="gitHub" />
-            </label>
-            <label>
-                Website
-                <input v-model="website" />
-            </label>
-            <label>
-                Driving license
-                <input v-model="drivingLicense" />
+                <input class="editor__input" v-model="name" />
             </label>
             <label>
                 Title
-                <input v-model="title" />
+                <input class="editor__input" v-model="title" />
+            </label>
+            <label>
+                Email
+                <input class="editor__input" v-model="email" />
+            </label>
+            <label>
+                Phone
+                <input class="editor__input" v-model="phone" />
+            </label>
+            <label>
+                Address
+                <input class="editor__input" v-model="address" />
+            </label>
+            <label>
+                LinkedIn
+                <input class="editor__input" v-model="linkedIn" />
+            </label>
+            <label>
+                GitHub
+                <input class="editor__input" v-model="gitHub" />
+            </label>
+            <label>
+                Website
+                <input class="editor__input" v-model="website" />
+            </label>
+            <label>
+                Driving license
+                <input class="editor__input" v-model="drivingLicense" />
             </label>
         </Category>
         <Category heading="Work experience" class="editor__section">
-            <ul>
+            <ul class="editor__section__list">
                 <li v-for="job, jobIndex in workExperience" class="editor__experience">
-                    <button @click="() => deleteJob(jobIndex)">Remove</button>
+                    <ListActions
+                        :index="jobIndex"
+                        :list-length="workExperience.length"
+                        @moveUp="moveUp(workExperience, jobIndex)"
+                        @moveDown="moveDown(workExperience, jobIndex)"
+                        @remove="remove(workExperience, jobIndex)" />
                     <label>
                         Position
-                        <input v-model="job.position" />
+                        <input class="editor__input" v-model="job.position" />
                     </label>
                     <label>
                         Company
-                        <input v-model="job.company" />
+                        <input class="editor__input" v-model="job.company" />
                     </label>
                     <label>
                         Period
-                        <input v-model="job.period" />
+                        <input class="editor__input" v-model="job.period" />
                     </label>
                     <label>
                         Location
-                        <input v-model="job.location" />
+                        <input class="editor__input" v-model="job.location" />
                     </label>
                     <label>
                         Description
-                        <input v-model="job.description" />
+                        <input class="editor__input" v-model="job.description" />
                     </label>
                     <label>
                         Tasks
-                        <ul>
+                        <ul class="editor__section__list">
                             <li v-for="_task, taskIndex in job.tasks">
-                                <input v-model="job.tasks[taskIndex]" />
+                                <input class="editor__input" v-model="job.tasks[taskIndex]" />
                                 <button @click="() => deleteTask(jobIndex, taskIndex)">Remove</button>
                             </li>
                         </ul>
@@ -129,28 +132,33 @@ function deleteTraining(educationIndex: number) {
             <button @click="addJob">Add experience</button>
         </Category>
         <Category heading="Education" class="editor__section">
-            <ul>
+            <ul class="editor__section__list">
                 <li v-for="training, trainingIndex in education" class="editor__experience">
-                    <button @click="() => deleteTraining(trainingIndex)">Remove</button>
+                    <ListActions
+                        :index="trainingIndex"
+                        :list-length="education.length"
+                        @moveUp="moveUp(education, trainingIndex)"
+                        @moveDown="moveDown(education, trainingIndex)"
+                        @delete="() => deleteTraining(trainingIndex)" />
                     <label>
                         Diploma
-                        <input v-model="training.diploma" />
+                        <input class="editor__input" v-model="training.diploma" />
                     </label>
                     <label>
                         Institution
-                        <input v-model="training.institution" />
+                        <input class="editor__input" v-model="training.institution" />
                     </label>
                     <label>
                         Period
-                        <input v-model="training.period" />
+                        <input class="editor__input" v-model="training.period" />
                     </label>
                     <label>
                         Location
-                        <input v-model="training.location" />
+                        <input class="editor__input" v-model="training.location" />
                     </label>
                     <label>
                         Description
-                        <input v-model="training.description" />
+                        <input class="editor__input" v-model="training.description" />
                     </label>
                 </li>
             </ul>
@@ -163,7 +171,7 @@ function deleteTraining(educationIndex: number) {
 .editor {
     display: flex;
     flex-direction: column;
-    gap: 3rem;
+    gap: 1rem;
     place-items: center;
     overflow-y: scroll;
     height: 100%;
@@ -171,11 +179,24 @@ function deleteTraining(educationIndex: number) {
 
 .editor__section {
     width: 100%;
-    max-width: 42rem;
+}
+
+.editor__section__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.editor__input {
+    width: 100%;
 }
 
 .editor__experience {
     display: flex;
     flex-direction: column;
+}
+
+.editor__experience__actions {
+    margin-bottom: 2rem;
 }
 </style>
