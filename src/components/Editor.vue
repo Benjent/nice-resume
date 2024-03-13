@@ -117,7 +117,7 @@ function deleteTraining(educationIndex: number) {
                     <label>
                         Tasks
                         <ul>
-                            <li v-for="task, taskIndex in job.tasks">
+                            <li v-for="_task, taskIndex in job.tasks">
                                 <input v-model="job.tasks[taskIndex]" />
                                 <button @click="() => deleteTask(jobIndex, taskIndex)">Remove</button>
                             </li>
