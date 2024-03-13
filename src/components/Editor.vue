@@ -90,7 +90,7 @@ function deleteTraining(educationIndex: number) {
     </Category>
     <Category heading="Work experience" class="editor__section">
       <ul class="editor__section__list">
-        <li v-for="job, jobIndex in workExperience" class="editor__experience">
+        <li v-for="job, jobIndex in workExperience" :key="`job${jobIndex}`" class="editor__experience">
           <ListActions :index="jobIndex" :list-length="workExperience.length" @moveUp="moveUp(workExperience, jobIndex)"
             @moveDown="moveDown(workExperience, jobIndex)" @remove="remove(workExperience, jobIndex)" />
           <label>
@@ -116,7 +116,7 @@ function deleteTraining(educationIndex: number) {
           <label>
             Tasks
             <ul class="editor__section__list">
-              <li v-for="_task, taskIndex in job.tasks">
+              <li v-for="_task, taskIndex in job.tasks" :key="`task${taskIndex}`">
                 <input class="editor__input" v-model="job.tasks[taskIndex]" />
                 <button @click="() => deleteTask(jobIndex, taskIndex)">Remove</button>
               </li>
@@ -129,7 +129,7 @@ function deleteTraining(educationIndex: number) {
     </Category>
     <Category heading="Education" class="editor__section">
       <ul class="editor__section__list">
-        <li v-for="training, trainingIndex in education" class="editor__experience">
+        <li v-for="training, trainingIndex in education" :key="`training${trainingIndex}`" class="editor__experience">
           <ListActions :index="trainingIndex" :list-length="education.length" @moveUp="moveUp(education, trainingIndex)"
             @moveDown="moveDown(education, trainingIndex)" @delete="() => deleteTraining(trainingIndex)" />
           <label>
