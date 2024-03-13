@@ -5,10 +5,12 @@ defineProps<{ heading: string }>()
 </script>
 
 <template>
-    <main class="category">
-        <h3 class="category__heading">{{ heading }}</h3>
-        <slot />
-    </main>
+  <main class="category">
+    <h3 class="category__heading">
+      {{ heading }}
+    </h3>
+    <slot />
+  </main>
 </template>
 
 <style scoped>
