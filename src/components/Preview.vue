@@ -42,14 +42,14 @@ const { address, drivingLicense, education, email, gitHub, linkedIn, name, phone
 
     <div>
       <ul>
-        <li v-for="job in workExperience">
+        <li v-for="job, jobIndex in workExperience" :key="`job${jobIndex}`">
           <div>{{ job.position }}</div>
           <div>{{ job.company }}</div>
           <div>{{ job.period }}</div>
           <div>{{ job.location }}</div>
           <div>{{ job.description }}</div>
           <ul>
-            <li v-for="task in job.tasks">
+            <li v-for="task, taskIndex in job.tasks" :key="`task${taskIndex}`">
               {{ task }}
             </li>
           </ul>
@@ -59,7 +59,7 @@ const { address, drivingLicense, education, email, gitHub, linkedIn, name, phone
 
     <div>
       <ul>
-        <li v-for="training in education">
+        <li v-for="training, trainingIndex in education" :key="`training${trainingIndex}`">
           <div>{{ training.diploma }}</div>
           <div>{{ training.institution }}</div>
           <div>{{ training.period }}</div>
