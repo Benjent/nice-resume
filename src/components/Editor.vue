@@ -1,12 +1,24 @@
 <script setup lang="ts">
-import { storeToRefs } from "pinia"
-import { useResumeStore } from "../stores/resume"
-import { moveDown, moveUp, remove } from "../utils/array"
-import { type Education, type WorkExperience } from "../types"
-import Category from './Category.vue'
-import ListActions from './ListActions.vue'
+import { storeToRefs } from "pinia";
+import { useResumeStore } from "../stores/resume";
+import { moveDown, moveUp, remove } from "../utils/array";
+import { type Education, type WorkExperience } from "../types";
+import Category from "./Category.vue";
+import ListActions from "./ListActions.vue";
 
-const { address, drivingLicense, education, email, gitHub, linkedIn, name, phone, title, website, workExperience } = storeToRefs(useResumeStore())
+const {
+  address,
+  drivingLicense,
+  education,
+  email,
+  gitHub,
+  linkedIn,
+  name,
+  phone,
+  title,
+  website,
+  workExperience,
+} = storeToRefs(useResumeStore());
 
 function addJob() {
   const experience: WorkExperience = {
@@ -16,19 +28,19 @@ function addJob() {
     location: "",
     description: "",
     tasks: [],
-  }
+  };
 
-  workExperience.value.push(experience)
+  workExperience.value.push(experience);
 }
 
 function addTask(experienceIndex: number) {
-  const experience = workExperience.value[experienceIndex]
-  experience.tasks.push("")
+  const experience = workExperience.value[experienceIndex];
+  experience.tasks.push("");
 }
 
 function deleteTask(experienceIndex: number, taskIndex: number) {
-  const experience = workExperience.value[experienceIndex]
-  experience.tasks.splice(taskIndex, 1)
+  const experience = workExperience.value[experienceIndex];
+  experience.tasks.splice(taskIndex, 1);
 }
 
 function addTraining() {
@@ -38,13 +50,13 @@ function addTraining() {
     period: "",
     location: "",
     description: "",
-  }
+  };
 
-  education.value.push(training)
+  education.value.push(training);
 }
 
 function deleteTraining(educationIndex: number) {
-  education.value.splice(educationIndex, 1)
+  education.value.splice(educationIndex, 1);
 }
 </script>
 
@@ -90,9 +102,18 @@ function deleteTraining(educationIndex: number) {
     </Category>
     <Category heading="Work experience" class="editor__section">
       <ul class="editor__section__list">
-        <li v-for="job, jobIndex in workExperience" :key="`job${jobIndex}`" class="editor__experience">
-          <ListActions :index="jobIndex" :list-length="workExperience.length" @moveUp="moveUp(workExperience, jobIndex)"
-            @moveDown="moveDown(workExperience, jobIndex)" @remove="remove(workExperience, jobIndex)" />
+        <li
+          v-for="(job, jobIndex) in workExperience"
+          :key="`job${jobIndex}`"
+          class="editor__experience"
+        >
+          <ListActions
+            :index="jobIndex"
+            :list-length="workExperience.length"
+            @moveUp="moveUp(workExperience, jobIndex)"
+            @moveDown="moveDown(workExperience, jobIndex)"
+            @remove="remove(workExperience, jobIndex)"
+          />
           <label>
             Position
             <input class="editor__input" v-model="job.position" />
@@ -116,9 +137,14 @@ function deleteTraining(educationIndex: number) {
           <label>
             Tasks
             <ul class="editor__section__list">
-              <li v-for="_task, taskIndex in job.tasks" :key="`task${taskIndex}`">
+              <li
+                v-for="(_task, taskIndex) in job.tasks"
+                :key="`task${taskIndex}`"
+              >
                 <input class="editor__input" v-model="job.tasks[taskIndex]" />
-                <button @click="() => deleteTask(jobIndex, taskIndex)">Remove</button>
+                <button @click="() => deleteTask(jobIndex, taskIndex)">
+                  Remove
+                </button>
               </li>
             </ul>
             <button @click="() => addTask(jobIndex)">Add task</button>
@@ -129,9 +155,18 @@ function deleteTraining(educationIndex: number) {
     </Category>
     <Category heading="Education" class="editor__section">
       <ul class="editor__section__list">
-        <li v-for="training, trainingIndex in education" :key="`training${trainingIndex}`" class="editor__experience">
-          <ListActions :index="trainingIndex" :list-length="education.length" @moveUp="moveUp(education, trainingIndex)"
-            @moveDown="moveDown(education, trainingIndex)" @delete="() => deleteTraining(trainingIndex)" />
+        <li
+          v-for="(training, trainingIndex) in education"
+          :key="`training${trainingIndex}`"
+          class="editor__experience"
+        >
+          <ListActions
+            :index="trainingIndex"
+            :list-length="education.length"
+            @moveUp="moveUp(education, trainingIndex)"
+            @moveDown="moveDown(education, trainingIndex)"
+            @delete="() => deleteTraining(trainingIndex)"
+          />
           <label>
             Diploma
             <input class="editor__input" v-model="training.diploma" />

@@ -16,13 +16,13 @@
 }
 
 body {
-    display: flex;
-    min-height: 100svh;
-    max-height: 100svh;
+  display: flex;
+  min-height: 100svh;
+  max-height: 100svh;
 }
 
 #app {
-    flex: 1;
+  flex: 1;
 }
 
 a {
