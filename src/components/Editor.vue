@@ -62,43 +62,51 @@ function deleteTraining(educationIndex: number) {
 
 <template>
   <main class="editor">
-    <Category heading="Personal details" class="editor__section">
-      <label>
-        Name
-        <input class="editor__input" v-model="name" />
-      </label>
-      <label>
-        Title
-        <input class="editor__input" v-model="title" />
-      </label>
-      <label>
-        Email
-        <input class="editor__input" v-model="email" />
-      </label>
-      <label>
-        Phone
-        <input class="editor__input" v-model="phone" />
-      </label>
-      <label>
-        Address
-        <input class="editor__input" v-model="address" />
-      </label>
-      <label>
-        LinkedIn
-        <input class="editor__input" v-model="linkedIn" />
-      </label>
-      <label>
-        GitHub
-        <input class="editor__input" v-model="gitHub" />
-      </label>
-      <label>
-        Website
-        <input class="editor__input" v-model="website" />
-      </label>
-      <label>
-        Driving license
-        <input class="editor__input" v-model="drivingLicense" />
-      </label>
+    <Category heading="Personal details" class="w-full">
+      <div class="flex flex-col gap-5">
+        <div class="flex justify-center gap-10">
+          <label class="flex-1">
+            Name
+            <input v-model="name" />
+          </label>
+          <label class="flex-1">
+            Title
+            <input v-model="title" />
+          </label>
+        </div>
+        <div class="flex justify-center gap-10">
+          <label class="flex-[60%]">
+            Email
+            <input v-model="email" />
+          </label>
+          <label class="flex-[40%]">
+            Phone
+            <input v-model="phone" />
+          </label>
+        </div>
+        <div class="flex justify-center gap-10">
+          <label class="flex-[80%]">
+            Address
+            <input v-model="address" />
+          </label>
+          <label class="flex-[20%]">
+            Driving license
+            <input v-model="drivingLicense" />
+          </label>
+        </div>
+        <label>
+          LinkedIn
+          <input v-model="linkedIn" />
+        </label>
+        <label>
+          GitHub
+          <input v-model="gitHub" />
+        </label>
+        <label>
+          Website
+          <input v-model="website" />
+        </label>
+      </div>
     </Category>
     <Category heading="Work experience" class="editor__section">
       <ul class="editor__section__list">
@@ -223,7 +231,8 @@ function deleteTraining(educationIndex: number) {
   flex-direction: column;
 }
 
-.editor__experience__actions {
-  margin-bottom: 2rem;
+label {
+    display: flex;
+    flex-direction: column;
 }
 </style>
