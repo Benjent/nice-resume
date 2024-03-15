@@ -54,10 +54,6 @@ function addTraining() {
 
   education.value.push(training);
 }
-
-function deleteTraining(educationIndex: number) {
-  education.value.splice(educationIndex, 1);
-}
 </script>
 
 <template>
@@ -184,7 +180,7 @@ function deleteTraining(educationIndex: number) {
             :list-length="education.length"
             @moveUp="moveUp(education, trainingIndex)"
             @moveDown="moveDown(education, trainingIndex)"
-            @delete="() => deleteTraining(trainingIndex)"
+            @remove="() => remove(education, trainingIndex)"
           />
           <div class="flex flex-col gap-5">
             <label class="flex flex-col">
