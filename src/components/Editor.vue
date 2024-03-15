@@ -61,7 +61,7 @@ function deleteTraining(educationIndex: number) {
 </script>
 
 <template>
-  <main class="editor">
+  <main class="flex flex-col overflow-y-scroll">
     <Category heading="Personal details" class="w-full">
       <div class="flex flex-col gap-5">
         <div class="flex justify-center gap-10">
@@ -113,7 +113,6 @@ function deleteTraining(educationIndex: number) {
         <li
           v-for="(job, jobIndex) in workExperience"
           :key="`job${jobIndex}`"
-          class="editor__experience"
         >
           <ListActions
             class="mb-5"
@@ -173,74 +172,58 @@ function deleteTraining(educationIndex: number) {
         <button class="bg-green-700 px-3 py-2 rounded" @click="addJob">Add experience</button>
       </footer>
     </Category>
-    <Category heading="Education" class="editor__section">
-      <ul class="editor__section__list">
+    <Category heading="Education" class="w-full">
+      <ul class="flex flex-col gap-10">
         <li
           v-for="(training, trainingIndex) in education"
           :key="`training${trainingIndex}`"
-          class="editor__experience"
         >
           <ListActions
+            class="mb-5"
             :index="trainingIndex"
             :list-length="education.length"
             @moveUp="moveUp(education, trainingIndex)"
             @moveDown="moveDown(education, trainingIndex)"
             @delete="() => deleteTraining(trainingIndex)"
           />
-          <label>
-            Diploma
-            <input class="editor__input" v-model="training.diploma" />
-          </label>
-          <label>
-            Institution
-            <input class="editor__input" v-model="training.institution" />
-          </label>
-          <label>
-            Period
-            <input class="editor__input" v-model="training.period" />
-          </label>
-          <label>
-            Location
-            <input class="editor__input" v-model="training.location" />
-          </label>
-          <label>
-            Description
-            <input class="editor__input" v-model="training.description" />
-          </label>
+          <div class="flex flex-col gap-5">
+            <label>
+              Diploma
+              <input v-model="training.diploma" />
+            </label>
+            <label>
+              Institution
+              <input v-model="training.institution" />
+            </label>
+            <div class="flex justify-center gap-10">
+              <label class="flex-[30%]">
+                Period
+                <input v-model="training.period" />
+              </label>
+              <label class="flex-[70%]">
+                Location
+                <input v-model="training.location" />
+              </label>
+            </div>
+            <label>
+              Description
+              <input v-model="training.description" />
+            </label>
+          </div>
         </li>
       </ul>
-      <button @click="addTraining">Add education</button>
+      <footer class="flex justify-center mt-10">
+        <button class="bg-green-700 px-3 py-2 rounded" @click="addTraining">Add education</button>
+      </footer>
     </Category>
   </main>
 </template>
 
 <style scoped>
-.editor {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  place-items: center;
-  overflow-y: scroll;
-  height: 100%;
-}
-
-.editor__section {
-  width: 100%;
-}
-
 .editor__section__list {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-}
-
-.editor__input {
-  width: 100%;
-}
-
-.editor__experience {
-  display: flex;
-  flex-direction: column;
 }
 
 label {
