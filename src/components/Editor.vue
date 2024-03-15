@@ -11,6 +11,7 @@ const {
   address,
   drivingLicense,
   education,
+  educationLabel,
   email,
   gitHub,
   linkedIn,
@@ -19,6 +20,7 @@ const {
   title,
   website,
   workExperience,
+  workExperienceLabel,
 } = storeToRefs(useResumeStore());
 
 function addJob() {
@@ -59,7 +61,8 @@ function addTraining() {
 
 <template>
   <main class="flex flex-col overflow-y-scroll">
-    <Category heading="Personal details" class="w-full">
+    <Category class="w-full">
+      <template v-slot:header> Personal details </template>
       <div class="flex flex-col gap-5">
         <div class="flex justify-center gap-10">
           <label class="flex flex-col flex-1">
@@ -105,7 +108,13 @@ function addTraining() {
         </label>
       </div>
     </Category>
-    <Category heading="Work experience" class="w-full">
+    <Category class="w-full">
+      <template v-slot:header>
+        <input
+          class="bg-white bg-opacity-10 rounded px-2 py-1"
+          v-model="workExperienceLabel"
+        />
+      </template>
       <ul class="flex flex-col gap-10">
         <li
           v-for="(job, jobIndex) in workExperience"
@@ -171,7 +180,13 @@ function addTraining() {
         <button class="bg-pink-600 px-3 py-2 rounded" @click="addJob">Add experience</button>
       </footer>
     </Category>
-    <Category heading="Education" class="w-full">
+    <Category class="w-full">
+      <template v-slot:header>
+        <input
+          class="bg-white bg-opacity-10 rounded px-2 py-1"
+          v-model="educationLabel"
+        />
+      </template>
       <ul class="flex flex-col gap-10">
         <li
           v-for="(training, trainingIndex) in education"
