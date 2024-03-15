@@ -152,7 +152,7 @@ function deleteTraining(educationIndex: number) {
                 Tasks
                 <button class="text-green-400 underline" @click="() => addTask(jobIndex)">Add task</button>
               </div>
-              <ul class="editor__section__list">
+              <ul class="flex flex-col gap-2">
                 <li
                   v-for="(_task, taskIndex) in job.tasks"
                   :key="`task${taskIndex}`"
@@ -220,12 +220,6 @@ function deleteTraining(educationIndex: number) {
 </template>
 
 <style scoped>
-.editor__section__list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
 label {
     display: flex;
     flex-direction: column;
