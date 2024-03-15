@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
+import { PlusCircleIcon, XCircleIcon } from "@heroicons/vue/24/outline"
 import { useResumeStore } from "../stores/resume";
 import { moveDown, moveUp, remove } from "../utils/array";
 import { type Education, type WorkExperience } from "../types";
@@ -111,7 +112,7 @@ function addTraining() {
           :key="`job${jobIndex}`"
         >
           <ListActions
-            class="mb-5"
+            class="mb-2"
             :index="jobIndex"
             :list-length="workExperience.length"
             @moveUp="moveUp(workExperience, jobIndex)"
@@ -146,7 +147,9 @@ function addTraining() {
             <label class="flex flex-col">
               <div class="flex gap-2">
                 Tasks
-                <button class="text-green-400 underline" @click="() => addTask(jobIndex)">Add task</button>
+                <button title="Add task" class="text-white size-6" @click="() => addTask(jobIndex)">
+                  <PlusCircleIcon class="size-full" />
+                </button>
               </div>
               <ul class="flex flex-col gap-2">
                 <li
@@ -155,8 +158,8 @@ function addTraining() {
                   class="flex items-center gap-2"
                 >
                   <input class="flex-1" v-model="job.tasks[taskIndex]" />
-                  <button class="bg-red-700 px-2 rounded" @click="() => deleteTask(jobIndex, taskIndex)">
-                    Remove
+                  <button title="Remove" class="text-white size-6" @click="() => deleteTask(jobIndex, taskIndex)">
+                    <XCircleIcon class="size-full" />
                   </button>
                 </li>
               </ul>
@@ -165,7 +168,7 @@ function addTraining() {
         </li>
       </ul>
       <footer class="flex justify-center mt-10">
-        <button class="bg-green-700 px-3 py-2 rounded" @click="addJob">Add experience</button>
+        <button class="bg-pink-600 px-3 py-2 rounded" @click="addJob">Add experience</button>
       </footer>
     </Category>
     <Category heading="Education" class="w-full">
@@ -175,7 +178,7 @@ function addTraining() {
           :key="`training${trainingIndex}`"
         >
           <ListActions
-            class="mb-5"
+            class="mb-2"
             :index="trainingIndex"
             :list-length="education.length"
             @moveUp="moveUp(education, trainingIndex)"
@@ -209,7 +212,7 @@ function addTraining() {
         </li>
       </ul>
       <footer class="flex justify-center mt-10">
-        <button class="bg-green-700 px-3 py-2 rounded" @click="addTraining">Add education</button>
+        <button class="bg-pink-600 px-3 py-2 rounded" @click="addTraining">Add education</button>
       </footer>
     </Category>
   </main>

@@ -15,16 +15,6 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-body {
-  display: flex;
-  min-height: 100svh;
-  max-height: 100svh;
-}
-
-#app {
-  flex: 1;
-}
-
 a {
   font-weight: 500;
   color: #646cff;
