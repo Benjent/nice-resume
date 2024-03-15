@@ -4,20 +4,8 @@ import Preview from "./components/Preview.vue";
 </script>
 
 <template>
-  <section class="app">
-    <Editor class="app__section" />
-    <Preview class="app__section" />
+  <section class="flex h-full bg-gradient-to-br from-emerald-500 to-pink-500">
+    <Editor class="flex-1" />
+    <Preview class="flex-1" />
   </section>
 </template>
-
-<style scoped>
-.app {
-  height: 100%;
-  display: flex;
-}
-
-.app__section {
-  flex: 1;
-  height: 100%;
-}
-</style>

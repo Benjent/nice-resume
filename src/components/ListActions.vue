@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { defineProps } from "vue";
+import { ArrowDownCircleIcon, ArrowUpCircleIcon, XCircleIcon } from "@heroicons/vue/24/outline"
 
 defineProps<{ index: number; listLength: number }>();
 </script>
@@ -7,19 +8,27 @@ defineProps<{ index: number; listLength: number }>();
 <template>
   <div class="flex justify-end gap-2">
     <button
+      title="Move up"
       v-if="listLength > 1 && index > 0"
-      class="bg-blue-700 px-3 py-2 rounded"
+      class="text-white size-8"
       @click="$emit('moveUp')"
     >
-      Move up
+      <ArrowUpCircleIcon class="size-full" />
     </button>
     <button
+      title="Move down"
       v-if="listLength > 1 && index < listLength - 1"
-      class="bg-blue-700 px-3 py-2 rounded"
+      class="text-white size-8"
       @click="$emit('moveDown')"
     >
-      Move down
+      <ArrowDownCircleIcon class="size-full" />
     </button>
-    <button class="bg-red-700 px-3 py-2 rounded" @click="$emit('remove')">Remove</button>
+    <button
+      title="Remove"
+      class="text-white size-8"
+      @click="$emit('remove')"
+    >
+        <XCircleIcon class="size-full" />
+    </button>
   </div>
 </template>
