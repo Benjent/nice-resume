@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import { PlusCircleIcon, XCircleIcon } from "@heroicons/vue/24/outline"
+import { PlusCircleIcon, XCircleIcon } from "@heroicons/vue/24/outline";
 import { useResumeStore } from "../stores/resume";
 import { moveDown, moveUp, remove } from "../utils/array";
 import { type Education, type WorkExperience } from "../types";
@@ -67,44 +67,71 @@ function addTraining() {
         <div class="flex justify-center gap-10">
           <label class="flex flex-col flex-1">
             Name
-            <input class="bg-white bg-opacity-10 rounded px-2 py-1" v-model="name" />
+            <input
+              class="bg-white bg-opacity-10 rounded px-2 py-1"
+              v-model="name"
+            />
           </label>
           <label class="flex flex-col flex-1">
             Title
-            <input class="bg-white bg-opacity-10 rounded px-2 py-1" v-model="title" />
+            <input
+              class="bg-white bg-opacity-10 rounded px-2 py-1"
+              v-model="title"
+            />
           </label>
         </div>
         <div class="flex justify-center gap-10">
           <label class="flex flex-col flex-[60%]">
             Email
-            <input class="bg-white bg-opacity-10 rounded px-2 py-1" v-model="email" />
+            <input
+              class="bg-white bg-opacity-10 rounded px-2 py-1"
+              v-model="email"
+            />
           </label>
           <label class="flex flex-col flex-[40%]">
             Phone
-            <input class="bg-white bg-opacity-10 rounded px-2 py-1" v-model="phone" />
+            <input
+              class="bg-white bg-opacity-10 rounded px-2 py-1"
+              v-model="phone"
+            />
           </label>
         </div>
         <div class="flex justify-center gap-10">
           <label class="flex flex-col flex-[80%]">
             Address
-            <input class="bg-white bg-opacity-10 rounded px-2 py-1" v-model="address" />
+            <input
+              class="bg-white bg-opacity-10 rounded px-2 py-1"
+              v-model="address"
+            />
           </label>
           <label class="flex flex-col flex-[20%]">
             Driving license
-            <input class="bg-white bg-opacity-10 rounded px-2 py-1" v-model="drivingLicense" />
+            <input
+              class="bg-white bg-opacity-10 rounded px-2 py-1"
+              v-model="drivingLicense"
+            />
           </label>
         </div>
         <label class="flex flex-col">
           LinkedIn
-          <input class="bg-white bg-opacity-10 rounded px-2 py-1" v-model="linkedIn" />
+          <input
+            class="bg-white bg-opacity-10 rounded px-2 py-1"
+            v-model="linkedIn"
+          />
         </label>
         <label class="flex flex-col">
           GitHub
-          <input class="bg-white bg-opacity-10 rounded px-2 py-1" v-model="gitHub" />
+          <input
+            class="bg-white bg-opacity-10 rounded px-2 py-1"
+            v-model="gitHub"
+          />
         </label>
         <label class="flex flex-col">
           Website
-          <input class="bg-white bg-opacity-10 rounded px-2 py-1" v-model="website" />
+          <input
+            class="bg-white bg-opacity-10 rounded px-2 py-1"
+            v-model="website"
+          />
         </label>
       </div>
     </Category>
@@ -116,10 +143,7 @@ function addTraining() {
         />
       </template>
       <ul class="flex flex-col gap-10">
-        <li
-          v-for="(job, jobIndex) in workExperience"
-          :key="`job${jobIndex}`"
-        >
+        <li v-for="(job, jobIndex) in workExperience" :key="`job${jobIndex}`">
           <ListActions
             class="mb-2"
             :index="jobIndex"
@@ -132,31 +156,50 @@ function addTraining() {
             <div class="flex justify-center gap-10">
               <label class="flex flex-col flex-1">
                 Position
-                <input class="bg-white bg-opacity-10 rounded px-2 py-1" v-model="job.position" />
+                <input
+                  class="bg-white bg-opacity-10 rounded px-2 py-1"
+                  v-model="job.position"
+                />
               </label>
               <label class="flex flex-col flex-1">
                 Company
-                <input class="bg-white bg-opacity-10 rounded px-2 py-1" v-model="job.company" />
+                <input
+                  class="bg-white bg-opacity-10 rounded px-2 py-1"
+                  v-model="job.company"
+                />
               </label>
             </div>
             <div class="flex justify-center gap-10">
               <label class="flex flex-col flex-[30%]">
                 Period
-                <input class="bg-white bg-opacity-10 rounded px-2 py-1" v-model="job.period" />
+                <input
+                  class="bg-white bg-opacity-10 rounded px-2 py-1"
+                  v-model="job.period"
+                />
               </label>
               <label class="flex flex-col flex-[70%]">
                 Location
-                <input class="bg-white bg-opacity-10 rounded px-2 py-1" v-model="job.location" />
+                <input
+                  class="bg-white bg-opacity-10 rounded px-2 py-1"
+                  v-model="job.location"
+                />
               </label>
             </div>
             <label class="flex flex-col">
               Description
-              <textarea class="bg-white bg-opacity-10 rounded px-2 py-1" v-model="job.description" />
+              <textarea
+                class="bg-white bg-opacity-10 rounded px-2 py-1"
+                v-model="job.description"
+              />
             </label>
             <label class="flex flex-col">
               <div class="flex gap-2">
                 Tasks
-                <button title="Add task" class="text-white size-6" @click="() => addTask(jobIndex)">
+                <button
+                  title="Add task"
+                  class="text-white size-6"
+                  @click="() => addTask(jobIndex)"
+                >
                   <PlusCircleIcon class="size-full" />
                 </button>
               </div>
@@ -166,8 +209,15 @@ function addTraining() {
                   :key="`task${taskIndex}`"
                   class="flex items-center gap-2"
                 >
-                  <input class="bg-white bg-opacity-10 rounded px-2 py-1 flex-1" v-model="job.tasks[taskIndex]" />
-                  <button title="Remove" class="text-white size-6" @click="() => deleteTask(jobIndex, taskIndex)">
+                  <input
+                    class="bg-white bg-opacity-10 rounded px-2 py-1 flex-1"
+                    v-model="job.tasks[taskIndex]"
+                  />
+                  <button
+                    title="Remove"
+                    class="text-white size-6"
+                    @click="() => deleteTask(jobIndex, taskIndex)"
+                  >
                     <XCircleIcon class="size-full" />
                   </button>
                 </li>
@@ -177,7 +227,9 @@ function addTraining() {
         </li>
       </ul>
       <footer class="flex justify-center mt-10">
-        <button class="bg-pink-600 px-3 py-2 rounded" @click="addJob">Add experience</button>
+        <button class="bg-pink-600 px-3 py-2 rounded" @click="addJob">
+          Add experience
+        </button>
       </footer>
     </Category>
     <Category class="w-full">
@@ -203,31 +255,48 @@ function addTraining() {
           <div class="flex flex-col gap-5">
             <label class="flex flex-col">
               Diploma
-              <input class="bg-white bg-opacity-10 rounded px-2 py-1" v-model="training.diploma" />
+              <input
+                class="bg-white bg-opacity-10 rounded px-2 py-1"
+                v-model="training.diploma"
+              />
             </label>
             <label class="flex flex-col">
               Institution
-              <input class="bg-white bg-opacity-10 rounded px-2 py-1" v-model="training.institution" />
+              <input
+                class="bg-white bg-opacity-10 rounded px-2 py-1"
+                v-model="training.institution"
+              />
             </label>
             <div class="flex justify-center gap-10">
               <label class="flex flex-col flex-[30%]">
                 Period
-                <input class="bg-white bg-opacity-10 rounded px-2 py-1" v-model="training.period" />
+                <input
+                  class="bg-white bg-opacity-10 rounded px-2 py-1"
+                  v-model="training.period"
+                />
               </label>
               <label class="flex flex-col flex-[70%]">
                 Location
-                <input class="bg-white bg-opacity-10 rounded px-2 py-1" v-model="training.location" />
+                <input
+                  class="bg-white bg-opacity-10 rounded px-2 py-1"
+                  v-model="training.location"
+                />
               </label>
             </div>
             <label class="flex flex-col">
               Description
-              <input class="bg-white bg-opacity-10 rounded px-2 py-1" v-model="training.description" />
+              <input
+                class="bg-white bg-opacity-10 rounded px-2 py-1"
+                v-model="training.description"
+              />
             </label>
           </div>
         </li>
       </ul>
       <footer class="flex justify-center mt-10">
-        <button class="bg-pink-600 px-3 py-2 rounded" @click="addTraining">Add education</button>
+        <button class="bg-pink-600 px-3 py-2 rounded" @click="addTraining">
+          Add education
+        </button>
       </footer>
     </Category>
   </main>

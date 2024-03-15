@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { defineProps } from "vue";
-import { ArrowDownCircleIcon, ArrowUpCircleIcon, XCircleIcon } from "@heroicons/vue/24/outline"
+import {
+  ArrowDownCircleIcon,
+  ArrowUpCircleIcon,
+  XCircleIcon,
+} from "@heroicons/vue/24/outline";
 
 defineProps<{ index: number; listLength: number }>();
 </script>
@@ -23,12 +27,8 @@ defineProps<{ index: number; listLength: number }>();
     >
       <ArrowDownCircleIcon class="size-full" />
     </button>
-    <button
-      title="Remove"
-      class="text-white size-8"
-      @click="$emit('remove')"
-    >
-        <XCircleIcon class="size-full" />
+    <button title="Remove" class="text-white size-8" @click="$emit('remove')">
+      <XCircleIcon class="size-full" />
     </button>
   </div>
 </template>
