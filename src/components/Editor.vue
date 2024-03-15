@@ -108,58 +108,70 @@ function deleteTraining(educationIndex: number) {
         </label>
       </div>
     </Category>
-    <Category heading="Work experience" class="editor__section">
-      <ul class="editor__section__list">
+    <Category heading="Work experience" class="w-full">
+      <ul class="flex flex-col gap-10">
         <li
           v-for="(job, jobIndex) in workExperience"
           :key="`job${jobIndex}`"
           class="editor__experience"
         >
           <ListActions
+            class="mb-5"
             :index="jobIndex"
             :list-length="workExperience.length"
             @moveUp="moveUp(workExperience, jobIndex)"
             @moveDown="moveDown(workExperience, jobIndex)"
             @remove="remove(workExperience, jobIndex)"
           />
-          <label>
-            Position
-            <input class="editor__input" v-model="job.position" />
-          </label>
-          <label>
-            Company
-            <input class="editor__input" v-model="job.company" />
-          </label>
-          <label>
-            Period
-            <input class="editor__input" v-model="job.period" />
-          </label>
-          <label>
-            Location
-            <input class="editor__input" v-model="job.location" />
-          </label>
-          <label>
-            Description
-            <input class="editor__input" v-model="job.description" />
-          </label>
-          <label>
-            Tasks
-            <ul class="editor__section__list">
-              <li
-                v-for="(_task, taskIndex) in job.tasks"
-                :key="`task${taskIndex}`"
-              >
-                <input class="editor__input" v-model="job.tasks[taskIndex]" />
-                <button @click="() => deleteTask(jobIndex, taskIndex)">
-                  Remove
-                </button>
-              </li>
-            </ul>
-            <button @click="() => addTask(jobIndex)">Add task</button>
-          </label>
+          <div class="flex flex-col gap-5">
+            <div class="flex justify-center gap-10">
+              <label class="flex-1">
+                Position
+                <input v-model="job.position" />
+              </label>
+              <label class="flex-1">
+                Company
+                <input v-model="job.company" />
+              </label>
+            </div>
+            <div class="flex justify-center gap-10">
+              <label class="flex-[30%]">
+                Period
+                <input v-model="job.period" />
+              </label>
+              <label class="flex-[70%]">
+                Location
+                <input v-model="job.location" />
+              </label>
+            </div>
+            <label>
+              Description
+              <textarea v-model="job.description" />
+            </label>
+            <label>
+              <div class="flex gap-2">
+                Tasks
+                <button class="text-green-400 underline" @click="() => addTask(jobIndex)">Add task</button>
+              </div>
+              <ul class="editor__section__list">
+                <li
+                  v-for="(_task, taskIndex) in job.tasks"
+                  :key="`task${taskIndex}`"
+                  class="flex items-center gap-2"
+                >
+                  <input class="flex-1" v-model="job.tasks[taskIndex]" />
+                  <button class="bg-red-700 px-2 rounded" @click="() => deleteTask(jobIndex, taskIndex)">
+                    Remove
+                  </button>
+                </li>
+              </ul>
+            </label>
+          </div>
         </li>
       </ul>
-      <button @click="addJob">Add experience</button>
+      <footer class="flex justify-center mt-10">
+        <button class="bg-green-700 px-3 py-2 rounded" @click="addJob">Add experience</button>
+      </footer>
     </Category>
     <Category heading="Education" class="editor__section">
       <ul class="editor__section__list">
