@@ -65,44 +65,44 @@ function deleteTraining(educationIndex: number) {
     <Category heading="Personal details" class="w-full">
       <div class="flex flex-col gap-5">
         <div class="flex justify-center gap-10">
-          <label class="flex-1">
+          <label class="flex flex-col flex-1">
             Name
             <input v-model="name" />
           </label>
-          <label class="flex-1">
+          <label class="flex flex-col flex-1">
             Title
             <input v-model="title" />
           </label>
         </div>
         <div class="flex justify-center gap-10">
-          <label class="flex-[60%]">
+          <label class="flex flex-col flex-[60%]">
             Email
             <input v-model="email" />
           </label>
-          <label class="flex-[40%]">
+          <label class="flex flex-col flex-[40%]">
             Phone
             <input v-model="phone" />
           </label>
         </div>
         <div class="flex justify-center gap-10">
-          <label class="flex-[80%]">
+          <label class="flex flex-col flex-[80%]">
             Address
             <input v-model="address" />
           </label>
-          <label class="flex-[20%]">
+          <label class="flex flex-col flex-[20%]">
             Driving license
             <input v-model="drivingLicense" />
           </label>
         </div>
-        <label>
+        <label class="flex flex-col">
           LinkedIn
           <input v-model="linkedIn" />
         </label>
-        <label>
+        <label class="flex flex-col">
           GitHub
           <input v-model="gitHub" />
         </label>
-        <label>
+        <label class="flex flex-col">
           Website
           <input v-model="website" />
         </label>
@@ -124,30 +124,30 @@ function deleteTraining(educationIndex: number) {
           />
           <div class="flex flex-col gap-5">
             <div class="flex justify-center gap-10">
-              <label class="flex-1">
+              <label class="flex flex-col flex-1">
                 Position
                 <input v-model="job.position" />
               </label>
-              <label class="flex-1">
+              <label class="flex flex-col flex-1">
                 Company
                 <input v-model="job.company" />
               </label>
             </div>
             <div class="flex justify-center gap-10">
-              <label class="flex-[30%]">
+              <label class="flex flex-col flex-[30%]">
                 Period
                 <input v-model="job.period" />
               </label>
-              <label class="flex-[70%]">
+              <label class="flex flex-col flex-[70%]">
                 Location
                 <input v-model="job.location" />
               </label>
             </div>
-            <label>
+            <label class="flex flex-col">
               Description
               <textarea v-model="job.description" />
             </label>
-            <label>
+            <label class="flex flex-col">
               <div class="flex gap-2">
                 Tasks
                 <button class="text-green-400 underline" @click="() => addTask(jobIndex)">Add task</button>
@@ -187,25 +187,25 @@ function deleteTraining(educationIndex: number) {
             @delete="() => deleteTraining(trainingIndex)"
           />
           <div class="flex flex-col gap-5">
-            <label>
+            <label class="flex flex-col">
               Diploma
               <input v-model="training.diploma" />
             </label>
-            <label>
+            <label class="flex flex-col">
               Institution
               <input v-model="training.institution" />
             </label>
             <div class="flex justify-center gap-10">
-              <label class="flex-[30%]">
+              <label class="flex flex-col flex-[30%]">
                 Period
                 <input v-model="training.period" />
               </label>
-              <label class="flex-[70%]">
+              <label class="flex flex-col flex-[70%]">
                 Location
                 <input v-model="training.location" />
               </label>
             </div>
-            <label>
+            <label class="flex flex-col">
               Description
               <input v-model="training.description" />
             </label>
@@ -218,10 +218,3 @@ function deleteTraining(educationIndex: number) {
     </Category>
   </main>
 </template>
-
-<style scoped>
-label {
-    display: flex;
-    flex-direction: column;
-}
-</style>
