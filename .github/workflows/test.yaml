@@ -17,7 +17,19 @@ jobs:
       - uses: actions/checkout@v4
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v4
+      - name: Dump version
+        run: |
+          node -v
+          npm --version
+          git --version
       - run: npm ci
+      - name: npm audit
+        run: |
+          npm audit > ./audit.log || true
+          if ! [ "$(cat ./audit.log | wc -l)" = 1 ]; then
+            echo "::warning::$(cat ./audit.log)"
+          fi
+          rm ./audit.log
       - run: npm run format:check:all
       - run: npm run lint:check:all
       - run: npm run build --if-present
