@@ -15,7 +15,7 @@
     "typescript": "vue-tsc",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint './src/**/*.{ts,vue}'",
+    "lint": "eslint \"./src/**/*.{ts,vue}\"",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
     "prepare": "husky"
