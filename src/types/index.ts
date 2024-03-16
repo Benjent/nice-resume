@@ -14,3 +14,8 @@ export interface Education {
   location: string;
   description: string;
 }
+
+export interface Skill {
+  name: string;
+  level: string;
+}

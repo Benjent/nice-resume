@@ -3,7 +3,7 @@ import { storeToRefs } from "pinia";
 import { PlusCircleIcon, XCircleIcon } from "@heroicons/vue/24/outline";
 import { useResumeStore } from "../stores/resume";
 import { moveDown, moveUp, remove } from "../utils/array";
-import { type Education, type WorkExperience } from "../types";
+import { Skill, type Education, type WorkExperience } from "../types";
 import Category from "./Category.vue";
 import ListActions from "./ListActions.vue";
 
@@ -17,6 +17,8 @@ const {
   linkedIn,
   name,
   phone,
+  skills,
+  skillsLabel,
   title,
   website,
   workExperience,
@@ -57,15 +59,24 @@ function addTraining() {
 
   education.value.push(training);
 }
+
+function addSkill() {
+  const skill: Skill = {
+    name: "",
+    level: "",
+  };
+
+  skills.value.push(skill);
+}
 </script>
 
 <template>
-  <main class="flex flex-col overflow-y-scroll">
+  <main class="flex flex-col overflow-y-scroll text-white">
     <h1 class="text-center text-4xl p-6 font-black tracking-widest uppercase">
       Nice Resume
     </h1>
     <Category class="w-full">
-      <template v-slot:header> Personal details </template>
+      <template v-slot:header>Personal details</template>
       <div class="flex flex-col gap-5">
         <div class="flex justify-center gap-10">
           <label class="flex flex-col flex-1" for="editorPersonalDetailsName">
@@ -339,6 +350,50 @@ function addTraining() {
       <footer class="flex justify-center mt-10">
         <button class="text-white px-3 py-2 rounded" @click="addTraining">
           Add education
+        </button>
+      </footer>
+    </Category>
+    <Category class="w-full">
+      <template v-slot:header>
+        <input
+          class="bg-white bg-opacity-10 rounded px-2 py-1"
+          v-model="skillsLabel"
+        />
+      </template>
+      <ul class="flex flex-col gap-10">
+        <li v-for="(skill, skillIndex) in skills" :key="`skill${skillIndex}`">
+          <ListActions
+            class="mb-2"
+            :index="skillIndex"
+            :list-length="skill.length"
+            @moveUp="moveUp(skill, skillIndex)"
+            @moveDown="moveDown(skill, skillIndex)"
+            @remove="() => remove(skill, skillIndex)"
+          />
+
+          <div class="flex flex-col gap-5">
+            <div class="flex justify-center gap-10">
+              <label class="flex flex-col flex-[80%]">
+                Name
+                <input
+                  class="bg-white bg-opacity-10 rounded px-2 py-1"
+                  v-model="skill.name"
+                />
+              </label>
+              <label class="flex flex-col flex-[20%]">
+                Level
+                <input
+                  class="bg-white bg-opacity-10 rounded px-2 py-1"
+                  v-model="skill.level"
+                />
+              </label>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <footer class="flex justify-center mt-10">
+        <button class="bg-pink-600 px-3 py-2 rounded" @click="addSkill">
+          Add skill
         </button>
       </footer>
     </Category>
