@@ -20,7 +20,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
       - run: npm ci
-      - run: npm run format:check
+      - run: npm run format:check:all
 
   lint:
     runs-on: ubuntu-latest
@@ -36,7 +36,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
       - run: npm ci
-      - run: npm run lint
+      - run: npm run lint:check:all
 
   build:
     runs-on: ubuntu-latest
