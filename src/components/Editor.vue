@@ -65,70 +65,79 @@ function addTraining() {
       <template v-slot:header> Personal details </template>
       <div class="flex flex-col gap-5">
         <div class="flex justify-center gap-10">
-          <label class="flex flex-col flex-1">
+          <label class="flex flex-col flex-1" for="editorPersoName">
             Name
             <input
+              id="editorPersoName"
               class="bg-white bg-opacity-10 rounded px-2 py-1"
               v-model="name"
             />
           </label>
-          <label class="flex flex-col flex-1">
+          <label class="flex flex-col flex-1" for="editorPersoTitle">
             Title
             <input
+              id="editorPersoTitle"
               class="bg-white bg-opacity-10 rounded px-2 py-1"
               v-model="title"
             />
           </label>
         </div>
         <div class="flex justify-center gap-10">
-          <label class="flex flex-col flex-[60%]">
+          <label class="flex flex-col flex-[60%]" for="editorPersoEmail">
             Email
             <input
+              id="editorPersoEmail"
               class="bg-white bg-opacity-10 rounded px-2 py-1"
               v-model="email"
             />
           </label>
-          <label class="flex flex-col flex-[40%]">
+          <label class="flex flex-col flex-[40%]" for="editorPersoPhone">
             Phone
             <input
+              id="editorPersoPhone"
               class="bg-white bg-opacity-10 rounded px-2 py-1"
               v-model="phone"
             />
           </label>
         </div>
         <div class="flex justify-center gap-10">
-          <label class="flex flex-col flex-[80%]">
+          <label class="flex flex-col flex-[80%]" for="editorPersoAddress">
             Address
             <input
+              id="editorPersoAddress"
               class="bg-white bg-opacity-10 rounded px-2 py-1"
               v-model="address"
             />
           </label>
-          <label class="flex flex-col flex-[20%]">
+          <label class="flex flex-col flex-[20%]" for="editorPersoDriving">
             Driving license
             <input
+              id="editorPersoDriving"
               class="bg-white bg-opacity-10 rounded px-2 py-1"
               v-model="drivingLicense"
             />
           </label>
         </div>
-        <label class="flex flex-col">
+        <label class="flex flex-col" for="editorPersoLinkedin">
           LinkedIn
           <input
+            id="editorPersoLinkedin"
             class="bg-white bg-opacity-10 rounded px-2 py-1"
             v-model="linkedIn"
           />
         </label>
-        <label class="flex flex-col">
+        <label class="flex flex-col" for="editorPersoGithub">
           GitHub
           <input
+            id="editorPersoGithub"
             class="bg-white bg-opacity-10 rounded px-2 py-1"
             v-model="gitHub"
           />
         </label>
-        <label class="flex flex-col">
+        <label class="flex flex-col" for="editorPersoWebsite">
           Website
           <input
+            id="editorPersoWebsite"
             class="bg-white bg-opacity-10 rounded px-2 py-1"
             v-model="website"
           />
@@ -154,48 +163,54 @@ function addTraining() {
           />
           <div class="flex flex-col gap-5">
             <div class="flex justify-center gap-10">
-              <label class="flex flex-col flex-1">
+              <label class="flex flex-col flex-1" for="editorWorkPosition">
                 Position
                 <input
+                  id="editorWorkPosition"
                   class="bg-white bg-opacity-10 rounded px-2 py-1"
                   v-model="job.position"
                 />
               </label>
-              <label class="flex flex-col flex-1">
+              <label class="flex flex-col flex-1" for="editorWorkCompany">
                 Company
                 <input
+                  id="editorWorkCompany"
                   class="bg-white bg-opacity-10 rounded px-2 py-1"
                   v-model="job.company"
                 />
               </label>
             </div>
             <div class="flex justify-center gap-10">
-              <label class="flex flex-col flex-[30%]">
+              <label class="flex flex-col flex-[30%]" for="editorWorkPeriod">
                 Period
                 <input
+                  id="editorWorkPeriod"
                   class="bg-white bg-opacity-10 rounded px-2 py-1"
                   v-model="job.period"
                 />
               </label>
-              <label class="flex flex-col flex-[70%]">
+              <label class="flex flex-col flex-[70%]" for="editorWorkLocation">
                 Location
                 <input
+                  id="editorWorkLocation"
                   class="bg-white bg-opacity-10 rounded px-2 py-1"
                   v-model="job.location"
                 />
               </label>
             </div>
-            <label class="flex flex-col">
+            <label class="flex flex-col" for="editorWorkDescription">
               Description
               <textarea
+                id="editorWorkDescription"
                 class="bg-white bg-opacity-10 rounded px-2 py-1"
                 v-model="job.description"
               />
             </label>
-            <label class="flex flex-col">
+            <label class="flex flex-col" for="editorWorkTask">
               <div class="flex gap-2">
                 Tasks
                 <button
+                  id="editorWorkTask"
                   title="Add task"
                   class="text-white size-6"
                   @click="() => addTask(jobIndex)"
@@ -253,39 +268,44 @@ function addTraining() {
             @remove="() => remove(education, trainingIndex)"
           />
           <div class="flex flex-col gap-5">
-            <label class="flex flex-col">
+            <label class="flex flex-col" for="editorEduDiploma">
               Diploma
               <input
+                id="editorEduDiploma"
                 class="bg-white bg-opacity-10 rounded px-2 py-1"
                 v-model="training.diploma"
               />
             </label>
-            <label class="flex flex-col">
+            <label class="flex flex-col" for="editorEduInstitution">
               Institution
               <input
+                id="editorEduInstitution"
                 class="bg-white bg-opacity-10 rounded px-2 py-1"
                 v-model="training.institution"
               />
             </label>
             <div class="flex justify-center gap-10">
-              <label class="flex flex-col flex-[30%]">
+              <label class="flex flex-col flex-[30%]" for="editorEduPeriod">
                 Period
                 <input
+                  id="editorEduPeriod"
                   class="bg-white bg-opacity-10 rounded px-2 py-1"
                   v-model="training.period"
                 />
               </label>
-              <label class="flex flex-col flex-[70%]">
+              <label class="flex flex-col flex-[70%]" for="editorEduLocation">
                 Location
                 <input
+                  id="editorEduLocation"
                   class="bg-white bg-opacity-10 rounded px-2 py-1"
                   v-model="training.location"
                 />
               </label>
             </div>
-            <label class="flex flex-col">
+            <label class="flex flex-col" for="editorEduDescription">
               Description
               <input
+                id="editorEduDescription"
                 class="bg-white bg-opacity-10 rounded px-2 py-1"
                 v-model="training.description"
               />
