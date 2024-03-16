@@ -21,5 +21,7 @@ If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has a
 
 - [Vite](https://vitejs.dev/)
 - [Vue](https://vuejs.org/)
-- [Tailwindcss](https://tailwindcss.com/)
+- [Tailwindcss](https://tailwindcss.com/) (see [this article](https://fogbender.com/blog/separate-tailwind-config-for-landing) for several config files)
 - [Heroicons](https://heroicons.com/)
+- [Simple Icons](https://simpleicons.org/) (for brand icons)
+
