@@ -3,21 +3,19 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "lint-staged": {
-    "*.{ts,tsx,md,html,css,json}": [
-      "npm run lint --",
-      "npm run format:check --",
-      "npm run typescript --"
-    ]
-  },
   "scripts": {
     "dev": "vite",
-    "typescript": "vue-tsc",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint './src/**/*.{ts,vue}'",
-    "format": "prettier . --write",
-    "format:check": "prettier . --check",
+    "typescript": "vue-tsc",
+    "format": "prettier --write",
+    "format:all": "npm run format .",
+    "format:check": "prettier --check --cache",
+    "format:check:all": "npm run format:check .",
+    "lint": "eslint --cache --write",
+    "lint:all": "npm run lint -- './src/**/*.{ts,vue}'",
+    "lint:check": "eslint --cache",
+    "lint:check:all": "npm run lint:check -- './src/**/*.{ts,vue}'",
     "prepare": "husky"
   },
   "dependencies": {
