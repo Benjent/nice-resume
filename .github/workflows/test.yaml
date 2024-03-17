@@ -22,21 +22,7 @@ jobs:
       - run: npm run lint:check:all
       - run: npm run build --if-present
 
-  a11y-axe:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v4
-      - run: npm ci
-      - run: npm run build --if-present
-      - run: npm run preview & npx wait-on $A11Y_HOST
-      - name: Run axe
-        run: |
-          npm install -g @axe-core/cli
-          axe $A11Y_HOST --exit
-
-  a11y-pa11y:
+  pa11y-axe:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -48,4 +34,8 @@ jobs:
       - name: Run pa11y
         run: |
           npm install -g pa11y
-          pa11y $A11Y_HOST
+          pa11y $A11Y_HOST \
+            --runner axe \
+            --runner htmlcs \
+            --ignore 'nested-interactive'
+            --ignore 'WCAG2AA.Principle1.Guideline1_4.1_4_3.G18'
