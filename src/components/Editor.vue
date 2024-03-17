@@ -38,16 +38,6 @@ function addJob() {
   workExperience.value.push(experience);
 }
 
-function addTask(experienceIndex: number) {
-  const experience = workExperience.value[experienceIndex];
-  experience.tasks.push("");
-}
-
-function deleteTask(experienceIndex: number, taskIndex: number) {
-  const experience = workExperience.value[experienceIndex];
-  experience.tasks.splice(taskIndex, 1);
-}
-
 function addTraining() {
   const training: Education = {
     diploma: "",
@@ -240,7 +230,7 @@ function addSkill() {
                   id="editorWorkTask"
                   title="Add task"
                   class="text-white size-6"
-                  @click="() => addTask(jobIndex)"
+                  @click="() => job.tasks.push('')"
                 >
                   <PlusCircleIcon class="size-full" />
                 </button>
@@ -258,7 +248,7 @@ function addSkill() {
                   <button
                     title="Remove"
                     class="text-white size-6"
-                    @click="() => deleteTask(jobIndex, taskIndex)"
+                    @click="remove(job.tasks, taskIndex)"
                   >
                     <XCircleIcon class="size-full" />
                   </button>
