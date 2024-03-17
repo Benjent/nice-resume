@@ -1,3 +1,5 @@
+export type Template = "Benjent2023";
+
 export interface WorkExperience {
   position: string;
   company: string;
@@ -13,4 +15,9 @@ export interface Education {
   period: string;
   location: string;
   description: string;
+}
+
+export interface Skill {
+  name: string;
+  level: string;
 }
