@@ -1,11 +1,18 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import { storeToRefs } from "pinia";
-import { PlusCircleIcon, XCircleIcon } from "@heroicons/vue/24/outline";
+import {
+  ArrowUpOnSquareIcon,
+  ArrowDownOnSquareIcon,
+  PlusCircleIcon,
+  XCircleIcon,
+} from "@heroicons/vue/24/outline";
 import { useResumeStore } from "../stores/resume";
 import { moveDown, moveUp, remove } from "../utils/array";
 import { Skill, type Education, type WorkExperience } from "../types";
 import Category from "./Category.vue";
 import ListActions from "./ListActions.vue";
+import { download } from "../utils/file";
 
 const {
   address,
@@ -24,6 +31,75 @@ const {
   workExperience,
   workExperienceLabel,
 } = storeToRefs(useResumeStore());
+
+const isImportError = ref(false);
+
+function exportToJson() {
+  const resume = {
+    isNiceResumeExport: true,
+    address: address.value,
+    drivingLicense: drivingLicense.value,
+    education: education.value,
+    educationLabel: educationLabel.value,
+    email: email.value,
+    gitHub: gitHub.value,
+    linkedIn: linkedIn.value,
+    name: name.value,
+    phone: phone.value,
+    skills: skills.value,
+    skillsLabel: skillsLabel.value,
+    title: title.value,
+    website: website.value,
+    workExperience: workExperience.value,
+    workExperienceLabel: workExperienceLabel.value,
+  };
+
+  download(resume, "nice-resume");
+}
+
+function importFromJson(event: Event) {
+  isImportError.value = false;
+  try {
+    // @ts-expect-error It seems like TS does nos not have the files property attached to the Event type.
+    const file = event.target.files[0];
+
+    const fileReader = new FileReader();
+    fileReader.readAsText(file, "UTF-8");
+    fileReader.onload = function (fileReaderEvent) {
+      if (!fileReaderEvent.target?.result) {
+        isImportError.value = true;
+        return;
+      }
+
+      const resume = JSON.parse(fileReaderEvent.target.result.toString());
+      if (!resume.isNiceResumeExport) {
+        isImportError.value = true;
+        return;
+      }
+
+      address.value = resume.address;
+      drivingLicense.value = resume.drivingLicense;
+      education.value = resume.education;
+      educationLabel.value = resume.educationLabel;
+      email.value = resume.email;
+      gitHub.value = resume.gitHub;
+      linkedIn.value = resume.linkedIn;
+      name.value = resume.name;
+      phone.value = resume.phone;
+      skills.value = resume.skills;
+      skillsLabel.value = resume.skillsLabel;
+      title.value = resume.title;
+      website.value = resume.website;
+      workExperience.value = resume.workExperience;
+      workExperienceLabel.value = resume.workExperienceLabel;
+    };
+    fileReader.onerror = function () {
+      isImportError.value = true;
+    };
+  } catch {
+    isImportError.value = true;
+  }
+}
 
 function addJob() {
   const experience: WorkExperience = {
@@ -72,9 +148,40 @@ function addSkill() {
 
 <template>
   <main class="flex flex-col overflow-y-scroll text-white">
-    <h1 class="text-center text-4xl p-6 font-black tracking-widest uppercase">
-      Nice Resume
-    </h1>
+    <header class="flex justify-center gap-2 p-6 bg-white shadow-lg">
+      <h1
+        class="bg-gradient-to-br from-blue-700 to-pink-500 text-transparent bg-clip-text text-center text-4xl font-black tracking-widest uppercase"
+      >
+        Nice
+        <br />
+        Resume
+      </h1>
+      <div class="flex items-center gap-4">
+        <div>
+          <label
+            for="editorFileReader"
+            class="text-blue-500 flex items-center gap-1 cursor-pointer"
+          >
+            <ArrowUpOnSquareIcon class="h-6" />Import
+            <input
+              id="editorFileReader"
+              type="file"
+              accept=".json"
+              @change="importFromJson"
+            />
+          </label>
+          <p v-if="isImportError" class="text-red-500">
+            Error while importing data from local file.
+          </p>
+        </div>
+        <button
+          class="text-blue-500 flex items-center gap-1"
+          @click="exportToJson"
+        >
+          <ArrowDownOnSquareIcon class="h-6" />Export
+        </button>
+      </div>
+    </header>
     <Category class="w-full">
       <template v-slot:header>Personal details</template>
       <div class="flex flex-col gap-5">
