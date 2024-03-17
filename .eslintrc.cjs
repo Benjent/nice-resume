@@ -8,6 +8,7 @@ module.exports = {
     "plugin:vue/vue3-essential",
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
+    "plugin:vuejs-accessibility/recommended",
   ],
   overrides: [],
   parser: "vue-eslint-parser",
@@ -16,7 +17,7 @@ module.exports = {
     ecmaVersion: "latest",
     sourceType: "module",
   },
-  plugins: ["vue", "@typescript-eslint"],
+  plugins: ["vue", "@typescript-eslint", "vuejs-accessibility"],
   rules: {
     "vue/multi-word-component-names": "off",
   },
