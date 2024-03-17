@@ -148,7 +148,7 @@ function addSkill() {
 
 <template>
   <main class="flex flex-col overflow-y-scroll text-white">
-    <header class="flex justify-center gap-2 p-6 bg-white shadow-lg">
+    <header class="flex justify-between gap-2 py-6 px-12 bg-white shadow-lg">
       <h1
         class="bg-gradient-to-br from-blue-700 to-pink-500 text-transparent bg-clip-text text-center text-4xl font-black tracking-widest uppercase"
       >
@@ -165,6 +165,7 @@ function addSkill() {
             <ArrowUpOnSquareIcon class="h-6" />Import
             <input
               id="editorFileReader"
+              class="hidden"
               type="file"
               accept=".json"
               @change="importFromJson"
