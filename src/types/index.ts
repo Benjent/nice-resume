@@ -1,3 +1,5 @@
+export type Template = "Benjent2023";
+
 export interface WorkExperience {
   position: string;
   company: string;

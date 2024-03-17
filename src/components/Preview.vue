@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import { defineProps } from "vue";
+import { defineProps, type Component } from "vue";
+import { Template } from "../types";
 import Benjent2023 from "./templates/Benjent2023.vue";
 
-const { template } = defineProps<{ template: string }>();
-
-type Templates = "Benjent2023";
+const { template } = defineProps<{ template: Template }>();
 
 type TemplateMapper = {
-  [K in Templates]: any;
+  [K in Template]: Component;
 };
 
 const templateMapper: TemplateMapper = {
   Benjent2023,
 };
-const component = templateMapper[template]; // TODO define type
+
+const component: Component = templateMapper[template];
 </script>
 
 <template>
