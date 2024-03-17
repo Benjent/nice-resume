@@ -365,10 +365,10 @@ function addSkill() {
           <ListActions
             class="mb-2"
             :index="skillIndex"
-            :list-length="skill.length"
-            @moveUp="moveUp(skill, skillIndex)"
-            @moveDown="moveDown(skill, skillIndex)"
-            @remove="() => remove(skill, skillIndex)"
+            :list-length="skills.length"
+            @moveUp="moveUp(skills, skillIndex)"
+            @moveDown="moveDown(skills, skillIndex)"
+            @remove="() => remove(skills, skillIndex)"
           />
 
           <div class="flex flex-col gap-5">
