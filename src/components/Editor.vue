@@ -283,7 +283,7 @@ function addSkill() {
             :list-length="education.length"
             @moveUp="moveUp(education, trainingIndex)"
             @moveDown="moveDown(education, trainingIndex)"
-            @remove="() => remove(education, trainingIndex)"
+            @remove="remove(education, trainingIndex)"
           />
           <div class="flex flex-col gap-5">
             <label class="flex flex-col" for="editorEducationDiploma">
@@ -359,7 +359,7 @@ function addSkill() {
             :list-length="skills.length"
             @moveUp="moveUp(skills, skillIndex)"
             @moveDown="moveDown(skills, skillIndex)"
-            @remove="() => remove(skills, skillIndex)"
+            @remove="remove(skills, skillIndex)"
           />
 
           <div class="flex flex-col gap-5">
