@@ -502,7 +502,7 @@ function addSkill() {
         </li>
       </ul>
       <footer class="flex justify-center mt-10">
-        <button class="bg-pink-600 px-3 py-2 rounded" @click="addSkill">
+        <button class="text-white px-3 py-2 rounded" @click="addSkill">
           Add skill
         </button>
       </footer>
