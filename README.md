@@ -1,4 +1,4 @@
-# Vue 3 + TypeScript + Vite
+# Nice Resume
 
 This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
 
@@ -17,9 +17,10 @@ If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has a
    2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
 2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
 
-## Ressources
+## Resources
 
 - [Vite](https://vitejs.dev/)
 - [Vue](https://vuejs.org/)
-- [Tailwindcss](https://tailwindcss.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
 - [Heroicons](https://heroicons.com/)
+- [Simple Icons](https://simpleicons.org/) (for brand icons)
