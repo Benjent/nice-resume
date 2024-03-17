@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
-    "typescript": "vue-tsc",
+    "typescript": "vue-tsc --noEmit",
     "format": "prettier --write",
     "format:all": "npm run format .",
     "format:check": "prettier --check --cache",
