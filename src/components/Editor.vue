@@ -356,6 +356,7 @@ function addSkill() {
     <Category class="w-full">
       <template v-slot:header>
         <input
+          aria-label="Skills label"
           class="bg-white bg-opacity-10 rounded px-2 py-1"
           v-model="skillsLabel"
         />
@@ -373,16 +374,18 @@ function addSkill() {
 
           <div class="flex flex-col gap-5">
             <div class="flex justify-center gap-10">
-              <label class="flex flex-col flex-[80%]">
+              <label class="flex flex-col flex-[80%]" for="editorSkillName">
                 Name
                 <input
+                  id="editorSkillName"
                   class="bg-white bg-opacity-10 rounded px-2 py-1"
                   v-model="skill.name"
                 />
               </label>
-              <label class="flex flex-col flex-[20%]">
+              <label class="flex flex-col flex-[20%]" for="editorSkillLevel">
                 Level
                 <input
+                  id="editorSkillLevel"
                   class="bg-white bg-opacity-10 rounded px-2 py-1"
                   v-model="skill.level"
                 />
