@@ -159,6 +159,7 @@ function addTraining() {
     <Category class="w-full">
       <template v-slot:header>
         <input
+          aria-label="Work experience label"
           class="bg-white bg-opacity-10 rounded px-2 py-1"
           v-model="workExperienceLabel"
         />
@@ -262,6 +263,7 @@ function addTraining() {
     <Category class="w-full">
       <template v-slot:header>
         <input
+          aria-label="Education label"
           class="bg-white bg-opacity-10 rounded px-2 py-1"
           v-model="educationLabel"
         />
