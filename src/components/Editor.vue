@@ -68,39 +68,24 @@ function addTraining() {
       <template v-slot:header> Personal details </template>
       <div class="flex flex-col gap-5">
         <div class="flex justify-center gap-10">
-<<<<<<< HEAD
           <label class="flex flex-col flex-1" for="editorPersonalDetailsName">
             Name
             <input
               id="editorPersonalDetailsName"
-=======
-          <label class="flex flex-col flex-1" for="editorPersoName">
-            Name
-            <input
-              id="editorPersoName"
->>>>>>> 473de40 (feat: Add a11y)
               class="bg-white bg-opacity-10 rounded px-2 py-1"
               v-model="name"
             />
           </label>
-<<<<<<< HEAD
           <label class="flex flex-col flex-1" for="editorPersonalDetailsTitle">
             Title
             <input
               id="editorPersonalDetailsTitle"
-=======
-          <label class="flex flex-col flex-1" for="editorPersoTitle">
-            Title
-            <input
-              id="editorPersoTitle"
->>>>>>> 473de40 (feat: Add a11y)
               class="bg-white bg-opacity-10 rounded px-2 py-1"
               v-model="title"
             />
           </label>
         </div>
         <div class="flex justify-center gap-10">
-<<<<<<< HEAD
           <label
             class="flex flex-col flex-[60%]"
             for="editorPersonalDetailsEmail"
@@ -108,17 +93,10 @@ function addTraining() {
             Email
             <input
               id="editorPersonalDetailsEmail"
-=======
-          <label class="flex flex-col flex-[60%]" for="editorPersoEmail">
-            Email
-            <input
-              id="editorPersoEmail"
->>>>>>> 473de40 (feat: Add a11y)
               class="bg-white bg-opacity-10 rounded px-2 py-1"
               v-model="email"
             />
           </label>
-<<<<<<< HEAD
           <label
             class="flex flex-col flex-[40%]"
             for="editorPersonalDetailsPhone"
@@ -126,19 +104,12 @@ function addTraining() {
             Phone
             <input
               id="editorPersonalDetailsPhone"
-=======
-          <label class="flex flex-col flex-[40%]" for="editorPersoPhone">
-            Phone
-            <input
-              id="editorPersoPhone"
->>>>>>> 473de40 (feat: Add a11y)
               class="bg-white bg-opacity-10 rounded px-2 py-1"
               v-model="phone"
             />
           </label>
         </div>
         <div class="flex justify-center gap-10">
-<<<<<<< HEAD
           <label
             class="flex flex-col flex-[80%]"
             for="editorPersonalDetailsAddress"
@@ -146,17 +117,10 @@ function addTraining() {
             Address
             <input
               id="editorPersonalDetailsAddress"
-=======
-          <label class="flex flex-col flex-[80%]" for="editorPersoAddress">
-            Address
-            <input
-              id="editorPersoAddress"
->>>>>>> 473de40 (feat: Add a11y)
               class="bg-white bg-opacity-10 rounded px-2 py-1"
               v-model="address"
             />
           </label>
-<<<<<<< HEAD
           <label
             class="flex flex-col flex-[20%]"
             for="editorPersonalDetailsDriving"
@@ -164,58 +128,31 @@ function addTraining() {
             Driving license
             <input
               id="editorPersonalDetailsDriving"
-=======
-          <label class="flex flex-col flex-[20%]" for="editorPersoDriving">
-            Driving license
-            <input
-              id="editorPersoDriving"
->>>>>>> 473de40 (feat: Add a11y)
               class="bg-white bg-opacity-10 rounded px-2 py-1"
               v-model="drivingLicense"
             />
           </label>
         </div>
-<<<<<<< HEAD
         <label class="flex flex-col" for="editorPersonalDetailsLinkedin">
           LinkedIn
           <input
             id="editorPersonalDetailsLinkedin"
-=======
-        <label class="flex flex-col" for="editorPersoLinkedin">
-          LinkedIn
-          <input
-            id="editorPersoLinkedin"
->>>>>>> 473de40 (feat: Add a11y)
             class="bg-white bg-opacity-10 rounded px-2 py-1"
             v-model="linkedIn"
           />
         </label>
-<<<<<<< HEAD
         <label class="flex flex-col" for="editorPersonalDetailsGithub">
           GitHub
           <input
             id="editorPersonalDetailsGithub"
-=======
-        <label class="flex flex-col" for="editorPersoGithub">
-          GitHub
-          <input
-            id="editorPersoGithub"
->>>>>>> 473de40 (feat: Add a11y)
             class="bg-white bg-opacity-10 rounded px-2 py-1"
             v-model="gitHub"
           />
         </label>
-<<<<<<< HEAD
         <label class="flex flex-col" for="editorPersonalDetailsWebsite">
           Website
           <input
             id="editorPersonalDetailsWebsite"
-=======
-        <label class="flex flex-col" for="editorPersoWebsite">
-          Website
-          <input
-            id="editorPersoWebsite"
->>>>>>> 473de40 (feat: Add a11y)
             class="bg-white bg-opacity-10 rounded px-2 py-1"
             v-model="website"
           />
@@ -348,38 +285,23 @@ function addTraining() {
             @remove="() => remove(education, trainingIndex)"
           />
           <div class="flex flex-col gap-5">
-<<<<<<< HEAD
             <label class="flex flex-col" for="editorEducationDiploma">
               Diploma
               <input
                 id="editorEducationDiploma"
-=======
-            <label class="flex flex-col" for="editorEduDiploma">
-              Diploma
-              <input
-                id="editorEduDiploma"
->>>>>>> 473de40 (feat: Add a11y)
                 class="bg-white bg-opacity-10 rounded px-2 py-1"
                 v-model="training.diploma"
               />
             </label>
-<<<<<<< HEAD
             <label class="flex flex-col" for="editorEducationInstitution">
               Institution
               <input
                 id="editorEducationInstitution"
-=======
-            <label class="flex flex-col" for="editorEduInstitution">
-              Institution
-              <input
-                id="editorEduInstitution"
->>>>>>> 473de40 (feat: Add a11y)
                 class="bg-white bg-opacity-10 rounded px-2 py-1"
                 v-model="training.institution"
               />
             </label>
             <div class="flex justify-center gap-10">
-<<<<<<< HEAD
               <label
                 class="flex flex-col flex-[30%]"
                 for="editorEducationPeriod"
@@ -387,17 +309,10 @@ function addTraining() {
                 Period
                 <input
                   id="editorEducationPeriod"
-=======
-              <label class="flex flex-col flex-[30%]" for="editorEduPeriod">
-                Period
-                <input
-                  id="editorEduPeriod"
->>>>>>> 473de40 (feat: Add a11y)
                   class="bg-white bg-opacity-10 rounded px-2 py-1"
                   v-model="training.period"
                 />
               </label>
-<<<<<<< HEAD
               <label
                 class="flex flex-col flex-[70%]"
                 for="editorEducationLocation"
@@ -405,28 +320,15 @@ function addTraining() {
                 Location
                 <input
                   id="editorEducationLocation"
-=======
-              <label class="flex flex-col flex-[70%]" for="editorEduLocation">
-                Location
-                <input
-                  id="editorEduLocation"
->>>>>>> 473de40 (feat: Add a11y)
                   class="bg-white bg-opacity-10 rounded px-2 py-1"
                   v-model="training.location"
                 />
               </label>
             </div>
-<<<<<<< HEAD
             <label class="flex flex-col" for="editorEducationDescription">
               Description
               <input
                 id="editorEducationDescription"
-=======
-            <label class="flex flex-col" for="editorEduDescription">
-              Description
-              <input
-                id="editorEduDescription"
->>>>>>> 473de40 (feat: Add a11y)
                 class="bg-white bg-opacity-10 rounded px-2 py-1"
                 v-model="training.description"
               />
