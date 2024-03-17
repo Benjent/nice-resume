@@ -61,6 +61,7 @@ function addTraining() {
 
 <template>
   <main class="flex flex-col overflow-y-scroll">
+    <h1 class="text-center text-xl p-6">Nice Resume</h1>
     <Category class="w-full">
       <template v-slot:header> Personal details </template>
       <div class="flex flex-col gap-5">
