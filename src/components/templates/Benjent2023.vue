@@ -52,14 +52,18 @@ const {
             <LinkIcon class="w-4 text-dark" />{{ website }}
           </div>
           <div v-if="linkedIn" class="flex gap-1 items-center">
-            <img src="../../assets/images/icons/linkedin.svg" class="h-4" />{{
-              linkedIn
-            }}
+            <img
+              src="../../assets/images/icons/linkedin.svg"
+              alt="LinkedIn icon"
+              class="h-4"
+            />{{ linkedIn }}
           </div>
           <div v-if="gitHub" class="flex gap-1 items-center">
-            <img src="../../assets/images/icons/github.svg" class="h-4" />{{
-              gitHub
-            }}
+            <img
+              src="../../assets/images/icons/github.svg"
+              alt="GitHub icon"
+              class="h-4"
+            />{{ gitHub }}
           </div>
         </div>
       </div>
