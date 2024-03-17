@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
+import { LinkIcon } from "@heroicons/vue/16/solid";
 import { useResumeStore } from "../../stores/resume";
 
 const {
@@ -46,10 +47,20 @@ const {
           <div v-if="email">{{ email }}</div>
           <div v-if="phone">{{ phone }}</div>
         </div>
-        <div class="leading-none">
-          <div v-if="website">{{ website }}</div>
-          <div v-if="linkedIn">{{ linkedIn }}</div>
-          <div v-if="gitHub">{{ gitHub }}</div>
+        <div class="leading-tight">
+          <div v-if="website" class="flex gap-1">
+            <LinkIcon class="w-4 text-dark" />{{ website }}
+          </div>
+          <div v-if="linkedIn" class="flex gap-1 items-center">
+            <img src="../../assets/images/icons/linkedin.svg" class="h-4" />{{
+              linkedIn
+            }}
+          </div>
+          <div v-if="gitHub" class="flex gap-1 items-center">
+            <img src="../../assets/images/icons/github.svg" class="h-4" />{{
+              gitHub
+            }}
+          </div>
         </div>
       </div>
     </header>
