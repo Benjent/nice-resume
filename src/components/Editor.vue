@@ -256,10 +256,7 @@ function addTraining() {
         </li>
       </ul>
       <footer class="flex justify-center mt-10">
-        <button
-          class="bg-white text-emerald-500 px-3 py-2 rounded"
-          @click="addJob"
-        >
+        <button class="text-white px-3 py-2 rounded" @click="addJob">
           Add experience
         </button>
       </footer>
@@ -338,10 +335,7 @@ function addTraining() {
         </li>
       </ul>
       <footer class="flex justify-center mt-10">
-        <button
-          class="bg-white text-emerald-500 px-3 py-2 rounded"
-          @click="addTraining"
-        >
+        <button class="text-white px-3 py-2 rounded" @click="addTraining">
           Add education
         </button>
       </footer>
