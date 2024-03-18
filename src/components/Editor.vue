@@ -9,7 +9,13 @@ import {
 } from "@heroicons/vue/24/outline";
 import { useResumeStore } from "../stores/resume";
 import { moveDown, moveUp, remove } from "../utils/array";
-import { Skill, type Education, type WorkExperience } from "../types";
+import {
+  Template,
+  type Education,
+  type Skill,
+  type WorkExperience,
+} from "../types";
+import { templates } from "../globals";
 import Category from "./Category.vue";
 import ListActions from "./ListActions.vue";
 import { download } from "../utils/file";
@@ -26,6 +32,7 @@ const {
   phone,
   skills,
   skillsLabel,
+  template,
   title,
   website,
   workExperience,
@@ -37,6 +44,7 @@ const isImportError = ref(false);
 function exportToJson() {
   const resume = {
     isNiceResumeExport: true,
+    template: template.value,
     address: address.value,
     drivingLicense: drivingLicense.value,
     education: education.value,
@@ -99,6 +107,10 @@ function importFromJson(event: Event) {
   } catch {
     isImportError.value = true;
   }
+}
+
+function selectTemplate(value: Template) {
+  template.value = value;
 }
 
 function addJob() {
@@ -173,6 +185,11 @@ function addSkill() {
         </button>
       </div>
     </header>
+    <ul class="flex gap-2 py-6 px-12 bg-slate-900 shadow-lg">
+      <li v-for="(template, index) in templates" :key="index">
+        <button @click="selectTemplate(template)">{{ template }}</button>
+      </li>
+    </ul>
     <Category class="w-full">
       <template v-slot:header>Personal details</template>
       <div class="flex flex-col gap-5">

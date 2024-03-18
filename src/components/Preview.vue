@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import { defineProps, type Component } from "vue";
+import { type Component, computed } from "vue";
+import { storeToRefs } from "pinia";
 import { Template } from "../types";
+import { useResumeStore } from "../stores/resume";
 import Benjent2023 from "./templates/Benjent2023.vue";
+import Benjent2023Light from "./templates/Benjent2023Light.vue";
 
-const { template } = defineProps<{ template: Template }>();
+const { template } = storeToRefs(useResumeStore());
 
 type TemplateMapper = {
   [K in Template]: Component;
@@ -11,9 +14,10 @@ type TemplateMapper = {
 
 const templateMapper: TemplateMapper = {
   Benjent2023,
+  Benjent2023Light,
 };
 
-const component: Component = templateMapper[template];
+const component: Component = computed(() => templateMapper[template.value]);
 </script>
 
 <template>
