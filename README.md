@@ -31,9 +31,8 @@ If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has a
 
 1. Create the Vue component in `/src/components/templates`
 2. Create the Tailwind configuration file in root
-3. Create the stylesheet in `/src/styles`
-4. Add the name in the template union type in `/src/types`
-5. Add the name in the templates array in `/src/globals`
-6. Add the name in the templateMapper in `/src/components/Preview.vue`
+3. Add the name in the template union type in `/src/types`
+4. Add the name in the templates array in `/src/globals`
+5. Add the name in the templateMapper in `/src/components/Preview.vue`
 
 Make sure the above steps rely on the same template name.
