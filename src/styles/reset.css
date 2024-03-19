@@ -9,3 +9,8 @@ button {
   font-family: inherit;
   cursor: pointer;
 }
+
+ol,
+ul {
+  list-style-position: inside;
+}
