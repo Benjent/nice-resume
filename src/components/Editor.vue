@@ -7,6 +7,7 @@ import {
   PlusCircleIcon,
   XCircleIcon,
 } from "@heroicons/vue/24/outline";
+import { useEditorStore } from "../stores/editor";
 import { useResumeStore } from "../stores/resume";
 import { moveDown, moveUp, remove } from "../utils/array";
 import { type Education, type Skill, type WorkExperience } from "../types";
@@ -14,6 +15,8 @@ import { templates } from "../globals";
 import Category from "./Category.vue";
 import ListActions from "./ListActions.vue";
 import { download } from "../utils/file";
+
+const { zoomLevel } = storeToRefs(useEditorStore());
 
 const {
   address,
@@ -152,6 +155,19 @@ function addSkill() {
         Resume
       </h1>
       <div class="flex items-center gap-4">
+        <label for="editorZoomLevel">
+          Zoom
+          <div class="flex gap-2 items-center">
+            <input
+              id="editorZoomLevel"
+              type="range"
+              min="50"
+              max="100"
+              v-model="zoomLevel"
+            />
+            <output class="w-[3rem]">{{ zoomLevel }}%</output>
+          </div>
+        </label>
         <label for="editorTemplateSelector">
           Template
           <select

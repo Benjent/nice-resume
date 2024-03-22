@@ -23,7 +23,7 @@ const {
 </script>
 
 <template>
-  <div class="bg-tertiary h-full w-full">
+  <div class="h-full w-full">
     <template v-if="name">
       <header
         class="flex items-start gap-12 p-12 bg-white text-dark font-display"
