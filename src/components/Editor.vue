@@ -9,12 +9,7 @@ import {
 } from "@heroicons/vue/24/outline";
 import { useResumeStore } from "../stores/resume";
 import { moveDown, moveUp, remove } from "../utils/array";
-import {
-  Template,
-  type Education,
-  type Skill,
-  type WorkExperience,
-} from "../types";
+import { type Education, type Skill, type WorkExperience } from "../types";
 import { templates } from "../globals";
 import Category from "./Category.vue";
 import ListActions from "./ListActions.vue";
@@ -109,10 +104,6 @@ function importFromJson(event: Event) {
   }
 }
 
-function selectTemplate(value: Template) {
-  template.value = value;
-}
-
 function addJob() {
   const experience: WorkExperience = {
     position: "",
@@ -150,7 +141,9 @@ function addSkill() {
 
 <template>
   <main class="flex flex-col overflow-y-scroll text-white">
-    <header class="flex justify-between gap-2 py-6 px-12 bg-white shadow-lg">
+    <header
+      class="flex justify-between gap-2 py-6 px-12 bg-white text-pink-500 shadow-lg"
+    >
       <h1
         class="bg-gradient-to-br from-blue-700 to-pink-500 text-transparent bg-clip-text text-center text-4xl font-black tracking-widest uppercase"
       >
@@ -159,6 +152,18 @@ function addSkill() {
         Resume
       </h1>
       <div class="flex items-center gap-4">
+        <label for="editorTemplateSelector">
+          Template
+          <select
+            id="editorTemplateSelector"
+            v-model="template"
+            class="bg-white cursor-pointer text-blue-500 block"
+          >
+            <option v-for="template in templates" :key="template">
+              {{ template }}
+            </option>
+          </select>
+        </label>
         <div>
           <label
             for="editorFileReader"
@@ -185,11 +190,6 @@ function addSkill() {
         </button>
       </div>
     </header>
-    <ul class="flex gap-2 py-6 px-12 bg-slate-900 shadow-lg">
-      <li v-for="(template, index) in templates" :key="index">
-        <button @click="selectTemplate(template)">{{ template }}</button>
-      </li>
-    </ul>
     <Category class="w-full">
       <template v-slot:header>Personal details</template>
       <div class="flex flex-col gap-5">
