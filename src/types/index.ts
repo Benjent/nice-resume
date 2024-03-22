@@ -1,4 +1,4 @@
-export type Template = "Benjent2023" | "Benjent2023Light";
+export type Template = "Benjent2023" | "Benjent2023Light" | "Caillou2023Light";
 
 export interface WorkExperience {
   position: string;
