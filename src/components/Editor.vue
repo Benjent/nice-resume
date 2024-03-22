@@ -107,10 +107,6 @@ function importFromJson(event: Event) {
   }
 }
 
-function selectTemplate(value: Template) {
-  template.value = value;
-}
-
 function addJob() {
   const experience: WorkExperience = {
     position: "",
@@ -210,11 +206,6 @@ function addSkill() {
         </button>
       </div>
     </header>
-    <ul class="flex gap-2 py-6 px-12 bg-slate-900 shadow-lg">
-      <li v-for="(template, index) in templates" :key="index">
-        <button @click="selectTemplate(template)">{{ template }}</button>
-      </li>
-    </ul>
     <Category class="w-full">
       <template v-slot:header>Personal details</template>
       <div class="flex flex-col gap-5">
