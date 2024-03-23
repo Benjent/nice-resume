@@ -7,6 +7,15 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Nuxt dev/build outputs
+.output
+.data
+.nuxt
+.nitro
+.cache
+dist
+
+# Node dependencies
 node_modules
 dist
 dist-ssr
@@ -16,6 +25,7 @@ dist-ssr
 .vscode/*
 !.vscode/extensions.json
 !.vscode/settings.json
+.fleet
 .idea
 .DS_Store
 *.suo
@@ -26,3 +36,8 @@ dist-ssr
 
 # ESLint
 .eslintcache
+
+# Local env files
+.env
+.env.*
+!.env.example

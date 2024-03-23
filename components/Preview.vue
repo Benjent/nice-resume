@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { type Component, computed } from "vue";
 import { storeToRefs } from "pinia";
-import { Template } from "../types";
+import { type Template } from "../types";
 import { useEditorStore } from "../stores/editor";
 import { useResumeStore } from "../stores/resume";
 import Benjent2023 from "./templates/Benjent2023.vue";

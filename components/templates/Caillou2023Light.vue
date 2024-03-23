@@ -125,7 +125,7 @@ const social = computed(() =>
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Kaisei+Tokumin&display=swap");
 
-@config "../../../tailwind.Caillou2023Light.config.js";
+@config "../../tailwind.Caillou2023Light.config.js";
 
 @tailwind base;
 @tailwind components;

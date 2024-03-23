@@ -17,6 +17,80 @@ If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has a
    2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
 2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
 
+Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+
+## Setup
+
+Make sure to install the dependencies:
+
+```bash
+# npm
+npm install
+
+# pnpm
+pnpm install
+
+# yarn
+yarn install
+
+# bun
+bun install
+```
+
+## Development Server
+
+Start the development server on `http://localhost:3000`:
+
+```bash
+# npm
+npm run dev
+
+# pnpm
+pnpm run dev
+
+# yarn
+yarn dev
+
+# bun
+bun run dev
+```
+
+## Production
+
+Build the application for production:
+
+```bash
+# npm
+npm run build
+
+# pnpm
+pnpm run build
+
+# yarn
+yarn build
+
+# bun
+bun run build
+```
+
+Locally preview production build:
+
+```bash
+# npm
+npm run preview
+
+# pnpm
+pnpm run preview
+
+# yarn
+yarn preview
+
+# bun
+bun run preview
+```
+
+Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
 ## Development
 
 ### Resources
@@ -29,10 +103,10 @@ If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has a
 
 ### Add a template
 
-1. Create the Vue component in `/src/components/templates`
+1. Create the Vue component in `/components/templates`
 2. Create the Tailwind configuration file in root
-3. Add the name in the template union type in `/src/types`
-4. Add the name in the templates array in `/src/globals`
-5. Add the name in the templateMapper in `/src/components/Preview.vue`
+3. Add the name in the template union type in `/types`
+4. Add the name in the templates array in `/globals`
+5. Add the name in the templateMapper in `/components/Preview.vue`
 
 Make sure the above steps rely on the same template name.

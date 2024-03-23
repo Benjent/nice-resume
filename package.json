@@ -4,24 +4,30 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc && vite build",
-    "preview": "vite preview",
-    "typescript": "vue-tsc --noEmit",
+    "dev": "nuxt dev",
+    "build": "vue-tsc && nuxt build",
+    "generate": "nuxt generate",
+    "postinstall": "nuxt prepare",
+    "preview": "nuxt preview",
+    "typescript": "nuxi typecheck",
     "format": "prettier --write",
     "format:all": "npm run format .",
     "format:check": "prettier --check --cache",
     "format:check:all": "npm run format:check .",
     "lint": "eslint --cache --fix",
-    "lint:all": "npm run lint -- \"./src/**/*.{ts,vue}\"",
+    "lint:all": "npm run lint -- \"./**/*.{ts,vue}\"",
     "lint:check": "eslint --cache",
-    "lint:check:all": "npm run lint:check -- \"./src/**/*.{ts,vue}\"",
+    "lint:check:all": "npm run lint:check -- \"./**/*.{ts,vue}\"",
     "prepare": "husky"
   },
   "dependencies": {
     "@heroicons/vue": "^2.1.1",
+    "@nuxtjs/tailwindcss": "^6.11.4",
+    "@pinia/nuxt": "^0.5.1",
+    "nuxt": "^3.11.1",
     "pinia": "^2.1.7",
-    "vue": "^3.4.19"
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^7.2.0",
