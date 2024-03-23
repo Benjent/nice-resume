@@ -61,7 +61,7 @@ jobs:
       - name: Build
         run: pnpm run build --if-present
       - name: Launch server
-        run: pnpm run preview & npx wait-on $A11Y_HOST
+        run: pnpm run preview & pnpx wait-on $A11Y_HOST
       - name: Run pa11y
         run: |
           pnpx pa11y $A11Y_HOST \
