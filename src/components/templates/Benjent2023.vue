@@ -23,7 +23,7 @@ const {
 </script>
 
 <template>
-  <div class="bg-tertiary h-full w-full">
+  <div class="h-full w-full">
     <template v-if="name">
       <header
         class="flex items-start gap-12 p-12 bg-white text-dark font-display"
@@ -156,3 +156,19 @@ const {
     </section>
   </div>
 </template>
+
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=League+Gothic&family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap");
+
+@config "../../../tailwind.Benjent2023.config.js";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  #preview {
+    font-family: "Mulish";
+  }
+}
+</style>

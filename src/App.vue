@@ -6,6 +6,6 @@ import Preview from "./components/Preview.vue";
 <template>
   <section class="flex h-full bg-gradient-to-br from-blue-700 to-pink-500">
     <Editor class="flex-1" />
-    <Preview id="preview" class="flex-1" template="Benjent2023" />
+    <Preview id="preview" class="flex-1" />
   </section>
 </template>

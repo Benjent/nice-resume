@@ -7,12 +7,16 @@ import {
   PlusCircleIcon,
   XCircleIcon,
 } from "@heroicons/vue/24/outline";
+import { useEditorStore } from "../stores/editor";
 import { useResumeStore } from "../stores/resume";
 import { moveDown, moveUp, remove } from "../utils/array";
-import { Skill, type Education, type WorkExperience } from "../types";
+import { type Education, type Skill, type WorkExperience } from "../types";
+import { templates } from "../globals";
 import Category from "./Category.vue";
 import ListActions from "./ListActions.vue";
 import { download } from "../utils/file";
+
+const { zoomLevel } = storeToRefs(useEditorStore());
 
 const {
   address,
@@ -26,6 +30,7 @@ const {
   phone,
   skills,
   skillsLabel,
+  template,
   title,
   website,
   workExperience,
@@ -37,6 +42,7 @@ const isImportError = ref(false);
 function exportToJson() {
   const resume = {
     isNiceResumeExport: true,
+    template: template.value,
     address: address.value,
     drivingLicense: drivingLicense.value,
     education: education.value,
@@ -138,7 +144,9 @@ function addSkill() {
 
 <template>
   <main class="flex flex-col overflow-y-scroll text-white">
-    <header class="flex justify-between gap-2 py-6 px-12 bg-white shadow-lg">
+    <header
+      class="flex justify-between gap-2 py-6 px-12 bg-white text-pink-500 shadow-lg"
+    >
       <h1
         class="bg-gradient-to-br from-blue-700 to-pink-500 text-transparent bg-clip-text text-center text-4xl font-black tracking-widest uppercase"
       >
@@ -147,6 +155,31 @@ function addSkill() {
         Resume
       </h1>
       <div class="flex items-center gap-4">
+        <label for="editorZoomLevel">
+          Zoom
+          <div class="flex gap-2 items-center">
+            <input
+              id="editorZoomLevel"
+              type="range"
+              min="50"
+              max="100"
+              v-model="zoomLevel"
+            />
+            <output class="w-[3rem]">{{ zoomLevel }}%</output>
+          </div>
+        </label>
+        <label for="editorTemplateSelector">
+          Template
+          <select
+            id="editorTemplateSelector"
+            v-model="template"
+            class="bg-white cursor-pointer text-blue-500 block"
+          >
+            <option v-for="template in templates" :key="template">
+              {{ template }}
+            </option>
+          </select>
+        </label>
         <div>
           <label
             for="editorFileReader"
