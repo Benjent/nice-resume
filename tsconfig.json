@@ -1,6 +1,4 @@
 {
-  // https://nuxt.com/docs/guide/concepts/typescript
-  "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
     "target": "ES2020",
     "useDefineForClassFields": true,
@@ -22,7 +20,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
+  "extends": "./.nuxt/tsconfig.json",
   "include": ["./**/*.ts", "./**/*.tsx", "./**/*.vue"],
-  "exclude": ["node_modules"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
