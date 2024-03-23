@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./src/components/templates/Benjent2023.vue"],
+  content: ["./components/templates/Benjent2023.vue"],
   theme: {
     extend: {
       fontFamily: {
