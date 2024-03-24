@@ -2,7 +2,7 @@ export type Template =
   | "Benjent2023"
   | "Benjent2023Light"
   | "Caillou2023Light"
-  | "Franckke2023Light";
+  | "Openresume2023Light";
 
 export interface WorkExperience {
   position: string;
