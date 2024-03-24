@@ -28,10 +28,10 @@ const {
   <div class="bg-white h-full w-full flex flex-col justify-between font-body">
     <header
       v-if="name"
-      class="flex items-start gap-12 p-12 text-[#1e1e1e] font-display"
+      class="flex items-start gap-12 px-10 py-6 text-[#1e1e1e] font-display"
     >
       <div
-        class="flex flex-col place-items-center w-fit border-y-4 border-[#ed3660] p-4"
+        class="flex flex-col place-items-center w-fit border-y-4 border-[#ed3660] py-2 px-4"
       >
         <h1 v-if="name" class="text-center uppercase text-4xl">
           {{ name }}
@@ -41,7 +41,7 @@ const {
         </h2>
       </div>
       <div class="flex flex-col gap-2">
-        <div class="leading-none font-body text-xs">
+        <div class="leading-none font-body text-xs italic">
           <div v-if="drivingLicense || address">
             <span v-if="drivingLicense">{{ drivingLicense }}</span>
             <span v-if="drivingLicense && address"> - </span>
@@ -66,24 +66,22 @@ const {
 
     <section
       v-if="workExperience.length"
-      class="p-12 border-t-2 border-[#ed3660]"
+      class="px-10 py-6 border-t-2 border-[#ed3660]"
     >
-      <h3 class="font-display uppercase mb-5 text-2xl text-[#ed3660]">
+      <h3 class="font-display uppercase mb-2 text-2xl text-[#ed3660]">
         {{ workExperienceLabel }}
       </h3>
       <ul class="flex flex-col gap-2">
         <li v-for="(job, jobIndex) in workExperience" :key="`job${jobIndex}`">
-          <div class="grid grid-cols-5">
-            <div class="text-[#ed3660] font-display bold text-xl col-span-2">
+          <div class="flex items-baseline">
+            <div class="text-[#ed3660] flex-1 font-display text-xl">
               {{ job.position }}
             </div>
-            <div>{{ job.company }}</div>
-            <div>{{ job.period }}</div>
-            <div>{{ job.location }}</div>
+            <div>{{ job.company }} · {{ job.period }} · {{ job.location }}</div>
           </div>
           <div>
-            <p class="bold">{{ job.description }}</p>
-            <ul class="italic text-sm">
+            <p class="text-sm">{{ job.description }}</p>
+            <ul class="italic text-xs">
               <li
                 v-for="(task, taskIndex) in job.tasks"
                 :key="`task${taskIndex}`"
@@ -96,8 +94,11 @@ const {
       </ul>
     </section>
 
-    <section v-if="education.length" class="p-12 border-t-2 border-[#5662e8]">
-      <h3 class="font-display uppercase mb-5 text-2xl text-[#5662e8]">
+    <section
+      v-if="education.length"
+      class="px-10 py-6 border-t-2 border-[#5662e8]"
+    >
+      <h3 class="font-display uppercase mb-2 text-2xl text-[#5662e8]">
         {{ educationLabel }}
       </h3>
       <ul class="flex flex-col gap-2">
@@ -105,28 +106,33 @@ const {
           v-for="(training, trainingIndex) in education"
           :key="`training${trainingIndex}`"
         >
-          <div class="grid grid-cols-5">
-            <div class="text-[#5662e8] font-display bold text-xl col-span-3">
+          <div class="flex items-baseline">
+            <div class="text-[#5662e8] flex-1 font-display text-xl">
               {{ training.diploma }}
             </div>
-            <div>{{ training.period }}</div>
-            <div>{{ training.institution }}, {{ training.location }}</div>
+            <div>
+              {{ training.period }} · {{ training.institution }},
+              {{ training.location }}
+            </div>
           </div>
-          <p class="italic text-sm">{{ training.description }}</p>
+          <p class="italic text-xs">{{ training.description }}</p>
         </li>
       </ul>
     </section>
 
-    <section v-if="skills.length" class="p-12 border-t-2 border-[#e8afcf]">
-      <h3 class="font-display uppercase mb-5 text-2xl text-[#e8afcf]">
+    <section
+      v-if="skills.length"
+      class="px-10 py-6 border-t-2 border-[#e8afcf]"
+    >
+      <h3 class="font-display uppercase mb-2 text-2xl text-[#e8afcf]">
         {{ skillsLabel }}
       </h3>
-      <ul class="flex flex-col">
+      <ul class="flex gap-2">
         <li v-for="(skill, skillIndex) in skills" :key="`skill${skillIndex}`">
           <span class="text-[#e8afcf] font-display bold text-xl">{{
             skill.name
           }}</span
-          ><span v-if="skill.level" class="italic font-sm text-[#e8afcf]">
+          ><span v-if="skill.level" class="italic text-sm text-[#e8afcf]">
             ({{ skill.level }})</span
           >
         </li>
@@ -140,7 +146,7 @@ const {
 @import "@/assets/styles/index.css";
 
 @layer components {
-  .font-display {
+  .font-body {
     font-family: "Mulish";
   }
   .font-display {
