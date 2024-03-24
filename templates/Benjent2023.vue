@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { LinkIcon } from "@heroicons/vue/16/solid";
-import { useResumeStore } from "../../stores/resume";
+import { useResumeStore } from "@/stores/resume";
+import GitHubIcon from "@/assets/images/icons/github.svg";
+import LinkedInIcon from "@/assets/images/icons/linkedin.svg";
 
 const {
   address,
@@ -26,10 +28,10 @@ const {
   <div class="h-full w-full">
     <template v-if="name">
       <header
-        class="flex items-start gap-12 p-12 bg-white text-dark font-display"
+        class="flex items-start gap-12 p-12 bg-white text-[#1e1e1e] font-display"
       >
         <div
-          class="flex flex-col place-items-center w-fit border-y-4 border-primary p-4"
+          class="flex flex-col place-items-center w-fit border-y-4 border-[#ed3660] p-4"
         >
           <h1 v-if="name" class="text-center uppercase text-4xl">
             {{ name }}
@@ -38,7 +40,7 @@ const {
             {{ title }}
           </h2>
         </div>
-        <div class="flex flex-col gap-2 text-primary">
+        <div class="flex flex-col gap-2 text-[#ed3660]">
           <div class="leading-none">
             <div v-if="drivingLicense || address">
               <span v-if="drivingLicense">{{ drivingLicense }}</span>
@@ -50,21 +52,15 @@ const {
           </div>
           <div class="leading-tight">
             <div v-if="website" class="flex gap-1">
-              <LinkIcon class="w-4 text-dark" />{{ website }}
+              <LinkIcon class="w-4" />{{ website }}
             </div>
             <div v-if="linkedIn" class="flex gap-1 items-center">
-              <img
-                src="../../assets/images/icons/linkedin.svg"
-                alt="LinkedIn icon"
-                class="h-4"
-              />{{ linkedIn }}
+              <LinkedInIcon />
+              {{ linkedIn }}
             </div>
             <div v-if="gitHub" class="flex gap-1 items-center">
-              <img
-                src="../../assets/images/icons/github.svg"
-                alt="GitHub icon"
-                class="h-4"
-              />{{ gitHub }}
+              <GitHubIcon />
+              {{ gitHub }}
             </div>
           </div>
         </div>
@@ -78,7 +74,7 @@ const {
     </template>
 
     <template v-if="workExperience.length">
-      <section class="p-12 bg-primary text-white">
+      <section class="p-12 bg-[#ed3660] text-white">
         <h3 class="font-display uppercase mb-5 text-2xl">
           {{ workExperienceLabel }}
         </h3>
@@ -109,13 +105,13 @@ const {
 
       <div class="drop-shadow-lg">
         <div
-          class="w-full absolute left-0 right-0 m-auto [clip-path:polygon(20%_0,_100%_0,_77%_100%)] bg-primary h-5"
+          class="w-full absolute left-0 right-0 m-auto [clip-path:polygon(20%_0,_100%_0,_77%_100%)] bg-[#ed3660] h-5"
         />
       </div>
     </template>
 
     <template v-if="education.length">
-      <section class="p-12 bg-secondary text-tertiary">
+      <section class="p-12 bg-[#5662e8] text-[#e8afcf]">
         <h3 class="font-display uppercase mb-5 text-2xl">
           {{ educationLabel }}
         </h3>
@@ -138,12 +134,12 @@ const {
 
       <div class="drop-shadow-lg">
         <div
-          class="w-full absolute left-0 right-0 m-auto [clip-path:polygon(20%_0,_100%_0,_77%_100%)] bg-secondary h-5"
+          class="w-full absolute left-0 right-0 m-auto [clip-path:polygon(20%_0,_100%_0,_77%_100%)] bg-[#5662e8] h-5"
         />
       </div>
     </template>
 
-    <section v-if="skills.length" class="p-12 bg-tertiary text-secondary">
+    <section v-if="skills.length" class="p-12 bg-[#e8afcf] text-[#5662e8]">
       <h3 class="font-display uppercase mb-5 text-2xl">{{ skillsLabel }}</h3>
       <ul class="flex flex-col">
         <li v-for="(skill, skillIndex) in skills" :key="`skill${skillIndex}`">
@@ -159,16 +155,14 @@ const {
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=League+Gothic&family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap");
+@import "@/assets/styles/index.css";
 
-@config "../../tailwind.Benjent2023.config.js";
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer base {
-  #preview {
+@layer components {
+  .font-display {
     font-family: "Mulish";
+  }
+  .font-display {
+    font-family: "League Gothic";
   }
 }
 </style>

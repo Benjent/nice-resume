@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { storeToRefs } from "pinia";
-import { useResumeStore } from "../../stores/resume";
+import { useResumeStore } from "@/stores/resume";
 
 const {
   address,
@@ -121,19 +121,3 @@ const social = computed(() =>
     </section>
   </div>
 </template>
-
-<style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Kaisei+Tokumin&display=swap");
-
-@config "../../tailwind.Caillou2023Light.config.js";
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer base {
-  #preview {
-    font-family: "sans-serif";
-  }
-}
-</style>

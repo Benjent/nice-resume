@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { LinkIcon } from "@heroicons/vue/16/solid";
-import { useResumeStore } from "../../stores/resume";
+import { useResumeStore } from "@/stores/resume";
+import GitHubIcon from "@/assets/images/icons/github.svg";
+import LinkedInIcon from "@/assets/images/icons/linkedin.svg";
 
 const {
   address,
@@ -23,13 +25,13 @@ const {
 </script>
 
 <template>
-  <div class="bg-white h-full w-full flex flex-col justify-between">
+  <div class="bg-white h-full w-full flex flex-col justify-between font-body">
     <header
       v-if="name"
-      class="flex items-start gap-12 p-12 text-dark font-display"
+      class="flex items-start gap-12 p-12 text-[#1e1e1e] font-display"
     >
       <div
-        class="flex flex-col place-items-center w-fit border-y-4 border-primary p-4"
+        class="flex flex-col place-items-center w-fit border-y-4 border-[#ed3660] p-4"
       >
         <h1 v-if="name" class="text-center uppercase text-4xl">
           {{ name }}
@@ -39,7 +41,7 @@ const {
         </h2>
       </div>
       <div class="flex flex-col gap-2">
-        <div class="leading-none font-body italic text-xs">
+        <div class="leading-none font-body text-xs">
           <div v-if="drivingLicense || address">
             <span v-if="drivingLicense">{{ drivingLicense }}</span>
             <span v-if="drivingLicense && address"> - </span>
@@ -48,23 +50,15 @@ const {
           <div v-if="email">{{ email }}</div>
           <div v-if="phone">{{ phone }}</div>
         </div>
-        <div class="leading-tight text-primary">
+        <div class="leading-tight">
           <div v-if="website" class="flex gap-1">
-            <LinkIcon class="w-4 text-dark" />{{ website }}
+            <LinkIcon class="w-4" />{{ website }}
           </div>
           <div v-if="linkedIn" class="flex gap-1 items-center">
-            <img
-              src="../../assets/images/icons/linkedin.svg"
-              alt="LinkedIn icon"
-              class="h-4"
-            />{{ linkedIn }}
+            <LinkedInIcon />{{ linkedIn }}
           </div>
           <div v-if="gitHub" class="flex gap-1 items-center">
-            <img
-              src="../../assets/images/icons/github.svg"
-              alt="GitHub icon"
-              class="h-4"
-            />{{ gitHub }}
+            <GitHubIcon />{{ gitHub }}
           </div>
         </div>
       </div>
@@ -72,15 +66,15 @@ const {
 
     <section
       v-if="workExperience.length"
-      class="p-12 border-t-2 border-primary"
+      class="p-12 border-t-2 border-[#ed3660]"
     >
-      <h3 class="font-display uppercase mb-5 text-2xl text-primary">
+      <h3 class="font-display uppercase mb-5 text-2xl text-[#ed3660]">
         {{ workExperienceLabel }}
       </h3>
       <ul class="flex flex-col gap-2">
         <li v-for="(job, jobIndex) in workExperience" :key="`job${jobIndex}`">
           <div class="grid grid-cols-5">
-            <div class="text-primary font-display bold text-xl col-span-2">
+            <div class="text-[#ed3660] font-display bold text-xl col-span-2">
               {{ job.position }}
             </div>
             <div>{{ job.company }}</div>
@@ -102,8 +96,8 @@ const {
       </ul>
     </section>
 
-    <section v-if="education.length" class="p-12 border-t-2 border-secondary">
-      <h3 class="font-display uppercase mb-5 text-2xl text-secondary">
+    <section v-if="education.length" class="p-12 border-t-2 border-[#5662e8]">
+      <h3 class="font-display uppercase mb-5 text-2xl text-[#5662e8]">
         {{ educationLabel }}
       </h3>
       <ul class="flex flex-col gap-2">
@@ -112,7 +106,7 @@ const {
           :key="`training${trainingIndex}`"
         >
           <div class="grid grid-cols-5">
-            <div class="text-secondary font-display bold text-xl col-span-3">
+            <div class="text-[#5662e8] font-display bold text-xl col-span-3">
               {{ training.diploma }}
             </div>
             <div>{{ training.period }}</div>
@@ -123,16 +117,16 @@ const {
       </ul>
     </section>
 
-    <section v-if="skills.length" class="p-12 border-t-2 border-tertiary">
-      <h3 class="font-display uppercase mb-5 text-2xl text-tertiary">
+    <section v-if="skills.length" class="p-12 border-t-2 border-[#e8afcf]">
+      <h3 class="font-display uppercase mb-5 text-2xl text-[#e8afcf]">
         {{ skillsLabel }}
       </h3>
       <ul class="flex flex-col">
         <li v-for="(skill, skillIndex) in skills" :key="`skill${skillIndex}`">
-          <span class="text-tertiary font-display bold text-xl">{{
+          <span class="text-[#e8afcf] font-display bold text-xl">{{
             skill.name
           }}</span
-          ><span v-if="skill.level" class="italic font-sm text-tertiary">
+          ><span v-if="skill.level" class="italic font-sm text-[#e8afcf]">
             ({{ skill.level }})</span
           >
         </li>
@@ -143,16 +137,14 @@ const {
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=League+Gothic&family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap");
+@import "@/assets/styles/index.css";
 
-@config "../../tailwind.Benjent2023Light.config.js";
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer base {
-  #preview {
+@layer components {
+  .font-display {
     font-family: "Mulish";
+  }
+  .font-display {
+    font-family: "League Gothic";
   }
 }
 </style>
