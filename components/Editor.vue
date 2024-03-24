@@ -310,7 +310,7 @@ function addSkill() {
         />
       </template>
       <ul class="flex flex-col gap-10">
-        <li v-for="(job, jobIndex) in workExperience" :key="`job${jobIndex}`">
+        <li v-for="(job, jobIndex) in workExperience" :key="jobIndex">
           <ListActions
             class="mb-2"
             :index="jobIndex"
@@ -379,7 +379,7 @@ function addSkill() {
               <ul class="flex flex-col gap-2">
                 <li
                   v-for="(_task, taskIndex) in job.tasks"
-                  :key="`task${taskIndex}`"
+                  :key="taskIndex"
                   class="flex items-center gap-2"
                 >
                   <input
@@ -414,10 +414,7 @@ function addSkill() {
         />
       </template>
       <ul class="flex flex-col gap-10">
-        <li
-          v-for="(training, trainingIndex) in education"
-          :key="`training${trainingIndex}`"
-        >
+        <li v-for="(training, trainingIndex) in education" :key="trainingIndex">
           <ListActions
             class="mb-2"
             :index="trainingIndex"
@@ -493,7 +490,7 @@ function addSkill() {
         />
       </template>
       <ul class="flex flex-col gap-10">
-        <li v-for="(skill, skillIndex) in skills" :key="`skill${skillIndex}`">
+        <li v-for="(skill, skillIndex) in skills" :key="skillIndex">
           <ListActions
             class="mb-2"
             :index="skillIndex"

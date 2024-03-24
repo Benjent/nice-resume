@@ -72,7 +72,7 @@ const {
         {{ workExperienceLabel }}
       </h3>
       <ul class="flex flex-col gap-2">
-        <li v-for="(job, jobIndex) in workExperience" :key="`job${jobIndex}`">
+        <li v-for="(job, jobIndex) in workExperience" :key="jobIndex">
           <div class="flex items-baseline">
             <div class="text-[#ed3660] flex-1 font-display text-xl">
               {{ job.position }}
@@ -82,10 +82,7 @@ const {
           <div>
             <p class="text-sm">{{ job.description }}</p>
             <ul class="italic text-xs">
-              <li
-                v-for="(task, taskIndex) in job.tasks"
-                :key="`task${taskIndex}`"
-              >
+              <li v-for="(task, taskIndex) in job.tasks" :key="taskIndex">
                 {{ task }}
               </li>
             </ul>
@@ -102,10 +99,7 @@ const {
         {{ educationLabel }}
       </h3>
       <ul class="flex flex-col gap-2">
-        <li
-          v-for="(training, trainingIndex) in education"
-          :key="`training${trainingIndex}`"
-        >
+        <li v-for="(training, trainingIndex) in education" :key="trainingIndex">
           <div class="flex items-baseline">
             <div class="text-[#5662e8] flex-1 font-display text-xl">
               {{ training.diploma }}
@@ -128,7 +122,7 @@ const {
         {{ skillsLabel }}
       </h3>
       <ul class="flex gap-2">
-        <li v-for="(skill, skillIndex) in skills" :key="`skill${skillIndex}`">
+        <li v-for="(skill, skillIndex) in skills" :key="skillIndex">
           <span class="text-[#e8afcf] font-display bold text-xl">{{
             skill.name
           }}</span
