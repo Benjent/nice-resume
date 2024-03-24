@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "build": "nuxi build",
     "dev": "nuxt dev",
     "format": "prettier --write",
     "format:all": "npm run format .",
