@@ -7,6 +7,7 @@ import { useResumeStore } from "@/stores/resume";
 import Benjent2023 from "@/templates/Benjent2023.vue";
 import Benjent2023Light from "@/templates/Benjent2023Light.vue";
 import Caillou2023Light from "@/templates/Caillou2023Light.vue";
+import OpenResume from "@/templates/OpenResume.vue";
 
 const { zoomLevel } = storeToRefs(useEditorStore());
 const { template } = storeToRefs(useResumeStore());
@@ -19,6 +20,7 @@ const templateMapper: TemplateMapper = {
   Benjent2023,
   Benjent2023Light,
   Caillou2023Light,
+  OpenResume,
 };
 
 const component: Component = computed(() => templateMapper[template.value]);
