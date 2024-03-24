@@ -32,7 +32,7 @@ const {
 
 <template>
   <div
-    class="bg-white h-full w-full flex flex-col justify-between py-6 px-12 border-t-8 border-amber-500 font-body"
+    class="bg-white h-full w-full flex flex-col py-6 px-12 border-t-8 border-amber-500 font-body"
   >
     <header v-if="name">
       <h1 v-if="name" class="text-3xl mb-2 text-amber-500 font-bold">

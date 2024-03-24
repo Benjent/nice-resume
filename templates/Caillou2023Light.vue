@@ -36,7 +36,7 @@ const social = computed(() =>
 
 <template>
   <div
-    class="bg-white h-full w-full flex flex-col justify-between p-12 text-zinc-600"
+    class="bg-white h-full w-full flex flex-col p-12 text-zinc-600 font-sans"
   >
     <header v-if="name" class="mb-6">
       <h1 v-if="name" class="text-center text-4xl mb-2 font-display">

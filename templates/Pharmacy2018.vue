@@ -32,7 +32,7 @@ const {
 
 <template>
   <div
-    class="bg-white h-full w-full flex flex-col justify-between p-12 font-body text-slate-900"
+    class="bg-white h-full w-full flex flex-col p-12 font-body text-slate-900"
   >
     <header>
       <h1
@@ -70,7 +70,7 @@ const {
 
     <h2
       v-if="title"
-      class="text-center my-8 text-cyan-500 text-4xl tracking-widest"
+      class="text-center my-12 text-cyan-500 text-4xl tracking-widest"
     >
       {{ title }}
     </h2>
@@ -126,7 +126,7 @@ const {
       </section>
     </div>
 
-    <section v-if="skills.length">
+    <section v-if="skills.length" class="mt-12">
       <h3 class="mb-2 text-lg uppercase font-bold tracking-widest">
         {{ skillsLabel }}
       </h3>

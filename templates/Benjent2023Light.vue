@@ -25,7 +25,7 @@ const {
 </script>
 
 <template>
-  <div class="bg-white h-full w-full flex flex-col justify-between font-body">
+  <div class="bg-white h-full w-full flex flex-col font-body">
     <header
       v-if="name"
       class="flex items-start gap-12 px-10 py-6 text-[#1e1e1e] font-display"
