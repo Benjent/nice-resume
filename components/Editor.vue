@@ -162,7 +162,7 @@ function addSkill() {
               id="editorZoomLevel"
               type="range"
               min="50"
-              max="100"
+              max="150"
               v-model="zoomLevel"
             />
             <output class="w-[3rem] text-blue-500">{{ zoomLevel }}%</output>

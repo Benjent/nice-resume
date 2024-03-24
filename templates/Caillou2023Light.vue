@@ -45,29 +45,29 @@ const social = computed(() =>
       <h2 v-if="title" class="text-center text-xl mb-2">
         {{ title }}
       </h2>
-      <div class="text-center">{{ location }}</div>
-      <div class="text-center">{{ contact }}</div>
-      <div class="text-center">{{ social }}</div>
+      <div class="text-center leading-tight">{{ location }}</div>
+      <div class="text-center leading-tight">{{ contact }}</div>
+      <div class="text-center leading-tight">{{ social }}</div>
     </header>
 
     <section
       v-if="workExperience.length"
       class="py-6 border-t-[1px] border-zinc-200"
     >
-      <h3 class="font-display uppercase mb-5 text-2xl text-black">
+      <h3 class="font-display uppercase mb-5 text-xl text-black font-bold">
         {{ workExperienceLabel }}
       </h3>
-      <ul class="flex flex-col gap-2">
+      <ul class="flex flex-col gap-4">
         <li v-for="(job, jobIndex) in workExperience" :key="`job${jobIndex}`">
-          <div class="uppercase text-black bold text-xl col-span-2">
+          <div class="uppercase text-black leading-none">
             {{ job.position }}
           </div>
-          <div class="text-zinc-400">
+          <div class="text-zinc-400 mb-1">
             {{ job.company }} | {{ job.location }} | {{ job.period }}
           </div>
           <div>
-            <p class="bold">{{ job.description }}</p>
-            <ul class="list-disc list-inside ml-3">
+            <p class="text-sm">{{ job.description }}</p>
+            <ul class="list-disc list-inside ml-3 text-sm">
               <li
                 v-for="(task, taskIndex) in job.tasks"
                 :key="`task${taskIndex}`"
@@ -84,28 +84,28 @@ const social = computed(() =>
       v-if="education.length"
       class="py-6 border-t-[1px] border-zinc-200"
     >
-      <h3 class="font-display uppercase mb-5 text-2xl text-black">
+      <h3 class="font-display uppercase mb-5 text-xl text-black font-bold">
         {{ educationLabel }}
       </h3>
-      <ul class="flex flex-col gap-2">
+      <ul class="flex flex-col gap-4">
         <li
           v-for="(training, trainingIndex) in education"
           :key="`training${trainingIndex}`"
         >
-          <div class="uppercase text-black bold text-xl col-span-3">
+          <div class="uppercase text-black leading-none">
             {{ training.diploma }}
           </div>
           <div class="text-zinc-400">
-            {{ training.diploma }} | {{ training.institution }} |
+            {{ training.institution }} | {{ training.location }} |
             {{ training.period }}
           </div>
-          <p class="">{{ training.description }}</p>
+          <p class="text-sm">{{ training.description }}</p>
         </li>
       </ul>
     </section>
 
     <section v-if="skills.length" class="py-6 border-t-[1px] border-zinc-200">
-      <h3 class="font-display uppercase mb-5 text-2xl text-black">
+      <h3 class="font-display uppercase mb-5 text-2xl text-black font-bold">
         {{ skillsLabel }}
       </h3>
       <ul class="flex flex-col">
@@ -114,8 +114,8 @@ const social = computed(() =>
           :key="`skill${skillIndex}`"
           class="flex gap-2 items-baseline"
         >
-          <span class="uppercase text-black bold text-xl">{{ skill.name }}</span
-          ><span v-if="skill.level" class="text-xl"> {{ skill.level }}</span>
+          <span class="uppercase text-black">{{ skill.name }}</span
+          ><span v-if="skill.level" class=""> {{ skill.level }}</span>
         </li>
       </ul>
     </section>

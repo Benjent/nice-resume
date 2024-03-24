@@ -25,13 +25,13 @@ const {
 </script>
 
 <template>
-  <div class="h-full w-full">
+  <div class="h-full w-full bg-[#e8afcf]">
     <template v-if="name">
       <header
-        class="flex items-start gap-12 p-12 bg-white text-[#1e1e1e] font-display"
+        class="flex items-start gap-10 py-8 px-10 bg-white text-[#1e1e1e] font-display"
       >
         <div
-          class="flex flex-col place-items-center w-fit border-y-4 border-[#ed3660] p-4"
+          class="flex flex-col place-items-center w-fit border-y-4 border-[#ed3660] py-2 px-4"
         >
           <h1 v-if="name" class="text-center uppercase text-4xl">
             {{ name }}
@@ -68,29 +68,30 @@ const {
 
       <div class="drop-shadow-lg">
         <div
-          class="w-full absolute left-0 right-0 m-auto [clip-path:polygon(20%_0,_100%_0,_77%_100%)] bg-white h-5"
+          class="w-full absolute left-0 right-0 -top-[2px] m-auto [clip-path:polygon(20%_0,_100%_0,_77%_100%)] bg-white h-5"
         />
       </div>
     </template>
 
     <template v-if="workExperience.length">
-      <section class="p-12 bg-[#ed3660] text-white">
-        <h3 class="font-display uppercase mb-5 text-2xl">
+      <section class="py-6 px-10 bg-[#ed3660] text-white">
+        <h3 class="font-display uppercase mb-2 text-2xl">
           {{ workExperienceLabel }}
         </h3>
-        <ul class="flex flex-col gap-2">
+        <ul class="flex flex-col gap-3">
           <li v-for="(job, jobIndex) in workExperience" :key="`job${jobIndex}`">
-            <div class="grid grid-cols-5">
-              <div class="font-display bold text-xl col-span-2">
+            <div class="grid grid-cols-[40%_30%_30%] items-baseline grid-gap-4">
+              <div class="font-display text-xl">
                 {{ job.position }}
               </div>
-              <div>{{ job.company }}</div>
-              <div>{{ job.period }}</div>
-              <div>{{ job.location }}</div>
+              <div class="text-sm font-semibold">{{ job.period }}</div>
+              <div class="text-sm font-semibold">
+                {{ job.company }}, {{ job.location }}
+              </div>
             </div>
             <div>
-              <p class="bold">{{ job.description }}</p>
-              <ul class="italic text-sm">
+              <p class="text-sm font-semibold">{{ job.description }}</p>
+              <ul class="italic text-xs">
                 <li
                   v-for="(task, taskIndex) in job.tasks"
                   :key="`task${taskIndex}`"
@@ -105,46 +106,49 @@ const {
 
       <div class="drop-shadow-lg">
         <div
-          class="w-full absolute left-0 right-0 m-auto [clip-path:polygon(20%_0,_100%_0,_77%_100%)] bg-[#ed3660] h-5"
+          class="w-full absolute left-0 right-0 -top-[2px] m-auto [clip-path:polygon(20%_0,_100%_0,_77%_100%)] bg-[#ed3660] h-5"
         />
       </div>
     </template>
 
     <template v-if="education.length">
-      <section class="p-12 bg-[#5662e8] text-[#e8afcf]">
-        <h3 class="font-display uppercase mb-5 text-2xl">
+      <section class="py-6 px-10 bg-[#5662e8] text-[#e8afcf]">
+        <h3 class="font-display uppercase mb-2 text-2xl">
           {{ educationLabel }}
         </h3>
-        <ul class="flex flex-col gap-2">
+        <ul class="flex flex-col gap-3">
           <li
             v-for="(training, trainingIndex) in education"
             :key="`training${trainingIndex}`"
           >
-            <div class="grid grid-cols-5">
-              <div class="font-display bold text-xl col-span-3">
+            <div class="flex gap-2 items-baseline -mb-1">
+              <div class="font-display text-xl">
                 {{ training.diploma }}
               </div>
               <div>{{ training.period }}</div>
               <div>{{ training.institution }}, {{ training.location }}</div>
             </div>
-            <p class="italic text-sm">{{ training.description }}</p>
+            <p class="italic text-xs">{{ training.description }}</p>
           </li>
         </ul>
       </section>
 
       <div class="drop-shadow-lg">
         <div
-          class="w-full absolute left-0 right-0 m-auto [clip-path:polygon(20%_0,_100%_0,_77%_100%)] bg-[#5662e8] h-5"
+          class="w-full absolute left-0 right-0 -top-[2px] m-auto [clip-path:polygon(20%_0,_100%_0,_77%_100%)] bg-[#5662e8] h-5"
         />
       </div>
     </template>
 
-    <section v-if="skills.length" class="p-12 bg-[#e8afcf] text-[#5662e8]">
-      <h3 class="font-display uppercase mb-5 text-2xl">{{ skillsLabel }}</h3>
-      <ul class="flex flex-col">
+    <section
+      v-if="skills.length"
+      class="py-6 px-10 bg-[#e8afcf] text-[#5662e8]"
+    >
+      <h3 class="font-display uppercase mb-2 text-2xl">{{ skillsLabel }}</h3>
+      <ul class="flex gap-3">
         <li v-for="(skill, skillIndex) in skills" :key="`skill${skillIndex}`">
-          <span class="font-display bold text-xl">{{ skill.name }}</span
-          ><span v-if="skill.level" class="italic font-sm">
+          <span class="font-display text-xl">{{ skill.name }}</span
+          ><span v-if="skill.level" class="italic text-sm">
             ({{ skill.level }})</span
           >
         </li>
