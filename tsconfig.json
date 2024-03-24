@@ -21,7 +21,6 @@
     "noFallthroughCasesInSwitch": true
   },
   "extends": "./.nuxt/tsconfig.json",
-  "files": ["./types/custom.d.ts"],
   "include": ["./**/*.ts", "./**/*.tsx", "./**/*.vue"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
