@@ -17,9 +17,8 @@ pnpm run dev
 
 ```bash
 # Preview production build
-pnpm run preview
-
 pnpm run build
+pnpm run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
@@ -28,7 +27,7 @@ Check out the [deployment documentation](https://nuxt.com/docs/getting-started/d
 
 ### Resources
 
-- [Nuxt](https://nuxt.com/) (for brand icons)
+- [Nuxt](https://nuxt.com/)
 - [Vue](https://vuejs.org/)
 - [Vite](https://vitejs.dev/)
 - [Tailwind CSS](https://tailwindcss.com/)
