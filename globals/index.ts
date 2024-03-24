@@ -5,4 +5,5 @@ export const templates: Array<Template> = [
   "Benjent2023Light",
   "Caillou2023Light",
   "OpenResume",
+  "Pharmacy2018",
 ];
