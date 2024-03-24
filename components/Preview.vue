@@ -4,11 +4,11 @@ import { storeToRefs } from "pinia";
 import { type Template } from "@/types";
 import { useEditorStore } from "@/stores/editor";
 import { useResumeStore } from "@/stores/resume";
-import Benjent2023 from "@/templates/Benjent2023.vue";
-import Benjent2023Light from "@/templates/Benjent2023Light.vue";
-import Caillou2023Light from "@/templates/Caillou2023Light.vue";
+import CottonCandy from "@/templates/CottonCandy.vue";
 import OpenResume from "@/templates/OpenResume.vue";
-import Pharmacy2018 from "@/templates/Pharmacy2018.vue";
+import Pharmacy from "@/templates/Pharmacy.vue";
+import Toothpaste from "@/templates/Toothpaste.vue";
+import Stone from "@/templates/Stone.vue";
 
 const { zoomLevel } = storeToRefs(useEditorStore());
 const { template } = storeToRefs(useResumeStore());
@@ -18,11 +18,11 @@ type TemplateMapper = {
 };
 
 const templateMapper: TemplateMapper = {
-  Benjent2023,
-  Benjent2023Light,
-  Caillou2023Light,
+  CottonCandy,
   OpenResume,
-  Pharmacy2018,
+  Pharmacy,
+  Toothpaste,
+  Stone,
 };
 
 const component: Component = computed(() => templateMapper[template.value]);
