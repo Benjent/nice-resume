@@ -81,7 +81,7 @@ const {
           {{ workExperienceLabel }}
         </h3>
         <ul class="flex flex-col gap-4 text-sm border-l-4 border-cyan-500 pl-4">
-          <li v-for="(job, jobIndex) in workExperience" :key="`job${jobIndex}`">
+          <li v-for="(job, jobIndex) in workExperience" :key="jobIndex">
             <div class="relative">
               <span
                 class="text-cyan-500 relative before:content-[''] before:absolute before:inline-block before:size-4 before:-left-[1.625rem] before:top-2 before:bg-slate-400 before:rounded-full"
@@ -94,10 +94,7 @@ const {
             <div>
               <p class="text-xs text-slate-400">{{ job.description }}</p>
               <ul class="list-disc list-inside ml-1 text-xs text-slate-600">
-                <li
-                  v-for="(task, taskIndex) in job.tasks"
-                  :key="`task${taskIndex}`"
-                >
+                <li v-for="(task, taskIndex) in job.tasks" :key="taskIndex">
                   {{ task }}
                 </li>
               </ul>
@@ -112,7 +109,7 @@ const {
         <ul class="flex flex-col gap-4 text-sm border-l-4 border-cyan-500 pl-4">
           <li
             v-for="(training, trainingIndex) in education"
-            :key="`training${trainingIndex}`"
+            :key="trainingIndex"
           >
             <div class="relative">
               <span
@@ -136,7 +133,7 @@ const {
       <ul class="flex flex-col text-sm">
         <li
           v-for="(skill, skillIndex) in skills"
-          :key="`skill${skillIndex}`"
+          :key="skillIndex"
           class="flex gap-2 items-baseline"
         >
           <span class="text-cyan-500">{{ skill.name }}</span
