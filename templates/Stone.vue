@@ -4,6 +4,7 @@ import { storeToRefs } from "pinia";
 import { useResumeStore } from "@/stores/resume";
 
 const {
+  about,
   address,
   drivingLicense,
   education,
@@ -49,6 +50,13 @@ const social = computed(() =>
       <div class="text-center leading-tight">{{ contact }}</div>
       <div class="text-center leading-tight">{{ social }}</div>
     </header>
+
+    <p
+      v-if="about"
+      class="py-6 border-t-[1px] border-zinc-200 text-center font-display"
+    >
+      {{ about }}
+    </p>
 
     <section
       v-if="workExperience.length"

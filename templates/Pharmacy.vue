@@ -12,6 +12,7 @@ import LinkedInIcon from "@/assets/images/icons/linkedin.svg";
 import { useResumeStore } from "@/stores/resume";
 
 const {
+  about,
   address,
   drivingLicense,
   education,
@@ -68,12 +69,14 @@ const {
       </div>
     </header>
 
-    <h2
-      v-if="title"
-      class="text-center my-12 text-cyan-500 text-4xl tracking-widest"
-    >
-      {{ title }}
-    </h2>
+    <div class="text-center my-12">
+      <h2 v-if="title" class="text-cyan-500 text-4xl tracking-widest">
+        {{ title }}
+      </h2>
+      <p v-if="about" class="mt-2 text-slate-400">
+        {{ about }}
+      </p>
+    </div>
 
     <div class="grid grid-cols-2 gap-8">
       <section v-if="workExperience.length">

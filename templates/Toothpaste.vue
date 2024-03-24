@@ -6,6 +6,7 @@ import GitHubIcon from "@/assets/images/icons/github.svg";
 import LinkedInIcon from "@/assets/images/icons/linkedin.svg";
 
 const {
+  about,
   address,
   drivingLicense,
   education,
@@ -31,7 +32,7 @@ const {
       class="flex items-start gap-12 px-10 py-6 text-[#1e1e1e] font-display"
     >
       <div
-        class="flex flex-col place-items-center w-fit border-y-4 border-[#ed3660] py-2 px-4"
+        class="flex flex-col place-items-center w-fit border-y-4 border-[#ed3660] py-2 px-4 flex-1"
       >
         <h1 v-if="name" class="text-center uppercase text-4xl">
           {{ name }}
@@ -40,7 +41,7 @@ const {
           {{ title }}
         </h2>
       </div>
-      <div class="flex flex-col gap-2">
+      <div class="flex flex-col gap-2 flex-1">
         <div class="leading-none font-body text-xs italic">
           <div v-if="drivingLicense || address">
             <span v-if="drivingLicense">{{ drivingLicense }}</span>
@@ -62,6 +63,9 @@ const {
           </div>
         </div>
       </div>
+      <p v-if="about" class="flex-1">
+        <span class="text-3xl text-[#5662e8] leading-4">“</span>{{ about }}
+      </p>
     </header>
 
     <section
