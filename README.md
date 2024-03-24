@@ -86,10 +86,9 @@ Check out the [deployment documentation](https://nuxt.com/docs/getting-started/d
 
 ### Add a template
 
-1. Create the Vue component in `/components/templates`
-2. Create the Tailwind configuration file in root
-3. Add the name in the template union type in `/types`
-4. Add the name in the templates array in `/globals`
-5. Add the name in the templateMapper in `/components/Preview.vue`
+1. Create the Vue component in `/templates`
+2. Add the name in the template union type in `/types`
+3. Add the name in the templates array in `/globals`
+4. Add the name in the templateMapper in `/components/Preview.vue`
 
 Make sure the above steps rely on the same template name.

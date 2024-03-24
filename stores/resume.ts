@@ -5,8 +5,8 @@ import {
   type Skill,
   type Template,
   type WorkExperience,
-} from "../types";
-import { templates } from "../globals";
+} from "@/types";
+import { templates } from "@/globals";
 
 export const useResumeStore = defineStore("resume", () => {
   const template = ref<Template>(templates[0]);
