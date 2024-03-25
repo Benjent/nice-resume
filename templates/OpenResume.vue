@@ -12,6 +12,7 @@ import LinkedInIcon from "@/assets/images/icons/linkedin.svg";
 import { useResumeStore } from "@/stores/resume";
 
 const {
+  about,
   address,
   drivingLicense,
   education,
@@ -34,7 +35,7 @@ const {
   <div
     class="bg-white h-full w-full flex flex-col py-6 px-12 border-t-8 border-amber-500 font-body"
   >
-    <header v-if="name">
+    <header>
       <h1 v-if="name" class="text-3xl mb-2 text-amber-500 font-bold">
         {{ name }}
       </h1>
@@ -64,6 +65,10 @@ const {
           <GitHubIcon />{{ gitHub }}
         </div>
       </div>
+
+      <p v-if="about" class="text-center mt-2 italic">
+        {{ about }}
+      </p>
     </header>
 
     <section v-if="workExperience.length" class="mt-6">

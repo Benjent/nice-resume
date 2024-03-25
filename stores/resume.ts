@@ -13,6 +13,7 @@ export const useResumeStore = defineStore("resume", () => {
 
   const name = ref("");
   const title = ref("");
+  const about = ref("");
 
   const address = ref("");
   const email = ref("");
@@ -31,6 +32,7 @@ export const useResumeStore = defineStore("resume", () => {
   const skillsLabel = ref("Skills");
 
   return {
+    about,
     address,
     drivingLicense,
     education,

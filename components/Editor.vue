@@ -19,6 +19,7 @@ import ListActions from "./ListActions.vue";
 const { zoomLevel } = storeToRefs(useEditorStore());
 
 const {
+  about,
   address,
   drivingLicense,
   education,
@@ -43,6 +44,7 @@ function exportToJson() {
   const resume = {
     isNiceResumeExport: true,
     template: template.value,
+    about: about.value,
     address: address.value,
     drivingLicense: drivingLicense.value,
     education: education.value,
@@ -83,6 +85,7 @@ function importFromJson(event: Event) {
         return;
       }
 
+      about.value = resume.about;
       address.value = resume.address;
       drivingLicense.value = resume.drivingLicense;
       education.value = resume.education;
@@ -227,6 +230,14 @@ function addSkill() {
             />
           </label>
         </div>
+        <label class="flex flex-col" for="editorAbout">
+          About
+          <textarea
+            id="editorAbout"
+            class="bg-white bg-opacity-10 rounded px-2 py-1"
+            v-model="about"
+          />
+        </label>
         <div class="flex justify-center gap-10">
           <label
             class="flex flex-col flex-[60%]"

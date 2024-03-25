@@ -6,6 +6,7 @@ import GitHubIcon from "@/assets/images/icons/github.svg";
 import LinkedInIcon from "@/assets/images/icons/linkedin.svg";
 
 const {
+  about,
   address,
   drivingLicense,
   education,
@@ -65,6 +66,13 @@ const {
           </div>
         </div>
       </header>
+
+      <p
+        v-if="about"
+        class="pb-6 px-10 bg-white text-[#1e1e1e] font-display text-lg"
+      >
+        {{ about }}
+      </p>
 
       <div class="drop-shadow-lg">
         <div
