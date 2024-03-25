@@ -1,8 +1,9 @@
 export type Template =
-  | "Benjent2023"
-  | "Benjent2023Light"
-  | "Caillou2023Light"
-  | "OpenResume";
+  | "CottonCandy"
+  | "OpenResume"
+  | "Pharmacy"
+  | "Stone"
+  | "Toothpaste";
 
 export interface WorkExperience {
   position: string;

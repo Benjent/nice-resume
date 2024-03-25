@@ -32,7 +32,7 @@ const {
 
 <template>
   <div
-    class="bg-white h-full w-full flex flex-col justify-between py-6 px-12 border-t-8 border-amber-500 font-body"
+    class="bg-white h-full w-full flex flex-col py-6 px-12 border-t-8 border-amber-500 font-body"
   >
     <header v-if="name">
       <h1 v-if="name" class="text-3xl mb-2 text-amber-500 font-bold">
@@ -73,7 +73,7 @@ const {
         {{ workExperienceLabel }}
       </h3>
       <ul class="flex flex-col gap-4 text-sm">
-        <li v-for="(job, jobIndex) in workExperience" :key="`job${jobIndex}`">
+        <li v-for="(job, jobIndex) in workExperience" :key="jobIndex">
           <div class="font-semibold">{{ job.position }}</div>
           <div class="flex justify-between">
             <div>{{ job.company }}, {{ job.location }}</div>
@@ -82,10 +82,7 @@ const {
           <div>
             <p class="italic">{{ job.description }}</p>
             <ul class="list-disc list-inside ml-1 text-xs">
-              <li
-                v-for="(task, taskIndex) in job.tasks"
-                :key="`task${taskIndex}`"
-              >
+              <li v-for="(task, taskIndex) in job.tasks" :key="taskIndex">
                 {{ task }}
               </li>
             </ul>
@@ -101,10 +98,7 @@ const {
         {{ educationLabel }}
       </h3>
       <ul class="flex flex-col gap-4 text-sm">
-        <li
-          v-for="(training, trainingIndex) in education"
-          :key="`training${trainingIndex}`"
-        >
+        <li v-for="(training, trainingIndex) in education" :key="trainingIndex">
           <div class="font-semibold">{{ training.diploma }}</div>
           <div class="flex justify-between">
             <div>{{ training.institution }}, {{ training.location }}</div>
@@ -124,7 +118,7 @@ const {
       <ul class="flex flex-col text-sm">
         <li
           v-for="(skill, skillIndex) in skills"
-          :key="`skill${skillIndex}`"
+          :key="skillIndex"
           class="flex gap-2 items-baseline"
         >
           <span>{{ skill.name }}</span
@@ -139,9 +133,7 @@ const {
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 @import "@/assets/styles/index.css";
 
-@layer components {
-  .font-body {
-    font-family: "Roboto";
-  }
+.font-body {
+  font-family: "Roboto";
 }
 </style>

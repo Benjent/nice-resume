@@ -36,7 +36,7 @@ const social = computed(() =>
 
 <template>
   <div
-    class="bg-white h-full w-full flex flex-col justify-between p-12 text-zinc-600"
+    class="bg-white h-full w-full flex flex-col p-12 text-zinc-600 font-sans"
   >
     <header v-if="name" class="mb-6">
       <h1 v-if="name" class="text-center text-4xl mb-2 font-display">
@@ -58,7 +58,7 @@ const social = computed(() =>
         {{ workExperienceLabel }}
       </h3>
       <ul class="flex flex-col gap-4">
-        <li v-for="(job, jobIndex) in workExperience" :key="`job${jobIndex}`">
+        <li v-for="(job, jobIndex) in workExperience" :key="jobIndex">
           <div class="uppercase text-black leading-none">
             {{ job.position }}
           </div>
@@ -68,10 +68,7 @@ const social = computed(() =>
           <div>
             <p class="text-sm">{{ job.description }}</p>
             <ul class="list-disc list-inside ml-3 text-sm">
-              <li
-                v-for="(task, taskIndex) in job.tasks"
-                :key="`task${taskIndex}`"
-              >
+              <li v-for="(task, taskIndex) in job.tasks" :key="taskIndex">
                 {{ task }}
               </li>
             </ul>
@@ -88,10 +85,7 @@ const social = computed(() =>
         {{ educationLabel }}
       </h3>
       <ul class="flex flex-col gap-4">
-        <li
-          v-for="(training, trainingIndex) in education"
-          :key="`training${trainingIndex}`"
-        >
+        <li v-for="(training, trainingIndex) in education" :key="trainingIndex">
           <div class="uppercase text-black leading-none">
             {{ training.diploma }}
           </div>
@@ -111,7 +105,7 @@ const social = computed(() =>
       <ul class="flex flex-col">
         <li
           v-for="(skill, skillIndex) in skills"
-          :key="`skill${skillIndex}`"
+          :key="skillIndex"
           class="flex gap-2 items-baseline"
         >
           <span class="uppercase text-black">{{ skill.name }}</span
@@ -121,3 +115,11 @@ const social = computed(() =>
     </section>
   </div>
 </template>
+
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Kaisei+Tokumin&display=swap");
+
+.font-display {
+  font-family: "Kaisei Tokumin";
+}
+</style>
