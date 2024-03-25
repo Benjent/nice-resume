@@ -212,7 +212,7 @@ function addSkill() {
     <Category class="w-full">
       <template v-slot:header>Personal details</template>
       <div class="flex flex-col gap-5">
-        <div class="flex justify-center gap-10">
+        <div class="flex justify-center gap-5 flex-wrap">
           <label class="flex flex-col flex-1" for="editorPersonalDetailsName">
             Name
             <input
@@ -238,7 +238,7 @@ function addSkill() {
             v-model="about"
           />
         </label>
-        <div class="flex justify-center gap-10">
+        <div class="flex justify-center gap-5 flex-wrap">
           <label
             class="flex flex-col flex-[60%]"
             for="editorPersonalDetailsEmail"
@@ -262,7 +262,7 @@ function addSkill() {
             />
           </label>
         </div>
-        <div class="flex justify-center gap-10">
+        <div class="flex justify-center gap-5 flex-wrap">
           <label
             class="flex flex-col flex-[80%]"
             for="editorPersonalDetailsAddress"
@@ -331,7 +331,7 @@ function addSkill() {
             @remove="remove(workExperience, jobIndex)"
           />
           <div class="flex flex-col gap-5">
-            <div class="flex justify-center gap-10">
+            <div class="flex justify-center gap-5 flex-wrap">
               <label class="flex flex-col flex-1" for="editorWorkPosition">
                 Position
                 <input
@@ -349,7 +349,7 @@ function addSkill() {
                 />
               </label>
             </div>
-            <div class="flex justify-center gap-10">
+            <div class="flex justify-center gap-5 flex-wrap">
               <label class="flex flex-col flex-[30%]" for="editorWorkPeriod">
                 Period
                 <input
@@ -451,7 +451,7 @@ function addSkill() {
                 v-model="training.institution"
               />
             </label>
-            <div class="flex justify-center gap-10">
+            <div class="flex justify-center gap-5 flex-wrap">
               <label
                 class="flex flex-col flex-[30%]"
                 for="editorEducationPeriod"
@@ -512,7 +512,7 @@ function addSkill() {
           />
 
           <div class="flex flex-col gap-5">
-            <div class="flex justify-center gap-10">
+            <div class="flex justify-center gap-5 flex-wrap">
               <label class="flex flex-col flex-[80%]" for="editorSkillName">
                 Name
                 <input
