@@ -31,7 +31,7 @@ const component: Component = computed(() => templateMapper[template.value]);
 <template>
   <aside class="overflow-y-auto">
     <section
-      class="w-[210mm] h-[297mm] bg-white shadow m-auto after:content-[''] after:block after:left-0 after:right-0 after:border-b-2 after:border-black after:border-dotted"
+      class="w-[210mm] h-[297mm] bg-white shadow origin-top-left after:content-[''] after:block after:left-0 after:right-0 after:border-b-2 after:border-black after:border-dotted"
       :style="`transform: scale(${zoomLevel / 100})`"
     >
       <component :is="component" />
