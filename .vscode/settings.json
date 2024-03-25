@@ -3,5 +3,8 @@
   "editor.formatOnSave": true,
   "editor.renderWhitespace": "all",
   "editor.renderControlCharacters": true,
-  "files.insertFinalNewline": true
+  "files.insertFinalNewline": true,
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
