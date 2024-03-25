@@ -146,11 +146,8 @@ const {
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,100..900;1,100..900&display=swap");
-@import "@/assets/styles/index.css";
 
-@layer components {
-  .font-body {
-    font-family: "Libre Franklin";
-  }
+.font-body {
+  font-family: "Libre Franklin";
 }
 </style>

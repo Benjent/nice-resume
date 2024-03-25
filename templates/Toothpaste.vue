@@ -137,14 +137,11 @@ const {
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=League+Gothic&family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap");
-@import "@/assets/styles/index.css";
 
-@layer components {
-  .font-body {
-    font-family: "Mulish";
-  }
-  .font-display {
-    font-family: "League Gothic";
-  }
+.font-body {
+  font-family: "Mulish";
+}
+.font-display {
+  font-family: "League Gothic";
 }
 </style>

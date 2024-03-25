@@ -119,11 +119,7 @@ const social = computed(() =>
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Kaisei+Tokumin&display=swap");
 
-@import "@/assets/styles/index.css";
-
-@layer components {
-  .font-display {
-    font-family: "Kaisei Tokumin";
-  }
+.font-display {
+  font-family: "Kaisei Tokumin";
 }
 </style>
