@@ -11,7 +11,9 @@ const title = ref("Nice resume");
     <Title>{{ title }}</Title>
     <Meta name="description" :content="title" />
   </Head>
-  <section class="flex bg-gradient-to-br from-blue-700 to-pink-500 h-[100svh]">
+  <section
+    class="flex flex-col bg-gradient-to-br from-blue-700 to-pink-500 lg:h-[100svh] lg:flex-row"
+  >
     <Editor class="flex-1" />
     <Preview />
   </section>

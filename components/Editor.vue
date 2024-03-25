@@ -146,7 +146,7 @@ function addSkill() {
 </script>
 
 <template>
-  <main class="flex flex-col overflow-y-scroll text-white">
+  <main class="flex flex-col overflow-y-auto text-white">
     <header
       class="flex justify-between gap-2 py-6 px-12 bg-white text-pink-500 shadow-lg"
     >
