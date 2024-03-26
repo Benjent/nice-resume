@@ -51,3 +51,11 @@ pnpm run preview
 4. Add the name in the templateMapper in `/components/Preview.vue`
 
 Make sure the above steps rely on the same template name.
+
+## Docker
+
+```bash
+# Production build
+docker build -t nice-resume:latest .
+docker run --rm -p 3000:3000 nice-resume:latest
+```
