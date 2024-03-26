@@ -30,7 +30,7 @@ jobs:
           echo "Pnpm version: $(pnpm --version) (aiming: ${{ env.PNPM_VERSION }})"
           echo "Git version: $(git --version)"
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
       - name: pnpm audit
         run: |
           pnpm audit > ./audit.log || true
@@ -57,7 +57,7 @@ jobs:
         with:
           version: ${{ env.PNPM_VERSION }}
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
       - name: Build
         run: pnpm run build
       - name: Launch server
