@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .input {
+    @apply bg-white bg-opacity-10 rounded px-2 py-1;
+  }
+}
