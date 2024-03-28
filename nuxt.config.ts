@@ -12,7 +12,7 @@ export default defineNuxtConfig({
         lang: "en-US",
       },
     },
-    baseURL: "/nice-resume/",
+    baseURL: "/",
   },
   typescript: {
     typeCheck: true,
