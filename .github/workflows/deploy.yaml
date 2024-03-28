@@ -12,6 +12,7 @@ env:
 
 jobs:
   build:
+    timeout-minutes: 5
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -29,7 +30,11 @@ jobs:
           echo "Pnpm version: $(pnpm --version) (aiming: ${{ env.PNPM_VERSION }})"
           echo "Git version: $(git --version)"
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
+      - name: "Configure baseUrl to work on Github Pages"
+        run: |
+          sed -i "s|baseURL: \"/\"|baseURL: \"/nice-resume/\"|g" nuxt.config.ts
+          cat nuxt.config.ts
       - name: Build
         run: pnpm run build --preset github_pages
       - name: Upload artifact
@@ -38,6 +43,7 @@ jobs:
           path: ./.output/public
 
   deploy:
+    timeout-minutes: 5
     needs: build
     # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
     permissions:
