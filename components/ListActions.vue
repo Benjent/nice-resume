@@ -5,7 +5,11 @@ import {
   XCircleIcon,
 } from "@heroicons/vue/24/outline";
 
-defineProps<{ index: number; listLength: number }>();
+const { index, listLength } = defineProps<{
+  index: number;
+  listLength: number;
+}>();
+defineEmits(["moveDown", "moveUp", "remove"]);
 </script>
 
 <template>

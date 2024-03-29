@@ -15,21 +15,16 @@ const { zoomLevel } = storeToRefs(useEditorStore());
 const {
   about,
   address,
+  categories,
   drivingLicense,
-  education,
-  educationLabel,
   email,
-  gitHub,
-  linkedIn,
+  // gitHub,
+  // linkedIn,
   name,
   phone,
-  skills,
-  skillsLabel,
   template,
   title,
-  website,
-  workExperience,
-  workExperienceLabel,
+  // website,
 } = storeToRefs(useResumeStore());
 
 const isImportError = ref(false);
@@ -41,19 +36,14 @@ function exportToJson() {
     about: about.value,
     address: address.value,
     drivingLicense: drivingLicense.value,
-    education: education.value,
-    educationLabel: educationLabel.value,
     email: email.value,
-    gitHub: gitHub.value,
-    linkedIn: linkedIn.value,
+    // gitHub: gitHub.value,
+    // linkedIn: linkedIn.value,
     name: name.value,
     phone: phone.value,
-    skills: skills.value,
-    skillsLabel: skillsLabel.value,
     title: title.value,
-    website: website.value,
-    workExperience: workExperience.value,
-    workExperienceLabel: workExperienceLabel.value,
+    // website: website.value,
+    categories: categories.value,
   };
 
   download(resume, "nice-resume");
@@ -79,22 +69,18 @@ function importFromJson(event: Event) {
         return;
       }
 
+      template.value = resume.template;
       about.value = resume.about;
       address.value = resume.address;
+      categories.value = resume.categories;
       drivingLicense.value = resume.drivingLicense;
-      education.value = resume.education;
-      educationLabel.value = resume.educationLabel;
       email.value = resume.email;
-      gitHub.value = resume.gitHub;
-      linkedIn.value = resume.linkedIn;
+      // gitHub.value = resume.gitHub;
+      // linkedIn.value = resume.linkedIn;
       name.value = resume.name;
       phone.value = resume.phone;
-      skills.value = resume.skills;
-      skillsLabel.value = resume.skillsLabel;
       title.value = resume.title;
-      website.value = resume.website;
-      workExperience.value = resume.workExperience;
-      workExperienceLabel.value = resume.workExperienceLabel;
+      // website.value = resume.website;
     };
     fileReader.onerror = function () {
       isImportError.value = true;
@@ -122,7 +108,8 @@ function importFromJson(event: Event) {
           for="editorFileReader"
           class="text-blue-500 flex items-center gap-1 cursor-pointer"
         >
-          <ArrowUpOnSquareIcon class="h-6" />Import
+          <ArrowUpOnSquareIcon class="h-6" />
+          Import
           <input
             id="editorFileReader"
             class="hidden"
@@ -139,17 +126,22 @@ function importFromJson(event: Event) {
         class="text-blue-500 flex items-center gap-1"
         @click="exportToJson"
       >
-        <ArrowDownOnSquareIcon class="h-6" />Export
+        <ArrowDownOnSquareIcon class="h-6" />
+        Export
       </button>
 
-      <label for="editorTemplateSelector">
+      <label for="template">
         Template
         <select
-          id="editorTemplateSelector"
+          id="template"
           v-model="template"
-          class="bg-white cursor-pointer text-blue-500 block"
+          class="cursor-pointer bg-transparent text-blue-500 block"
         >
-          <option v-for="template in templates" :key="template">
+          <option
+            v-for="template in templates"
+            :key="template"
+            class="bg-white"
+          >
             {{ template }}
           </option>
         </select>
