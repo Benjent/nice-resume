@@ -131,73 +131,37 @@ function getExperienceOrganizationLabel(experience: Experience) {
       <template v-slot:header>Details</template>
       <div class="flex flex-col gap-5">
         <div class="flex justify-center gap-5 flex-wrap">
-          <label class="flex flex-col flex-1" for="editorPersonalDetailsName">
+          <label class="flex flex-col flex-1" for="detailsName">
             Name
-            <input
-              id="editorPersonalDetailsName"
-              class="input"
-              v-model="name"
-            />
+            <input id="detailsName" class="input" v-model="name" />
           </label>
-          <label class="flex flex-col flex-1" for="editorPersonalDetailsTitle">
+          <label class="flex flex-col flex-1" for="detailsTitle">
             Title
-            <input
-              id="editorPersonalDetailsTitle"
-              class="input"
-              v-model="title"
-            />
+            <input id="detailsTitle" class="input" v-model="title" />
           </label>
         </div>
-        <label class="flex flex-col" for="editorAbout">
+        <label class="flex flex-col" for="detailsAbout">
           About
-          <textarea id="editorAbout" class="input" v-model="about" />
+          <textarea id="detailsAbout" class="input" v-model="about" />
         </label>
         <div class="flex justify-center gap-5 flex-wrap">
-          <label
-            class="flex flex-col flex-[60%]"
-            for="editorPersonalDetailsEmail"
-          >
+          <label class="flex flex-col flex-[60%]" for="detailsEmail">
             Email
-            <input
-              id="editorPersonalDetailsEmail"
-              class="input"
-              v-model="email"
-            />
+            <input id="detailsEmail" class="input" v-model="email" />
           </label>
-          <label
-            class="flex flex-col flex-[40%]"
-            for="editorPersonalDetailsPhone"
-          >
+          <label class="flex flex-col flex-[40%]" for="detailsPhone">
             Phone
-            <input
-              id="editorPersonalDetailsPhone"
-              class="input"
-              v-model="phone"
-            />
+            <input id="detailsPhone" class="input" v-model="phone" />
           </label>
         </div>
         <div class="flex justify-center gap-5 flex-wrap">
-          <label
-            class="flex flex-col flex-[80%]"
-            for="editorPersonalDetailsAddress"
-          >
+          <label class="flex flex-col flex-[80%]" for="detailsAddress">
             Address
-            <input
-              id="editorPersonalDetailsAddress"
-              class="input"
-              v-model="address"
-            />
+            <input id="detailsAddress" class="input" v-model="address" />
           </label>
-          <label
-            class="flex flex-col flex-[20%]"
-            for="editorPersonalDetailsDriving"
-          >
+          <label class="flex flex-col flex-[20%]" for="detailsDriving">
             Driving license
-            <input
-              id="editorPersonalDetailsDriving"
-              class="input"
-              v-model="drivingLicense"
-            />
+            <input id="detailsDriving" class="input" v-model="drivingLicense" />
           </label>
         </div>
         <label class="flex flex-col" for="highlights">
