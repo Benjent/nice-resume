@@ -18,7 +18,7 @@ export interface Details {
   email: string;
   phone: string;
   drivingLicense: string;
-  links: Array<Link>;
+  socialLinks: Array<Link>;
 }
 
 export interface Entry {
@@ -50,6 +50,8 @@ export interface Category {
   layout: "aside" | "full" | "half";
 }
 
-export interface Resume {
+export interface Resume extends Details {
+  isNiceResumeExport: boolean;
+  template: Template;
   categories: Array<Category>;
 }

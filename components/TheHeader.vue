@@ -9,6 +9,7 @@ import { useEditorStore } from "@/stores/editor";
 import { useResumeStore } from "@/stores/resume";
 import { templates } from "@/globals";
 import { download } from "@/utils/file";
+import type { Resume } from "@/types";
 
 const { zoomLevel } = storeToRefs(useEditorStore());
 
@@ -18,32 +19,28 @@ const {
   categories,
   drivingLicense,
   email,
-  // gitHub,
-  // linkedIn,
   name,
   phone,
+  socialLinks,
   template,
   title,
-  // website,
 } = storeToRefs(useResumeStore());
 
 const isImportError = ref(false);
 
 function exportToJson() {
-  const resume = {
+  const resume: Resume = {
     isNiceResumeExport: true,
     template: template.value,
     about: about.value,
     address: address.value,
+    categories: categories.value,
     drivingLicense: drivingLicense.value,
     email: email.value,
-    // gitHub: gitHub.value,
-    // linkedIn: linkedIn.value,
     name: name.value,
     phone: phone.value,
+    socialLinks: socialLinks.value,
     title: title.value,
-    // website: website.value,
-    categories: categories.value,
   };
 
   download(resume, "nice-resume");
@@ -52,7 +49,7 @@ function exportToJson() {
 function importFromJson(event: Event) {
   isImportError.value = false;
   try {
-    // @ts-expect-error It seems like TS does nos not have the files property attached to the Event type.
+    // @ts-expect-error TODO solve It seems like TS does nos not have the files property attached to the Event type.
     const file = event.target.files[0];
 
     const fileReader = new FileReader();
@@ -75,12 +72,10 @@ function importFromJson(event: Event) {
       categories.value = resume.categories;
       drivingLicense.value = resume.drivingLicense;
       email.value = resume.email;
-      // gitHub.value = resume.gitHub;
-      // linkedIn.value = resume.linkedIn;
       name.value = resume.name;
       phone.value = resume.phone;
+      socialLinks.value = resume.socialLinks;
       title.value = resume.title;
-      // website.value = resume.website;
     };
     fileReader.onerror = function () {
       isImportError.value = true;
