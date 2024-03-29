@@ -15,10 +15,6 @@ export const useResumeStore = defineStore("resume", () => {
   const phone = ref("");
   const drivingLicense = ref("");
 
-  const linkedIn = ref("");
-  const gitHub = ref("");
-  const website = ref("");
-
   const socialLinks = ref<Link[]>([]);
   const categories = ref<Category[]>([]);
 
@@ -28,13 +24,10 @@ export const useResumeStore = defineStore("resume", () => {
     categories,
     drivingLicense,
     email,
-    gitHub,
-    linkedIn,
     name,
     phone,
     socialLinks,
     template,
     title,
-    website,
   };
 });
