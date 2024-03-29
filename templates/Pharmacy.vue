@@ -125,7 +125,7 @@ const {
           </ul>
         </div>
       </aside>
-      <div class="grid grid-cols-2 gap-x-8 gap-y-12">
+      <div class="grid grid-cols-2 gap-x-8 gap-y-12 flex-1">
         <section
           v-for="(category, index) in categories.filter(
             (category) => category.layout !== 'aside',

@@ -105,7 +105,7 @@ const contact = computed(() =>
         </div>
       </aside>
 
-      <div class="grid grid-cols-2 gap-8">
+      <div class="grid grid-cols-2 gap-8 flex-1">
         <section
           v-for="(category, index) in categories.filter(
             (category) => category.layout !== 'aside',
