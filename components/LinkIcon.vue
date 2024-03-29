@@ -9,7 +9,7 @@ const { icon } = defineProps<{
 }>();
 
 type IconMapper = {
-  [K in Link["icon"]]: Component;
+  [K in Link["icon"] as string]: Component;
 };
 
 const iconMapper: IconMapper = {
@@ -18,7 +18,7 @@ const iconMapper: IconMapper = {
   linkedIn: LinkedInIcon,
 };
 
-const component: Component = computed(() => iconMapper[icon]);
+const component: Component = computed(() => (icon ? iconMapper[icon] : null));
 </script>
 
 <template>
