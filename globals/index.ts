@@ -73,6 +73,8 @@ export const experienceTypes: Array<Experience["type"]> = [
   "work",
 ];
 
+export const socialIcons: Array<Link["url"]> = ["gitHub", "linkedIn"];
+
 export const categoryTypes: Array<Category["type"]> = [
   "education",
   "project",
