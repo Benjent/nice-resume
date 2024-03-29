@@ -109,7 +109,7 @@ const {
           </ul>
         </div>
       </aside>
-      <div class="grid grid-cols-2 gap-8">
+      <div class="grid grid-cols-2 gap-8 flex-1">
         <section
           v-for="(category, categoryIndex) in categories.filter(
             (category) => category.layout !== 'aside',
