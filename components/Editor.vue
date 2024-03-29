@@ -10,12 +10,13 @@ import { type Category, type Experience } from "@/types";
 import { moveDown, moveUp, remove } from "@/utils/array";
 import EditorCategory from "./EditorCategory.vue";
 import ListActions from "./ListActions.vue";
-import type { Asset, Entry } from "@/types";
+import type { Asset, Entry, Link } from "@/types";
 import {
   assetTypes,
   categoryTypes,
   categoryLayouts,
   experienceTypes,
+  socialIcons,
 } from "@/globals";
 
 const {
@@ -24,12 +25,10 @@ const {
   categories,
   drivingLicense,
   email,
-  // gitHub,
-  // linkedIn,
   name,
   phone,
+  socialLinks,
   title,
-  // website,
 } = storeToRefs(useResumeStore());
 
 const types = ref<Category["type"][]>(categoryTypes);
@@ -74,9 +73,22 @@ function addEntry(category: Category) {
   }
 }
 
+function addSocialLink() {
+  const link: Link = {
+    icon: null,
+    url: "",
+  };
+
+  socialLinks.value.push(link);
+}
+
+function changeSocialLinkIcon(link: Link, value: Link["icon"]) {
+  link.icon = value;
+}
+
 function changeCategoryType(category: Category, value: Category["type"]) {
   category.type = value;
-  // @ts-expect-error aaa
+  // @ts-expect-error TODO which error?
   category.nature = assetTypes.includes(value) ? "asset" : "experience";
   category.entries = []; // Prevent inconsistency between previous and new entry types
 }
@@ -188,30 +200,57 @@ function getExperienceOrganizationLabel(experience: Experience) {
             />
           </label>
         </div>
-        <!-- <label class="flex flex-col" for="editorPersonalDetailsLinkedin">
-          LinkedIn
-          <input
-            id="editorPersonalDetailsLinkedin"
-            class="input"
-            v-model="linkedIn"
-          />
-        </label> -->
-        <!-- <label class="flex flex-col" for="editorPersonalDetailsGithub">
-          GitHub
-          <input
-            id="editorPersonalDetailsGithub"
-            class="input"
-            v-model="gitHub"
-          />
-        </label> -->
-        <!-- <label class="flex flex-col" for="editorPersonalDetailsWebsite">
-          Website
-          <input
-            id="editorPersonalDetailsWebsite"
-            class="input"
-            v-model="website"
-          />
-        </label> -->
+        <label class="flex flex-col" for="highlights">
+          <div class="flex gap-2">
+            Social links
+            <button
+              id="links"
+              title="Add task"
+              class="text-white size-6"
+              @click="addSocialLink"
+            >
+              <PlusCircleIcon class="size-full" />
+            </button>
+          </div>
+          <ul class="flex flex-col gap-2">
+            <li
+              v-for="(link, linkIndex) in socialLinks"
+              :key="linkIndex"
+              class="flex items-center gap-2"
+            >
+              <input
+                class="bg-white bg-opacity-10 rounded px-2 py-1 flex-1"
+                v-model="socialLinks[linkIndex].url"
+              />
+              <label for="linkIcon">
+                Icon
+                <select
+                  id="linkIcon"
+                  :value="link.icon"
+                  @change="changeSocialLinkIcon(link, $event.target?.value)"
+                  class="cursor-pointer bg-transparent text-white block capitalize"
+                >
+                  <!-- <option value="">None</option> -->
+                  <option value="default">Default</option>
+                  <option
+                    v-for="icon in socialIcons"
+                    :key="icon"
+                    class="text-blue-500 capitalize"
+                  >
+                    {{ icon }}
+                  </option>
+                </select>
+              </label>
+              <button
+                title="Remove"
+                class="text-white size-6"
+                @click="remove(socialLinks, linkIndex)"
+              >
+                <XCircleIcon class="size-full" />
+              </button>
+            </li>
+          </ul>
+        </label>
       </div>
     </EditorCategory>
     <EditorCategory

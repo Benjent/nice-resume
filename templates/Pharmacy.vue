@@ -3,13 +3,11 @@ import { storeToRefs } from "pinia";
 import {
   EnvelopeIcon,
   IdentificationIcon,
-  LinkIcon,
   MapPinIcon,
   PhoneIcon,
 } from "@heroicons/vue/16/solid";
-import GitHubIcon from "@/assets/images/icons/github.svg";
-import LinkedInIcon from "@/assets/images/icons/linkedin.svg";
 import { useResumeStore } from "@/stores/resume";
+import LinkIcon from "../components/LinkIcon.vue";
 
 const {
   about,
@@ -17,12 +15,10 @@ const {
   categories,
   drivingLicense,
   email,
-  gitHub,
-  linkedIn,
   name,
   phone,
+  socialLinks,
   title,
-  website,
 } = storeToRefs(useResumeStore());
 </script>
 
@@ -56,18 +52,16 @@ const {
           {{ drivingLicense }}
           <IdentificationIcon class="w-4" />
         </div>
-        <div v-if="website" class="flex gap-1 items-center">
-          {{ website }}
-          <LinkIcon class="w-4" />
-        </div>
-        <div v-if="linkedIn" class="flex gap-1 items-center">
-          {{ linkedIn }}
-          <LinkedInIcon />
-        </div>
-        <div v-if="gitHub" class="flex gap-1 items-center">
-          {{ gitHub }}
-          <GitHubIcon />
-        </div>
+        <ul>
+          <li
+            v-for="link in socialLinks"
+            :key="link.url"
+            class="flex gap-1 items-center"
+          >
+            {{ link.url }}
+            <LinkIcon v-if="link.icon" :icon="link.icon" class="w-4" />
+          </li>
+        </ul>
       </div>
     </header>
 

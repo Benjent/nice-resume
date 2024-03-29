@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { storeToRefs } from "pinia";
-import { LinkIcon } from "@heroicons/vue/16/solid";
-import { useResumeStore } from "@/stores/resume";
-import GitHubIcon from "@/assets/images/icons/github.svg";
-import LinkedInIcon from "@/assets/images/icons/linkedin.svg";
 import { computed } from "vue";
-import type { Category } from "~/types";
+import { storeToRefs } from "pinia";
+import { useResumeStore } from "@/stores/resume";
+import type { Category } from "@/types";
+import LinkIcon from "../components/LinkIcon.vue";
 
 const {
   about,
@@ -13,12 +11,10 @@ const {
   categories,
   drivingLicense,
   email,
-  gitHub,
-  linkedIn,
   name,
   phone,
+  socialLinks,
   title,
-  website,
 } = storeToRefs(useResumeStore());
 
 const mainCategories = computed(() => {
@@ -69,8 +65,7 @@ function getSectionCategory(indexToGetFrom: number) {
           class="flex flex-col place-items-center w-fit border-y-4 border-[#ed3660] py-2 px-4"
         >
           <h1 v-if="name" class="text-center uppercase text-4xl">
-            {{ name }}{{ firstSectionCategories.length
-            }}{{ secondSectionCategories.length }}
+            {{ name }}
           </h1>
           <h2 v-if="title" class="text-center uppercase text-2xl">
             {{ title }}
@@ -86,20 +81,16 @@ function getSectionCategory(indexToGetFrom: number) {
             <div v-if="email">{{ email }}</div>
             <div v-if="phone">{{ phone }}</div>
           </div>
-          <div class="leading-tight">
-            <div v-if="website" class="flex gap-1">
-              <LinkIcon class="w-4" />
-              {{ website }}
-            </div>
-            <div v-if="linkedIn" class="flex gap-1 items-center">
-              <LinkedInIcon />
-              {{ linkedIn }}
-            </div>
-            <div v-if="gitHub" class="flex gap-1 items-center">
-              <GitHubIcon />
-              {{ gitHub }}
-            </div>
-          </div>
+          <ul class="leading-tight">
+            <li
+              v-for="link in socialLinks"
+              :key="link.url"
+              class="flex gap-1 items-center"
+            >
+              <LinkIcon v-if="link.icon" :icon="link.icon" class="w-4" />
+              {{ link.url }}
+            </li>
+          </ul>
         </div>
       </header>
 
