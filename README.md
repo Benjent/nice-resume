@@ -16,7 +16,7 @@ This is a [Nuxt](https://nuxt.com/) project bootstrapped with Nuxi.
 - [Vue](https://vuejs.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Heroicons](https://heroicons.com/)
-- [Simple Icons](https://simpleicons.org/) (for brand icons)
+- [Simple Icons](https://simpleicons.org/) (for brand icons) through [Vue3 Simple Icons](https://vue3-simple-icons.wyatt-herkamp.dev/)
 
 ## Prerequisites
 
@@ -51,6 +51,10 @@ pnpm run preview
 4. Add the name in the templateMapper in `/components/Preview.vue`
 
 Make sure the above steps rely on the same template name.
+
+## Use a template
+
+Templates offer an aside section on the left and a main section on the right that can be split into two columns. Select _Aside_, _Full_ or _Half_ to place content accordingly.
 
 ## Docker
 

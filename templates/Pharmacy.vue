@@ -14,20 +14,15 @@ import { useResumeStore } from "@/stores/resume";
 const {
   about,
   address,
+  categories,
   drivingLicense,
-  education,
-  educationLabel,
   email,
   gitHub,
   linkedIn,
   name,
   phone,
-  skills,
-  skillsLabel,
   title,
   website,
-  workExperience,
-  workExperienceLabel,
 } = storeToRefs(useResumeStore());
 </script>
 
@@ -46,25 +41,32 @@ const {
         class="flex flex-col gap-1 text-xs items-end border-r-2 border-cyan-500 pr-6"
       >
         <div v-if="email" class="flex gap-1 items-center">
-          {{ email }}<EnvelopeIcon class="w-4" />
+          {{ email }}
+          <EnvelopeIcon class="w-4" />
         </div>
         <div v-if="phone" class="flex gap-1 items-center">
-          {{ phone }}<PhoneIcon class="w-4" />
+          {{ phone }}
+          <PhoneIcon class="w-4" />
         </div>
         <div v-if="address" class="flex gap-1 items-center">
-          {{ address }}<MapPinIcon class="w-4" />
+          {{ address }}
+          <MapPinIcon class="w-4" />
         </div>
         <div v-if="drivingLicense" class="flex gap-1 items-center">
-          {{ drivingLicense }}<IdentificationIcon class="w-4" />
+          {{ drivingLicense }}
+          <IdentificationIcon class="w-4" />
         </div>
         <div v-if="website" class="flex gap-1 items-center">
-          {{ website }}<LinkIcon class="w-4" />
+          {{ website }}
+          <LinkIcon class="w-4" />
         </div>
         <div v-if="linkedIn" class="flex gap-1 items-center">
-          {{ linkedIn }}<LinkedInIcon />
+          {{ linkedIn }}
+          <LinkedInIcon />
         </div>
         <div v-if="gitHub" class="flex gap-1 items-center">
-          {{ gitHub }}<GitHubIcon />
+          {{ gitHub }}
+          <GitHubIcon />
         </div>
       </div>
     </header>
@@ -78,72 +80,124 @@ const {
       </p>
     </div>
 
-    <div class="grid grid-cols-2 gap-8">
-      <section v-if="workExperience.length">
-        <h3 class="mb-2 text-lg uppercase font-bold tracking-widest">
-          {{ workExperienceLabel }}
-        </h3>
-        <ul class="flex flex-col gap-4 text-sm border-l-4 border-cyan-500 pl-4">
-          <li v-for="(job, jobIndex) in workExperience" :key="jobIndex">
-            <div class="relative">
-              <span
-                class="text-cyan-500 relative before:content-[''] before:absolute before:inline-block before:size-4 before:-left-[1.625rem] before:top-2 before:bg-slate-400 before:rounded-full"
-                >{{ job.period }}</span
-              >&nbsp;: {{ job.position }}
-            </div>
-            <div class="text-cyan-500">
-              {{ job.company }} {{ job.location }}
-            </div>
-            <div>
-              <p class="text-xs text-slate-400">{{ job.description }}</p>
+    <div class="flex gap-12">
+      <aside
+        v-if="categories.some((category) => category.layout === 'aside')"
+        class="w-[20%] flex flex-col gap-8"
+      >
+        <div
+          v-for="(category, index) in categories.filter(
+            (category) => category.layout === 'aside',
+          )"
+          :key="index"
+        >
+          <h3 class="mb-2 text-lg uppercase font-bold tracking-widest">
+            {{ category.name }}
+          </h3>
+          <ul class="flex flex-col gap-2 text-sm">
+            <li
+              v-for="(entry, entryIndex) in category.entries"
+              :key="entryIndex"
+            >
+              <div class="text-cyan-500">
+                {{ entry.title }}
+              </div>
+              <template v-if="entry.nature === 'experience'">
+                <div>{{ entry.startDate }} - {{ entry.endDate }}</div>
+                <div class="text-cyan-500">
+                  {{ entry.organization }} {{ entry.location }}
+                </div>
+                <div>
+                  <p class="text-xs text-slate-400">{{ entry.summary }}</p>
+                  <ul class="list-disc list-inside ml-1 text-xs text-slate-600">
+                    <li
+                      v-for="(highlight, highlightIndex) in entry.highlights"
+                      :key="highlightIndex"
+                    >
+                      {{ highlight }}
+                    </li>
+                  </ul>
+                </div>
+              </template>
               <ul class="list-disc list-inside ml-1 text-xs text-slate-600">
-                <li v-for="(task, taskIndex) in job.tasks" :key="taskIndex">
-                  {{ task }}
+                <li
+                  v-for="(highlight, highlightIndex) in entry.highlights"
+                  :key="highlightIndex"
+                >
+                  {{ highlight }}
                 </li>
               </ul>
-            </div>
-          </li>
-        </ul>
-      </section>
-      <section v-if="education.length">
-        <h3 class="mb-2 text-lg uppercase font-bold tracking-widest">
-          {{ educationLabel }}
-        </h3>
-        <ul class="flex flex-col gap-4 text-sm border-l-4 border-cyan-500 pl-4">
-          <li
-            v-for="(training, trainingIndex) in education"
-            :key="trainingIndex"
-          >
-            <div class="relative">
-              <span
-                class="text-cyan-500 before:content-[''] before:absolute before:inline-block before:size-4 before:-left-[1.625rem] before:top-2 before:bg-slate-400 before:rounded-full"
-                >{{ training.period }}</span
-              >&nbsp;: {{ training.diploma }}
-            </div>
-            <div class="text-cyan-500">
-              {{ training.institution }} {{ training.location }}
-            </div>
-            <p class="text-xs text-slate-400">{{ training.description }}</p>
-          </li>
-        </ul>
-      </section>
-    </div>
-
-    <section v-if="skills.length" class="mt-12">
-      <h3 class="mb-2 text-lg uppercase font-bold tracking-widest">
-        {{ skillsLabel }}
-      </h3>
-      <ul class="flex flex-col text-sm">
-        <li
-          v-for="(skill, skillIndex) in skills"
-          :key="skillIndex"
-          class="flex gap-2 items-baseline"
+            </li>
+          </ul>
+        </div>
+      </aside>
+      <div class="grid grid-cols-2 gap-x-8 gap-y-12">
+        <section
+          v-for="(category, index) in categories.filter(
+            (category) => category.layout !== 'aside',
+          )"
+          :key="index"
+          :class="category.layout === 'half' ? 'col-span-1' : 'col-span-2'"
         >
-          <span class="text-cyan-500">{{ skill.name }}</span
-          ><span v-if="skill.level">{{ skill.level }}</span>
-        </li>
-      </ul>
-    </section>
+          <h3 class="mb-2 text-lg uppercase font-bold tracking-widest">
+            {{ category.name }}
+          </h3>
+          <ul v-if="category.nature === 'asset'" class="flex gap-8 text-sm">
+            <li
+              v-for="(entry, entryIndex) in category.entries"
+              :key="entryIndex"
+              class=""
+            >
+              <div class="text-cyan-500" v-if="entry.nature === 'asset'">
+                {{ entry.title }}
+              </div>
+              <ul class="list-disc list-inside ml-1 text-xs text-slate-600">
+                <li
+                  v-for="(highlight, highlightIndex) in entry.highlights"
+                  :key="highlightIndex"
+                >
+                  {{ highlight }}
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <ul
+            v-else
+            class="flex flex-col gap-4 text-sm border-l-4 border-cyan-500 pl-4"
+          >
+            <li
+              v-for="(entry, entryIndex) in category.entries"
+              :key="entryIndex"
+            >
+              <template v-if="entry.nature === 'experience'">
+                <div class="relative">
+                  <span
+                    class="text-cyan-500 relative before:content-[''] before:absolute before:inline-block before:size-4 before:-left-[1.625rem] before:top-2 before:bg-slate-400 before:rounded-full"
+                  >
+                    {{ entry.startDate }} - {{ entry.endDate }}
+                  </span>
+                  &nbsp;: {{ entry.title }}
+                </div>
+                <div class="text-cyan-500">
+                  {{ entry.organization }} {{ entry.location }}
+                </div>
+                <div>
+                  <p class="text-xs text-slate-400">{{ entry.summary }}</p>
+                  <ul class="list-disc list-inside ml-1 text-xs text-slate-600">
+                    <li
+                      v-for="(highlight, highlightIndex) in entry.highlights"
+                      :key="highlightIndex"
+                    >
+                      {{ highlight }}
+                    </li>
+                  </ul>
+                </div>
+              </template>
+            </li>
+          </ul>
+        </section>
+      </div>
+    </div>
   </div>
 </template>
 

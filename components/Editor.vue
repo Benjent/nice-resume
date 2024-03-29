@@ -1,77 +1,129 @@
 <script setup lang="ts">
+// @ts-expect-error TODO set up type of htmlevent
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+import { ref } from "vue";
 import { storeToRefs } from "pinia";
 import { PlusCircleIcon, XCircleIcon } from "@heroicons/vue/24/outline";
 import { useResumeStore } from "@/stores/resume";
-import { type Education, type Skill, type WorkExperience } from "@/types";
+import { type Category, type Experience } from "@/types";
 import { moveDown, moveUp, remove } from "@/utils/array";
-import Category from "./Category.vue";
+import EditorCategory from "./EditorCategory.vue";
 import ListActions from "./ListActions.vue";
+import type { Asset, Entry } from "@/types";
+import {
+  assetTypes,
+  categoryTypes,
+  categoryLayouts,
+  experienceTypes,
+} from "@/globals";
 
 const {
   about,
   address,
+  categories,
   drivingLicense,
-  education,
-  educationLabel,
   email,
-  gitHub,
-  linkedIn,
+  // gitHub,
+  // linkedIn,
   name,
   phone,
-  skills,
-  skillsLabel,
   title,
-  website,
-  workExperience,
-  workExperienceLabel,
+  // website,
 } = storeToRefs(useResumeStore());
 
-function addJob() {
-  const experience: WorkExperience = {
-    position: "",
-    company: "",
-    period: "",
-    location: "",
-    description: "",
-    tasks: [],
+const types = ref<Category["type"][]>(categoryTypes);
+const layouts = ref<Category["layout"][]>(categoryLayouts);
+
+function addCategory() {
+  const category: Category = {
+    nature: "experience",
+    type: "work",
+    name: "Name",
+    entries: [],
+    layout: "full",
   };
 
-  workExperience.value.push(experience);
+  categories.value.push(category);
 }
 
-function addTraining() {
-  const training: Education = {
-    diploma: "",
-    institution: "",
-    period: "",
-    location: "",
-    description: "",
-  };
+function addEntry(category: Category) {
+  if (category.nature === "asset") {
+    const asset: Asset = {
+      nature: "asset",
+      type: assetTypes.find((type) => category.type === type) || "skill",
+      title: "",
+      highlights: [],
+    };
 
-  education.value.push(training);
+    category.entries.push(asset);
+  } else {
+    const experience: Experience = {
+      nature: "experience",
+      type: experienceTypes.find((type) => category.type === type) || "work",
+      title: "",
+      organization: "",
+      startDate: "",
+      endDate: "",
+      location: "",
+      summary: "",
+      highlights: [],
+    };
+
+    category.entries.push(experience);
+  }
 }
 
-function addSkill() {
-  const skill: Skill = {
-    name: "",
-    level: "",
-  };
+function changeCategoryType(category: Category, value: Category["type"]) {
+  category.type = value;
+  // @ts-expect-error aaa
+  category.nature = assetTypes.includes(value) ? "asset" : "experience";
+  category.entries = []; // Prevent inconsistency between previous and new entry types
+}
 
-  skills.value.push(skill);
+function changeCategoryLayout(category: Category, value: Category["layout"]) {
+  category.layout = value;
+}
+
+function getEntryTitleLabel(entry: Entry) {
+  switch (entry.type) {
+    case "education":
+      return "Diploma";
+    case "project":
+    case "voluntary":
+    case "work":
+      return "Position";
+    case "language":
+      return "Language";
+    default:
+      return "Title";
+  }
+}
+
+function getExperienceOrganizationLabel(experience: Experience) {
+  switch (experience.type) {
+    case "work":
+      return "Company";
+    case "education":
+      return "Institution";
+    case "project":
+    case "voluntary":
+      return "Organization";
+  }
 }
 </script>
 
 <template>
   <main class="flex flex-col overflow-y-auto text-white">
-    <Category class="w-full">
-      <template v-slot:header>Personal details</template>
+    <EditorCategory class="w-full">
+      <template v-slot:header>Details</template>
       <div class="flex flex-col gap-5">
         <div class="flex justify-center gap-5 flex-wrap">
           <label class="flex flex-col flex-1" for="editorPersonalDetailsName">
             Name
             <input
               id="editorPersonalDetailsName"
-              class="bg-white bg-opacity-10 rounded px-2 py-1"
+              class="input"
               v-model="name"
             />
           </label>
@@ -79,18 +131,14 @@ function addSkill() {
             Title
             <input
               id="editorPersonalDetailsTitle"
-              class="bg-white bg-opacity-10 rounded px-2 py-1"
+              class="input"
               v-model="title"
             />
           </label>
         </div>
         <label class="flex flex-col" for="editorAbout">
           About
-          <textarea
-            id="editorAbout"
-            class="bg-white bg-opacity-10 rounded px-2 py-1"
-            v-model="about"
-          />
+          <textarea id="editorAbout" class="input" v-model="about" />
         </label>
         <div class="flex justify-center gap-5 flex-wrap">
           <label
@@ -100,7 +148,7 @@ function addSkill() {
             Email
             <input
               id="editorPersonalDetailsEmail"
-              class="bg-white bg-opacity-10 rounded px-2 py-1"
+              class="input"
               v-model="email"
             />
           </label>
@@ -111,7 +159,7 @@ function addSkill() {
             Phone
             <input
               id="editorPersonalDetailsPhone"
-              class="bg-white bg-opacity-10 rounded px-2 py-1"
+              class="input"
               v-model="phone"
             />
           </label>
@@ -124,7 +172,7 @@ function addSkill() {
             Address
             <input
               id="editorPersonalDetailsAddress"
-              class="bg-white bg-opacity-10 rounded px-2 py-1"
+              class="input"
               v-model="address"
             />
           </label>
@@ -135,126 +183,162 @@ function addSkill() {
             Driving license
             <input
               id="editorPersonalDetailsDriving"
-              class="bg-white bg-opacity-10 rounded px-2 py-1"
+              class="input"
               v-model="drivingLicense"
             />
           </label>
         </div>
-        <label class="flex flex-col" for="editorPersonalDetailsLinkedin">
+        <!-- <label class="flex flex-col" for="editorPersonalDetailsLinkedin">
           LinkedIn
           <input
             id="editorPersonalDetailsLinkedin"
-            class="bg-white bg-opacity-10 rounded px-2 py-1"
+            class="input"
             v-model="linkedIn"
           />
-        </label>
-        <label class="flex flex-col" for="editorPersonalDetailsGithub">
+        </label> -->
+        <!-- <label class="flex flex-col" for="editorPersonalDetailsGithub">
           GitHub
           <input
             id="editorPersonalDetailsGithub"
-            class="bg-white bg-opacity-10 rounded px-2 py-1"
+            class="input"
             v-model="gitHub"
           />
-        </label>
-        <label class="flex flex-col" for="editorPersonalDetailsWebsite">
+        </label> -->
+        <!-- <label class="flex flex-col" for="editorPersonalDetailsWebsite">
           Website
           <input
             id="editorPersonalDetailsWebsite"
-            class="bg-white bg-opacity-10 rounded px-2 py-1"
+            class="input"
             v-model="website"
           />
-        </label>
+        </label> -->
       </div>
-    </Category>
-    <Category class="w-full">
+    </EditorCategory>
+    <EditorCategory
+      class="w-full"
+      v-for="(category, categoryIndex) in categories"
+      :key="categoryIndex"
+    >
       <template v-slot:header>
-        <input
-          aria-label="Work experience label"
-          class="bg-white bg-opacity-10 rounded px-2 py-1"
-          v-model="workExperienceLabel"
+        <div class="flex items-baseline gap-8">
+          <input class="input" v-model="category.name" />
+          <label for="type">
+            Type
+            <select
+              id="type"
+              :value="category.type"
+              @change="changeCategoryType(category, $event.target?.value)"
+              class="cursor-pointer bg-transparent text-white block capitalize"
+            >
+              <option
+                v-for="item in types"
+                :key="item"
+                class="text-blue-500 capitalize"
+              >
+                {{ item }}
+              </option>
+            </select>
+          </label>
+          <label for="layout">
+            Layout
+            <select
+              id="layout"
+              :value="category.layout"
+              @change="changeCategoryLayout(category, $event.target?.value)"
+              class="cursor-pointer bg-transparent text-white block capitalize"
+            >
+              <option
+                v-for="item in layouts"
+                :key="item"
+                class="text-blue-500 capitalize"
+              >
+                {{ item }}
+              </option>
+            </select>
+          </label>
+        </div>
+        <ListActions
+          class="mb-2"
+          :index="categoryIndex"
+          :list-length="categories.length"
+          @moveUp="moveUp(categories, categoryIndex)"
+          @moveDown="moveDown(categories, categoryIndex)"
+          @remove="remove(categories, categoryIndex)"
         />
       </template>
       <ul class="flex flex-col gap-10">
-        <li v-for="(job, jobIndex) in workExperience" :key="jobIndex">
+        <li v-for="(entry, entryIndex) in category.entries" :key="entryIndex">
           <ListActions
             class="mb-2"
-            :index="jobIndex"
-            :list-length="workExperience.length"
-            @moveUp="moveUp(workExperience, jobIndex)"
-            @moveDown="moveDown(workExperience, jobIndex)"
-            @remove="remove(workExperience, jobIndex)"
+            :index="entryIndex"
+            :list-length="category.entries.length"
+            @moveUp="moveUp(category.entries, entryIndex)"
+            @moveDown="moveDown(category.entries, entryIndex)"
+            @remove="remove(category.entries, entryIndex)"
           />
           <div class="flex flex-col gap-5">
-            <div class="flex justify-center gap-5 flex-wrap">
-              <label class="flex flex-col flex-1" for="editorWorkPosition">
-                Position
-                <input
-                  id="editorWorkPosition"
-                  class="bg-white bg-opacity-10 rounded px-2 py-1"
-                  v-model="job.position"
-                />
-              </label>
-              <label class="flex flex-col flex-1" for="editorWorkCompany">
-                Company
-                <input
-                  id="editorWorkCompany"
-                  class="bg-white bg-opacity-10 rounded px-2 py-1"
-                  v-model="job.company"
-                />
-              </label>
-            </div>
-            <div class="flex justify-center gap-5 flex-wrap">
-              <label class="flex flex-col flex-[30%]" for="editorWorkPeriod">
-                Period
-                <input
-                  id="editorWorkPeriod"
-                  class="bg-white bg-opacity-10 rounded px-2 py-1"
-                  v-model="job.period"
-                />
-              </label>
-              <label class="flex flex-col flex-[70%]" for="editorWorkLocation">
-                Location
-                <input
-                  id="editorWorkLocation"
-                  class="bg-white bg-opacity-10 rounded px-2 py-1"
-                  v-model="job.location"
-                />
-              </label>
-            </div>
-            <label class="flex flex-col" for="editorWorkDescription">
-              Description
-              <textarea
-                id="editorWorkDescription"
-                class="bg-white bg-opacity-10 rounded px-2 py-1"
-                v-model="job.description"
-              />
+            <label class="flex flex-col flex-1" for="title">
+              {{ getEntryTitleLabel(entry) }}
+              <input id="title" class="input" v-model="entry.title" />
             </label>
-            <label class="flex flex-col" for="editorWorkTask">
+            <template v-if="entry.nature === 'experience'">
+              <div class="flex justify-center gap-5 flex-wrap">
+                <label class="flex flex-col flex-1" for="organization">
+                  {{ getExperienceOrganizationLabel(entry) }}
+                  <input
+                    id="organization"
+                    class="input"
+                    v-model="entry.organization"
+                  />
+                </label>
+                <label class="flex flex-col flex-[20%]" for="location">
+                  Location
+                  <input id="location" class="input" v-model="entry.location" />
+                </label>
+                <label class="flex flex-col flex-[10%]" for="startDate">
+                  From
+                  <input
+                    id="startDate"
+                    class="input"
+                    v-model="entry.startDate"
+                  />
+                </label>
+                <label class="flex flex-col flex-[10%]" for="endDate">
+                  To
+                  <input id="endDate" class="input" v-model="entry.endDate" />
+                </label>
+              </div>
+              <label class="flex flex-col" for="summary">
+                Description
+                <textarea id="summary" class="input" v-model="entry.summary" />
+              </label>
+            </template>
+            <label class="flex flex-col" for="highlights">
               <div class="flex gap-2">
-                Tasks
+                Highlights
                 <button
-                  id="editorWorkTask"
+                  id="highlights"
                   title="Add task"
                   class="text-white size-6"
-                  @click="() => job.tasks.push('')"
+                  @click="() => entry.highlights.push('')"
                 >
                   <PlusCircleIcon class="size-full" />
                 </button>
               </div>
               <ul class="flex flex-col gap-2">
                 <li
-                  v-for="(_task, taskIndex) in job.tasks"
+                  v-for="(_task, taskIndex) in entry.highlights"
                   :key="taskIndex"
                   class="flex items-center gap-2"
                 >
                   <input
                     class="bg-white bg-opacity-10 rounded px-2 py-1 flex-1"
-                    v-model="job.tasks[taskIndex]"
+                    v-model="entry.highlights[taskIndex]"
                   />
                   <button
                     title="Remove"
                     class="text-white size-6"
-                    @click="remove(job.tasks, taskIndex)"
+                    @click="remove(entry.highlights, taskIndex)"
                   >
                     <XCircleIcon class="size-full" />
                   </button>
@@ -265,133 +349,19 @@ function addSkill() {
         </li>
       </ul>
       <footer class="flex justify-center mt-10">
-        <button class="text-white px-3 py-2 rounded" @click="addJob">
-          Add experience
+        <button
+          class="text-white px-3 py-2 rounded"
+          @click="addEntry(category)"
+        >
+          Add entry
         </button>
       </footer>
-    </Category>
-    <Category class="w-full">
-      <template v-slot:header>
-        <input
-          aria-label="Education label"
-          class="bg-white bg-opacity-10 rounded px-2 py-1"
-          v-model="educationLabel"
-        />
-      </template>
-      <ul class="flex flex-col gap-10">
-        <li v-for="(training, trainingIndex) in education" :key="trainingIndex">
-          <ListActions
-            class="mb-2"
-            :index="trainingIndex"
-            :list-length="education.length"
-            @moveUp="moveUp(education, trainingIndex)"
-            @moveDown="moveDown(education, trainingIndex)"
-            @remove="remove(education, trainingIndex)"
-          />
-          <div class="flex flex-col gap-5">
-            <label class="flex flex-col" for="editorEducationDiploma">
-              Diploma
-              <input
-                id="editorEducationDiploma"
-                class="bg-white bg-opacity-10 rounded px-2 py-1"
-                v-model="training.diploma"
-              />
-            </label>
-            <label class="flex flex-col" for="editorEducationInstitution">
-              Institution
-              <input
-                id="editorEducationInstitution"
-                class="bg-white bg-opacity-10 rounded px-2 py-1"
-                v-model="training.institution"
-              />
-            </label>
-            <div class="flex justify-center gap-5 flex-wrap">
-              <label
-                class="flex flex-col flex-[30%]"
-                for="editorEducationPeriod"
-              >
-                Period
-                <input
-                  id="editorEducationPeriod"
-                  class="bg-white bg-opacity-10 rounded px-2 py-1"
-                  v-model="training.period"
-                />
-              </label>
-              <label
-                class="flex flex-col flex-[70%]"
-                for="editorEducationLocation"
-              >
-                Location
-                <input
-                  id="editorEducationLocation"
-                  class="bg-white bg-opacity-10 rounded px-2 py-1"
-                  v-model="training.location"
-                />
-              </label>
-            </div>
-            <label class="flex flex-col" for="editorEducationDescription">
-              Description
-              <input
-                id="editorEducationDescription"
-                class="bg-white bg-opacity-10 rounded px-2 py-1"
-                v-model="training.description"
-              />
-            </label>
-          </div>
-        </li>
-      </ul>
-      <footer class="flex justify-center mt-10">
-        <button class="text-white px-3 py-2 rounded" @click="addTraining">
-          Add education
-        </button>
-      </footer>
-    </Category>
-    <Category class="w-full">
-      <template v-slot:header>
-        <input
-          aria-label="Skills label"
-          class="bg-white bg-opacity-10 rounded px-2 py-1"
-          v-model="skillsLabel"
-        />
-      </template>
-      <ul class="flex flex-col gap-10">
-        <li v-for="(skill, skillIndex) in skills" :key="skillIndex">
-          <ListActions
-            class="mb-2"
-            :index="skillIndex"
-            :list-length="skills.length"
-            @moveUp="moveUp(skills, skillIndex)"
-            @moveDown="moveDown(skills, skillIndex)"
-            @remove="remove(skills, skillIndex)"
-          />
+    </EditorCategory>
 
-          <div class="flex flex-col gap-5">
-            <div class="flex justify-center gap-5 flex-wrap">
-              <label class="flex flex-col flex-[80%]" for="editorSkillName">
-                Name
-                <input
-                  id="editorSkillName"
-                  class="bg-white bg-opacity-10 rounded px-2 py-1"
-                  v-model="skill.name"
-                />
-              </label>
-              <label class="flex flex-col flex-[20%]" for="editorSkillLevel">
-                Level
-                <input
-                  id="editorSkillLevel"
-                  class="bg-white bg-opacity-10 rounded px-2 py-1"
-                  v-model="skill.level"
-                />
-              </label>
-            </div>
-          </div>
-        </li>
-      </ul>
-      <footer class="flex justify-center mt-10">
-        <button class="text-white px-3 py-2 rounded" @click="addSkill">
-          Add skill
-        </button>
-      </footer>
-    </Category>
+    <footer class="flex justify-center mt-10">
+      <button class="text-white px-3 py-2 rounded" @click="addCategory">
+        Add category
+      </button>
+    </footer>
   </main>
 </template>

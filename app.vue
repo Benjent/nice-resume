@@ -17,6 +17,7 @@ const title = ref("Nice resume");
     class="flex flex-col bg-gradient-to-br from-blue-700 to-pink-500 lg:h-[calc(100svh-100px)] lg:flex-row"
   >
     <Editor class="flex-1" />
+    <!-- <div class="bg-white h:2 w-full lg:h-full lg:w-2" /> -->
     <Preview />
   </section>
 </template>
