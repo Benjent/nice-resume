@@ -19,18 +19,8 @@ import {
   socialIcons,
 } from "@/globals";
 
-const {
-  about,
-  address,
-  categories,
-  drivingLicense,
-  email,
-  name,
-  phone,
-  socialLinks,
-  template,
-  title,
-} = storeToRefs(useResumeStore());
+const { drivingLicense, email, name, phone, socialLinks, template, title } =
+  storeToRefs(useResumeStore());
 
 const types = ref<Category["type"][]>(categoryTypes);
 const layouts = ref<Category["layout"][]>(categoryLayouts);
