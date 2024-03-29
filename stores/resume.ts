@@ -1,6 +1,6 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
-import { type Category, type Template } from "@/types";
+import { type Category, type Link, type Template } from "@/types";
 import { templates } from "@/globals";
 
 export const useResumeStore = defineStore("resume", () => {
@@ -19,6 +19,7 @@ export const useResumeStore = defineStore("resume", () => {
   const gitHub = ref("");
   const website = ref("");
 
+  const socialLinks = ref<Link[]>([]);
   const categories = ref<Category[]>([]);
 
   return {
@@ -31,6 +32,7 @@ export const useResumeStore = defineStore("resume", () => {
     linkedIn,
     name,
     phone,
+    socialLinks,
     template,
     title,
     website,

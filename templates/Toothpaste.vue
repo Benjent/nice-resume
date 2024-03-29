@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { storeToRefs } from "pinia";
-import { LinkIcon } from "@heroicons/vue/16/solid";
 import { useResumeStore } from "@/stores/resume";
-import GitHubIcon from "@/assets/images/icons/github.svg";
-import LinkedInIcon from "@/assets/images/icons/linkedin.svg";
 import type { Category } from "@/types";
+import LinkIcon from "../components/LinkIcon.vue";
 
 const {
   about,
@@ -13,12 +11,10 @@ const {
   categories,
   drivingLicense,
   email,
-  gitHub,
-  linkedIn,
   name,
   phone,
+  socialLinks,
   title,
-  website,
 } = storeToRefs(useResumeStore());
 
 const mainCategories = computed(() => {
@@ -85,20 +81,16 @@ function getSectionCategory(indexToGetFrom: number) {
           <div v-if="email">{{ email }}</div>
           <div v-if="phone">{{ phone }}</div>
         </div>
-        <div class="leading-tight">
-          <div v-if="website" class="flex gap-1">
-            <LinkIcon class="w-4" />
-            {{ website }}
-          </div>
-          <div v-if="linkedIn" class="flex gap-1 items-center">
-            <LinkedInIcon />
-            {{ linkedIn }}
-          </div>
-          <div v-if="gitHub" class="flex gap-1 items-center">
-            <GitHubIcon />
-            {{ gitHub }}
-          </div>
-        </div>
+        <ul class="leading-tight">
+          <li
+            v-for="link in socialLinks"
+            :key="link.url"
+            class="flex gap-1 items-center"
+          >
+            <LinkIcon v-if="link.icon" :icon="link.icon" class="w-4" />
+            {{ link.url }}
+          </li>
+        </ul>
       </div>
       <p v-if="about" class="flex-1">
         <span class="text-3xl text-[#5662e8] leading-4">“</span>

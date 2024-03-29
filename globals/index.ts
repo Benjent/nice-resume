@@ -2,6 +2,7 @@ import {
   type Asset,
   type Category,
   type Experience,
+  type Link,
   type Template,
 } from "@/types";
 
@@ -9,9 +10,11 @@ export const templates: Array<Template> = [
   "CottonCandy",
   "OpenResume",
   "Pharmacy",
-  "Toothpaste",
   "Stone",
+  "Toothpaste",
 ];
+
+export const socialIcons: Array<Link["url"]> = ["gitHub", "linkedIn"];
 
 export const categoryTypes: Array<Category["type"]> = [
   "education",

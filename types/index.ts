@@ -6,8 +6,8 @@ export type Template =
   | "Toothpaste";
 
 export interface Link {
-  type: string; // TODO Union type of string and LinkedIn | GitHub | etc ?
-  value: string;
+  icon: "default" | "gitHub" | "linkedIn";
+  url: string;
 }
 
 export interface Details {

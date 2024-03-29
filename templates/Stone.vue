@@ -2,6 +2,7 @@
 import { computed } from "vue";
 import { storeToRefs } from "pinia";
 import { useResumeStore } from "@/stores/resume";
+import LinkIcon from "../components/LinkIcon.vue";
 
 const {
   about,
@@ -9,12 +10,10 @@ const {
   categories,
   drivingLicense,
   email,
-  gitHub,
-  linkedIn,
   name,
   phone,
+  socialLinks,
   title,
-  website,
 } = storeToRefs(useResumeStore());
 
 const location = computed(() =>
@@ -22,11 +21,7 @@ const location = computed(() =>
 );
 
 const contact = computed(() =>
-  [phone.value, email.value, website.value].filter(Boolean).join(" | "),
-);
-
-const social = computed(() =>
-  [gitHub.value, linkedIn.value].filter(Boolean).join(" | "),
+  [phone.value, email.value].filter(Boolean).join(" | "),
 );
 </script>
 
@@ -43,7 +38,16 @@ const social = computed(() =>
       </h2>
       <div class="text-center leading-tight">{{ location }}</div>
       <div class="text-center leading-tight">{{ contact }}</div>
-      <div class="text-center leading-tight">{{ social }}</div>
+      <ul class="text-center leading-tight">
+        <li
+          v-for="link in socialLinks"
+          :key="link.url"
+          class="flex gap-1 items-center"
+        >
+          <LinkIcon v-if="link.icon" :icon="link.icon" class="w-4" />
+          {{ link.url }}
+        </li>
+      </ul>
     </header>
 
     <p
