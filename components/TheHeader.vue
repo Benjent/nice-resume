@@ -49,7 +49,7 @@ function exportToJson() {
 function importFromJson(event: Event) {
   isImportError.value = false;
   try {
-    // @ts-expect-error TODO solve It seems like TS does nos not have the files property attached to the Event type.
+    // @ts-expect-error TODO find a way to make a TS-compliant check
     const file = event.target.files[0];
 
     const fileReader = new FileReader();

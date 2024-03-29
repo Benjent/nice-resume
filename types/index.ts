@@ -6,7 +6,7 @@ export type Template =
   | "Toothpaste";
 
 export interface Link {
-  icon: "default" | "gitHub" | "linkedIn";
+  icon: null | "default" | "gitHub" | "linkedIn";
   url: string;
 }
 

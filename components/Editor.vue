@@ -1,7 +1,4 @@
 <script setup lang="ts">
-// @ts-expect-error TODO set up type of htmlevent
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
 import { ref } from "vue";
 import { storeToRefs } from "pinia";
 import { PlusCircleIcon, XCircleIcon } from "@heroicons/vue/24/outline";
@@ -88,7 +85,7 @@ function changeSocialLinkIcon(link: Link, value: Link["icon"]) {
 
 function changeCategoryType(category: Category, value: Category["type"]) {
   category.type = value;
-  // @ts-expect-error TODO which error?
+  // @ts-expect-error TODO find a way to make a TS-compliant check
   category.nature = assetTypes.includes(value) ? "asset" : "experience";
   category.entries = []; // Prevent inconsistency between previous and new entry types
 }
@@ -191,7 +188,12 @@ function getExperienceOrganizationLabel(experience: Experience) {
                 <select
                   id="linkIcon"
                   :value="link.icon"
-                  @change="changeSocialLinkIcon(link, $event.target?.value)"
+                  @change="
+                    changeSocialLinkIcon(
+                      link,
+                      ($event.target as HTMLInputElement).value as Link['icon'],
+                    )
+                  "
                   class="cursor-pointer bg-transparent text-white block capitalize"
                 >
                   <!-- <option value="">None</option> -->
@@ -230,7 +232,12 @@ function getExperienceOrganizationLabel(experience: Experience) {
             <select
               id="type"
               :value="category.type"
-              @change="changeCategoryType(category, $event.target?.value)"
+              @change="
+                changeCategoryType(
+                  category,
+                  ($event.target as HTMLInputElement).value as Category['type'],
+                )
+              "
               class="cursor-pointer bg-transparent text-white block capitalize"
             >
               <option
@@ -247,7 +254,13 @@ function getExperienceOrganizationLabel(experience: Experience) {
             <select
               id="layout"
               :value="category.layout"
-              @change="changeCategoryLayout(category, $event.target?.value)"
+              @change="
+                changeCategoryLayout(
+                  category,
+                  ($event.target as HTMLInputElement)
+                    .value as Category['layout'],
+                )
+              "
               class="cursor-pointer bg-transparent text-white block capitalize"
             >
               <option
