@@ -13,6 +13,7 @@ import {
   categoryTypes,
   categoryLayouts,
   experienceTypes,
+  fixedLayoutTemplates,
   socialIcons,
 } from "@/globals";
 
@@ -25,6 +26,7 @@ const {
   name,
   phone,
   socialLinks,
+  template,
   title,
 } = storeToRefs(useResumeStore());
 
@@ -124,6 +126,12 @@ function getExperienceOrganizationLabel(experience: Experience) {
 
 <template>
   <main class="flex flex-col overflow-y-auto text-white">
+    <p
+      v-if="fixedLayoutTemplates.includes(template)"
+      class="text-center p-2 bg-amber-500"
+    >
+      Category layouts are fixed for this template.
+    </p>
     <EditorCategory class="w-full">
       <template v-slot:header>Details</template>
       <div class="flex flex-col gap-5">
@@ -253,6 +261,7 @@ function getExperienceOrganizationLabel(experience: Experience) {
             Layout
             <select
               id="layout"
+              :disabled="fixedLayoutTemplates.includes(template)"
               :value="category.layout"
               @change="
                 changeCategoryLayout(
@@ -261,7 +270,7 @@ function getExperienceOrganizationLabel(experience: Experience) {
                     .value as Category['layout'],
                 )
               "
-              class="cursor-pointer bg-transparent text-white block capitalize"
+              class="cursor-pointer bg-transparent text-white block capitalize disabled:cursor-not-allowed"
             >
               <option
                 v-for="item in layouts"

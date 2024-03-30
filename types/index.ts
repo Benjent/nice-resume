@@ -1,6 +1,7 @@
 export type Template =
   | "CottonCandy"
   | "OpenResume"
+  | "Paper"
   | "Pharmacy"
   | "Stone"
   | "Toothpaste";
