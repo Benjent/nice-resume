@@ -1,4 +1,5 @@
 # https://nuxt.com/deploy/github-pages
+# https://docs.github.com/en/packages/managing-github-packages-using-github-actions-workflows/publishing-and-installing-a-package-with-github-actions
 name: Deploy to GitHub Pages
 on:
   workflow_dispatch:
@@ -9,6 +10,7 @@ on:
 env:
   NODE_VERSION: 20.11
   PNPM_VERSION: 8
+  IMAGE_NAME: nice-resume
 
 jobs:
   build:
@@ -45,10 +47,9 @@ jobs:
   deploy:
     timeout-minutes: 5
     needs: build
-    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
     permissions:
-      pages: write # to deploy to Pages
-      id-token: write # to verify the deployment originates from an appropriate source
+      pages: write
+      id-token: write
     environment:
       name: github_pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -57,3 +58,28 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  container_build_push:
+    needs: build
+    permissions:
+      packages: write
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "SHORT_SHA=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_ENV
+      - name: Build image
+        run: docker build --file Dockerfile --tag $IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}" .
+
+      - name: Log in to registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+
+      - name: Push image
+        run: |
+          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
+          # This changes all uppercase characters to lowercase.
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          docker tag $IMAGE_NAME $IMAGE_ID:${{ env.SHORT_SHA }}
+          docker tag $IMAGE_NAME $IMAGE_ID:latest
+          docker push $IMAGE_ID:${{ env.SHORT_SHA }}
+          docker push $IMAGE_ID:latest
