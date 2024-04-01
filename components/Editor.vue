@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { storeToRefs } from "pinia";
 import { PlusCircleIcon, XCircleIcon } from "@heroicons/vue/24/outline";
 import { useResumeStore } from "@/stores/resume";
 import { type Category, type Experience } from "@/types";
 import { moveDown, moveUp, remove } from "@/utils/array";
+import { capitalize } from "@/utils/string";
 import EditorCategory from "./EditorCategory.vue";
 import ListActions from "./ListActions.vue";
 import type { Asset, Entry, Link } from "@/types";
@@ -12,6 +13,7 @@ import {
   assetTypes,
   categoryTypes,
   categoryLayouts,
+  discouragedLayoutTemplates,
   experienceTypes,
   fixedLayoutTemplates,
   socialIcons,
@@ -32,6 +34,25 @@ const {
 
 const types = ref<Category["type"][]>(categoryTypes);
 const layouts = ref<Category["layout"][]>(categoryLayouts);
+
+const isLayoutDisabled = computed(() =>
+  fixedLayoutTemplates.includes(template.value),
+);
+
+const isLayoutDiscouraged = computed(() => {
+  const discouragedLayouts = discouragedLayoutTemplates[template.value];
+  return categories.value.some((category) =>
+    discouragedLayouts.includes(category.layout),
+  );
+});
+
+const discouragedLayoutText = computed(() => {
+  const isPlural = discouragedLayoutTemplates[template.value].length > 1;
+  const layouts = discouragedLayoutTemplates[template.value]
+    .join(" and ")
+    .replaceAll(" ", "");
+  return `${capitalize(layouts)} ${isPlural ? "layouts are" : "layout is"} discouraged for this template.`;
+});
 
 function addCategory() {
   const category: Category = {
@@ -126,11 +147,11 @@ function getExperienceOrganizationLabel(experience: Experience) {
 
 <template>
   <main class="flex flex-col overflow-y-auto text-white">
-    <p
-      v-if="fixedLayoutTemplates.includes(template)"
-      class="text-center p-2 bg-amber-500"
-    >
+    <p v-if="isLayoutDisabled" class="text-center p-2 bg-amber-500">
       Category layouts are fixed for this template.
+    </p>
+    <p v-if="isLayoutDiscouraged" class="text-center p-2 bg-amber-500">
+      {{ discouragedLayoutText }}
     </p>
     <EditorCategory class="w-full">
       <template v-slot:header>Details</template>

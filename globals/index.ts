@@ -17,9 +17,16 @@ export const templates: Array<Template> = [
 
 export const fixedLayoutTemplates: Array<Template> = ["Paper"];
 
-// TODO islayout disabled -> lister les templates qui interdisent les layouts (forcent les catégories à être "full") comme les templates pour Paprer
-// TODO déconseiller certains layouts
-// On pourrait dire "full" - advised et "full" - mandatory pour avoir deux niveaux. Le but est aussi de conseiller les gens
+export const discouragedLayoutTemplates: {
+  [T in Template]: Array<Category["layout"]>;
+} = {
+  CottonCandy: ["aside"],
+  OpenResume: [],
+  Paper: [],
+  Pharmacy: [],
+  Stone: [],
+  Toothpaste: ["aside"],
+};
 
 export const socialIcons: Array<Link["url"]> = ["gitHub", "linkedIn"];
 
