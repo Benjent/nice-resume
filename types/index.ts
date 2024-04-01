@@ -1,5 +1,6 @@
 export type Template =
   | "CottonCandy"
+  | "Macchiato"
   | "OpenResume"
   | "Paper"
   | "Pharmacy"
@@ -7,7 +8,20 @@ export type Template =
   | "Toothpaste";
 
 export interface Link {
-  icon: null | "default" | "gitHub" | "linkedIn";
+  icon:
+    | null
+    | "default"
+    | "bandcamp"
+    | "behance"
+    | "facebook"
+    | "gitHub"
+    | "instagram"
+    | "linkedIn"
+    | "mastodon"
+    | "soundCloud"
+    | "stackOverflow"
+    | "viadeo"
+    | "x";
   url: string;
 }
 

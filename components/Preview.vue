@@ -5,6 +5,7 @@ import { type Template } from "@/types";
 import { useEditorStore } from "@/stores/editor";
 import { useResumeStore } from "@/stores/resume";
 import CottonCandy from "@/templates/CottonCandy.vue";
+import Macchiato from "@/templates/Macchiato.vue";
 import OpenResume from "@/templates/OpenResume.vue";
 import Paper from "@/templates/Paper.vue";
 import Pharmacy from "@/templates/Pharmacy.vue";
@@ -20,6 +21,7 @@ type TemplateMapper = {
 
 const templateMapper: TemplateMapper = {
   CottonCandy,
+  Macchiato,
   OpenResume,
   Paper,
   Pharmacy,
