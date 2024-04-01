@@ -79,6 +79,7 @@ export const discouragedLayoutTemplates: {
   [T in Template]: Array<Category["layout"]>;
 } = {
   CottonCandy: ["aside"],
+  Macchiato: [],
   OpenResume: [],
   Paper: [],
   Pharmacy: [],
@@ -86,7 +87,19 @@ export const discouragedLayoutTemplates: {
   Toothpaste: ["aside"],
 };
 
-export const socialIcons: Array<Link["url"]> = ["gitHub", "linkedIn"];
+export const socialIcons: Array<Link["url"]> = [
+  "bandcamp",
+  "behance",
+  "mastodon",
+  "facebook",
+  "gitHub",
+  "instagram",
+  "linkedIn",
+  "soundCloud",
+  "stackOverflow",
+  "viadeo",
+  "x",
+];
 
 export const categoryTypes: Array<Category["type"]> = [
   "education",
