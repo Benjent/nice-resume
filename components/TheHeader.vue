@@ -10,6 +10,9 @@ import { useResumeStore } from "@/stores/resume";
 import { templates } from "@/globals";
 import { download } from "@/utils/file";
 import type { Resume } from "@/types";
+import packageJson from "../package.json";
+
+console.log("Version: ", packageJson.version);
 
 const { zoomLevel } = storeToRefs(useEditorStore());
 
@@ -92,6 +95,7 @@ function importFromJson(event: Event) {
   >
     <h1
       class="bg-gradient-to-br from-blue-700 to-pink-500 text-transparent bg-clip-text text-center text-4xl font-black tracking-widest uppercase"
+      :title="packageJson.version"
     >
       Nice
       <br />

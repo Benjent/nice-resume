@@ -31,12 +31,16 @@ jobs:
           echo "Npm version: $(npm --version)"
           echo "Pnpm version: $(pnpm --version) (aiming: ${{ env.PNPM_VERSION }})"
           echo "Git version: $(git --version)"
+      - name: Set env with commit hash
+        run: echo "SHORT_SHA=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_ENV
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: "Configure baseUrl to work on Github Pages"
         run: |
           sed -i "s|baseURL: \"/\"|baseURL: \"/nice-resume/\"|g" nuxt.config.ts
-          cat nuxt.config.ts
+      - name: "Configure package.json version"
+        run: |
+          sed -i "s|\"version\": \"dev\"|\"version\": \"${{ env.SHORT_SHA }}\"|g" package.json
       - name: Build
         run: pnpm run build --preset github_pages
       - name: Upload artifact
@@ -67,7 +71,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: echo "SHORT_SHA=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_ENV
       - name: Build image
         run: docker build --file Dockerfile --tag $IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}" .
 
