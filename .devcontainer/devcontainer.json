@@ -1,0 +1,39 @@
+// https://github.com/nuxt/nuxt/tree/main/.devcontainer
+{
+  "name": "nuxt-devcontainer",
+  "dockerFile": "Dockerfile",
+  "features": {},
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "telemetry.enableTelemetry": false,
+        "redhat.telemetry.enabled": false,
+        "vulnCost.sendStatistics": false,
+        "editor.renderWhitespace": "all",
+        "editor.renderControlCharacters": true,
+        "editor.formatOnSave": true,
+        "files.insertFinalNewline": true
+      },
+      "extensions": [
+        "ms-azuretools.vscode-docker",
+        "github.vscode-github-actions",
+        "esbenp.prettier-vscode",
+        "vue.volar",
+        "bradlc.vscode-tailwindcss",
+        "dbaeumer.vscode-eslint"
+      ]
+    }
+  },
+  "postCreateCommand": "pnpm install --offline",
+  "postStartCommand": "pnpm install && pnpm postinstall",
+  // Share node_modules with the host
+  // "mounts": ["type=volume,target=${containerWorkspaceFolder}/node_modules"]
+  "remoteUser": "node",
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": {
+      "label": "Application Port",
+      "onAutoForward": "notify"
+    }
+  }
+}
