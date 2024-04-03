@@ -4,7 +4,12 @@ import { defineNuxtConfig } from "nuxt/config";
 export default defineNuxtConfig({
   css: ["@/assets/styles/index.css"],
   devtools: { enabled: true },
-  modules: ["@pinia/nuxt", "@nuxtjs/tailwindcss", "nuxt-svgo"],
+  modules: [
+    "@pinia/nuxt",
+    "@nuxtjs/tailwindcss",
+    "nuxt-svgo",
+    "nuxt-build-cache",
+  ],
   ssr: false,
   app: {
     head: {
