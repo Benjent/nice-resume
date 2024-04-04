@@ -4,7 +4,7 @@ export function moveUp(array: Array<unknown>, index: number) {
 }
 
 export function moveDown(array: Array<unknown>, index: number) {
-  if (index === array.length - 1) return;
+  if (array.length === 0 || index === array.length - 1) return;
   array.splice(index + 1, 0, array.splice(index, 1)[0]);
 }
 

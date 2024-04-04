@@ -1,10 +1,9 @@
 {
   "recommendations": [
-    "ms-azuretools.vscode-docker",
-    "github.vscode-github-actions",
     "esbenp.prettier-vscode",
     "vue.volar",
     "bradlc.vscode-tailwindcss",
-    "dbaeumer.vscode-eslint"
+    "dbaeumer.vscode-eslint",
+    "vitest.explorer"
   ]
 }

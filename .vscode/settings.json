@@ -6,5 +6,6 @@
   "files.insertFinalNewline": true,
   "[vue]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "playwright.reuseBrowser": true
 }
