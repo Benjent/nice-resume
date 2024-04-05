@@ -150,7 +150,4 @@ const {
 .font-body {
   font-family: "Fira Sans";
 }
-.font-display {
-  /* font-family: "Josefin Sans"; */
-}
 </style>
