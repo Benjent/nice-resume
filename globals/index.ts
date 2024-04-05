@@ -14,6 +14,7 @@ export const templates: Array<Template> = [
   "Pharmacy",
   "Stone",
   "Toothpaste",
+  "Wiki",
 ];
 
 export const fixedLayoutTemplates: Array<Template> = ["Paper"];
@@ -28,6 +29,7 @@ export const discouragedLayoutTemplates: {
   Pharmacy: [],
   Stone: [],
   Toothpaste: ["aside"],
+  Wiki: [],
 };
 
 export const socialIcons: Array<Link["url"]> = [

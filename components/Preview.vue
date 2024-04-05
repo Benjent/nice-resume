@@ -11,6 +11,7 @@ import Paper from "@/templates/Paper.vue";
 import Pharmacy from "@/templates/Pharmacy.vue";
 import Toothpaste from "@/templates/Toothpaste.vue";
 import Stone from "@/templates/Stone.vue";
+import Wiki from "@/templates/Wiki.vue";
 
 const { zoomLevel } = storeToRefs(useEditorStore());
 const { template } = storeToRefs(useResumeStore());
@@ -27,6 +28,7 @@ const templateMapper: TemplateMapper = {
   Pharmacy,
   Toothpaste,
   Stone,
+  Wiki,
 };
 
 const component: Component = computed(() => templateMapper[template.value]);

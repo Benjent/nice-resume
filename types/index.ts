@@ -5,7 +5,8 @@ export type Template =
   | "Paper"
   | "Pharmacy"
   | "Stone"
-  | "Toothpaste";
+  | "Toothpaste"
+  | "Wiki";
 
 export interface Link {
   icon:
