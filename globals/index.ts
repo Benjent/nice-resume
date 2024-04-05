@@ -85,6 +85,7 @@ export const discouragedLayoutTemplates: {
   Pharmacy: [],
   Stone: [],
   Toothpaste: ["aside"],
+  Wiki: [],
 };
 
 export const socialIcons: Array<Link["url"]> = [
