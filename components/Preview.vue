@@ -4,6 +4,7 @@ import { storeToRefs } from "pinia";
 import { type Template } from "@/types";
 import { useEditorStore } from "@/stores/editor";
 import { useResumeStore } from "@/stores/resume";
+import Aster from "@/templates/Aster.vue";
 import CottonCandy from "@/templates/CottonCandy.vue";
 import Macchiato from "@/templates/Macchiato.vue";
 import OpenResume from "@/templates/OpenResume.vue";
@@ -21,6 +22,7 @@ type TemplateMapper = {
 };
 
 const templateMapper: TemplateMapper = {
+  Aster,
   CottonCandy,
   Macchiato,
   OpenResume,

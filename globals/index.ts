@@ -7,6 +7,7 @@ import {
 } from "@/types";
 
 export const templates: Array<Template> = [
+  "Aster",
   "CottonCandy",
   "Macchiato",
   "OpenResume",
@@ -22,6 +23,7 @@ export const fixedLayoutTemplates: Array<Template> = ["Paper"];
 export const discouragedLayoutTemplates: {
   [T in Template]: Array<Category["layout"]>;
 } = {
+  Aster: ["aside", "half"],
   CottonCandy: ["aside"],
   Macchiato: [],
   OpenResume: [],
