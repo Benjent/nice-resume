@@ -108,8 +108,9 @@ function changeSocialLinkIcon(link: Link, value: Link["icon"]) {
 
 function changeCategoryType(category: Category, value: Category["type"]) {
   category.type = value;
-  // @ts-expect-error TODO find a way to make a TS-compliant check
-  category.nature = assetTypes.includes(value) ? "asset" : "experience";
+  category.nature = (assetTypes as string[]).includes(value)
+    ? "asset"
+    : "experience";
   category.entries = []; // Prevent inconsistency between previous and new entry types
 }
 
