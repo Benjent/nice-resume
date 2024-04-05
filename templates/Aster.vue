@@ -28,20 +28,20 @@ const {
         {{ name }}
       </h1>
       <div class="flex-1 text-center px-8">
-        <div class="flex items-center">
+        <div class="flex items-center" v-if="title">
           <div class="flex-1 bg-[#713C97] h-1" />
           <h2 class="text-2xl font-normal px-8">
             {{ title }}
           </h2>
           <div class="flex-1 bg-[#713C97] h-1" />
         </div>
-        <p>{{ about }}</p>
+        <p v-if="about">{{ about }}</p>
       </div>
       <ul class="flex flex-col items-end w-[26%]">
-        <li>{{ phone }}</li>
-        <li>{{ address }}</li>
-        <li>{{ drivingLicense }}</li>
-        <li>{{ email }}</li>
+        <li v-if="phone">{{ phone }}</li>
+        <li v-if="address">{{ address }}</li>
+        <li v-if="drivingLicense">{{ drivingLicense }}</li>
+        <li v-if="email">{{ email }}</li>
         <li
           v-for="link in socialLinks"
           :key="link.url"
