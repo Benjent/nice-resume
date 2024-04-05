@@ -48,9 +48,7 @@ const isLayoutDiscouraged = computed(() => {
 
 const discouragedLayoutText = computed(() => {
   const isPlural = discouragedLayoutTemplates[template.value].length > 1;
-  const layouts = discouragedLayoutTemplates[template.value]
-    .join(" and ")
-    .replaceAll(" ", "");
+  const layouts = discouragedLayoutTemplates[template.value].join(" and ");
   return `${capitalize(layouts)} ${isPlural ? "layouts are" : "layout is"} discouraged for this template.`;
 });
 
