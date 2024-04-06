@@ -406,7 +406,7 @@ function getExperienceOrganizationLabel(experience: Experience) {
                 Highlights
                 <button
                   id="highlights"
-                  title="Add task"
+                  title="Add highlight"
                   class="text-white size-6"
                   @click="() => entry.highlights.push('')"
                 >
@@ -415,21 +415,21 @@ function getExperienceOrganizationLabel(experience: Experience) {
               </div>
               <ul class="flex flex-col gap-2">
                 <li
-                  v-for="(_task, taskIndex) in entry.highlights"
-                  :key="taskIndex"
+                  v-for="(_highlight, highlightIndex) in entry.highlights"
+                  :key="highlightIndex"
                   class="flex items-center gap-2"
                 >
                   <input
                     class="bg-white bg-opacity-10 rounded px-2 py-1"
-                    v-model="entry.highlights[taskIndex]"
+                    v-model="entry.highlights[highlightIndex]"
                   />
                   <ListActions
                     class="mb-2"
-                    :index="taskIndex"
+                    :index="highlightIndex"
                     :list-length="entry.highlights.length"
-                    @moveUp="moveUp(entry.highlights, taskIndex)"
-                    @moveDown="moveDown(entry.highlights, taskIndex)"
-                    @remove="remove(entry.highlights, taskIndex)"
+                    @moveUp="moveUp(entry.highlights, highlightIndex)"
+                    @moveDown="moveDown(entry.highlights, highlightIndex)"
+                    @remove="remove(entry.highlights, highlightIndex)"
                   />
                 </li>
               </ul>
