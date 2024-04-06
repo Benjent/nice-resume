@@ -1,6 +1,7 @@
 import {
   type Asset,
   type Category,
+  type Detail,
   type Experience,
   type Link,
   type Template,
@@ -13,6 +14,7 @@ export const templates: Array<Template> = [
   "OpenResume",
   "Paper",
   "Pharmacy",
+  "Red",
   "Stone",
   "Toothpaste",
   "Wiki",
@@ -29,12 +31,20 @@ export const discouragedLayoutTemplates: {
   OpenResume: [],
   Paper: [],
   Pharmacy: [],
+  Red: ["full"],
   Stone: [],
   Toothpaste: ["aside"],
   Wiki: [],
 };
 
-export const socialIcons: Array<Link["url"]> = [
+export const contactIcons: Array<Detail["icon"]> = [
+  "address",
+  "drivingLicense",
+  "email",
+  "phone",
+];
+
+export const socialIcons: Array<Link["icon"]> = [
   "bandcamp",
   "behance",
   "mastodon",

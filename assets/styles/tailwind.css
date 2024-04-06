@@ -4,6 +4,12 @@
 
 @layer components {
   .input {
-    @apply bg-white bg-opacity-10 rounded px-2 py-1;
+    @apply bg-black bg-opacity-10 rounded px-2 py-1;
+  }
+  .option {
+    @apply bg-white text-blue-500 capitalize m-0;
+  }
+  .select {
+    @apply cursor-pointer bg-white text-blue-500;
   }
 }

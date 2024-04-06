@@ -1,25 +1,11 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import {
-  EnvelopeIcon,
-  IdentificationIcon,
-  MapPinIcon,
-  PhoneIcon,
-} from "@heroicons/vue/16/solid";
 import { useResumeStore } from "@/stores/resume";
+import ContactIcon from "../components/ContactIcon.vue";
 import LinkIcon from "../components/LinkIcon.vue";
 
-const {
-  about,
-  address,
-  categories,
-  drivingLicense,
-  email,
-  name,
-  phone,
-  socialLinks,
-  title,
-} = storeToRefs(useResumeStore());
+const { about, categories, contactDetails, name, socialLinks, title } =
+  storeToRefs(useResumeStore());
 </script>
 
 <template>
@@ -33,36 +19,26 @@ const {
       >
         {{ name }}
       </h1>
-      <div
+      <ul
         class="flex flex-col gap-1 text-xs items-end border-r-2 border-cyan-500 pr-6"
       >
-        <div v-if="email" class="flex gap-1 items-center">
-          {{ email }}
-          <EnvelopeIcon class="w-4" />
-        </div>
-        <div v-if="phone" class="flex gap-1 items-center">
-          {{ phone }}
-          <PhoneIcon class="w-4" />
-        </div>
-        <div v-if="address" class="flex gap-1 items-center">
-          {{ address }}
-          <MapPinIcon class="w-4" />
-        </div>
-        <div v-if="drivingLicense" class="flex gap-1 items-center">
-          {{ drivingLicense }}
-          <IdentificationIcon class="w-4" />
-        </div>
-        <ul>
-          <li
-            v-for="link in socialLinks"
-            :key="link.url"
-            class="flex gap-1 items-center"
-          >
-            {{ link.url }}
-            <LinkIcon v-if="link.icon" :icon="link.icon" class="w-4" />
-          </li>
-        </ul>
-      </div>
+        <li
+          v-for="detail in contactDetails"
+          :key="`${detail.value}${detail.icon}`"
+          class="flex gap-1 items-center"
+        >
+          {{ detail.value }}
+          <ContactIcon v-if="detail.icon" :icon="detail.icon" class="w-4" />
+        </li>
+        <li
+          v-for="link in socialLinks"
+          :key="`${link.url}${link.icon}`"
+          class="flex gap-1 items-center"
+        >
+          {{ link.url }}
+          <LinkIcon v-if="link.icon" :icon="link.icon" class="w-4" />
+        </li>
+      </ul>
     </header>
 
     <div class="text-center my-12">
@@ -97,13 +73,23 @@ const {
                 {{ entry.title }}
               </div>
               <template v-if="entry.nature === 'experience'">
-                <div>{{ entry.startDate }} - {{ entry.endDate }}</div>
+                <div v-if="entry.startDate">
+                  {{ entry.startDate }}
+                  <template v-if="entry.endDate">
+                    - {{ entry.endDate }}
+                  </template>
+                </div>
                 <div class="text-cyan-500">
                   {{ entry.organization }} {{ entry.location }}
                 </div>
                 <div>
-                  <p class="text-xs text-slate-400">{{ entry.summary }}</p>
-                  <ul class="list-disc list-inside ml-1 text-xs text-slate-600">
+                  <p class="text-xs text-slate-400" v-if="entry.summary">
+                    {{ entry.summary }}
+                  </p>
+                  <ul
+                    class="list-disc list-inside ml-1 text-xs text-slate-600"
+                    v-if="entry.highlights.length"
+                  >
                     <li
                       v-for="(highlight, highlightIndex) in entry.highlights"
                       :key="highlightIndex"
@@ -113,7 +99,10 @@ const {
                   </ul>
                 </div>
               </template>
-              <ul class="list-disc list-inside ml-1 text-xs text-slate-600">
+              <ul
+                class="list-disc list-inside ml-1 text-xs text-slate-600"
+                v-if="entry.highlights.length"
+              >
                 <li
                   v-for="(highlight, highlightIndex) in entry.highlights"
                   :key="highlightIndex"
@@ -145,7 +134,10 @@ const {
               <div class="text-cyan-500" v-if="entry.nature === 'asset'">
                 {{ entry.title }}
               </div>
-              <ul class="list-disc list-inside ml-1 text-xs text-slate-600">
+              <ul
+                class="list-disc list-inside ml-1 text-xs text-slate-600"
+                v-if="entry.highlights.length"
+              >
                 <li
                   v-for="(highlight, highlightIndex) in entry.highlights"
                   :key="highlightIndex"
@@ -167,8 +159,12 @@ const {
                 <div class="relative">
                   <span
                     class="text-cyan-500 relative before:content-[''] before:absolute before:inline-block before:size-4 before:-left-[1.625rem] before:top-2 before:bg-slate-400 before:rounded-full"
+                    v-if="entry.startDate"
                   >
-                    {{ entry.startDate }} - {{ entry.endDate }}
+                    {{ entry.startDate }}
+                    <template v-if="entry.endDate">
+                      - {{ entry.endDate }}
+                    </template>
                   </span>
                   &nbsp;: {{ entry.title }}
                 </div>
@@ -176,8 +172,13 @@ const {
                   {{ entry.organization }} {{ entry.location }}
                 </div>
                 <div>
-                  <p class="text-xs text-slate-400">{{ entry.summary }}</p>
-                  <ul class="list-disc list-inside ml-1 text-xs text-slate-600">
+                  <p class="text-xs text-slate-400" v-if="entry.summary">
+                    {{ entry.summary }}
+                  </p>
+                  <ul
+                    class="list-disc list-inside ml-1 text-xs text-slate-600"
+                    v-if="entry.highlights.length"
+                  >
                     <li
                       v-for="(highlight, highlightIndex) in entry.highlights"
                       :key="highlightIndex"

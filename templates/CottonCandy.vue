@@ -3,19 +3,11 @@ import { computed } from "vue";
 import { storeToRefs } from "pinia";
 import { useResumeStore } from "@/stores/resume";
 import type { Category } from "@/types";
+import ContactIcon from "../components/ContactIcon.vue";
 import LinkIcon from "../components/LinkIcon.vue";
 
-const {
-  about,
-  address,
-  categories,
-  drivingLicense,
-  email,
-  name,
-  phone,
-  socialLinks,
-  title,
-} = storeToRefs(useResumeStore());
+const { about, categories, contactDetails, name, socialLinks, title } =
+  storeToRefs(useResumeStore());
 
 const mainCategories = computed(() => {
   return categories.value.filter((category) => category.layout !== "aside");
@@ -72,19 +64,20 @@ function getSectionCategory(indexToGetFrom: number) {
           </h2>
         </div>
         <div class="flex flex-col gap-2 text-[#ed3660]">
-          <div class="leading-none">
-            <div v-if="drivingLicense || address">
-              <span v-if="drivingLicense">{{ drivingLicense }}</span>
-              <span v-if="drivingLicense && address">-</span>
-              <span v-if="address">{{ address }}</span>
-            </div>
-            <div v-if="email">{{ email }}</div>
-            <div v-if="phone">{{ phone }}</div>
-          </div>
+          <ul class="leading-none">
+            <li
+              v-for="detail in contactDetails"
+              :key="`${detail.value}${detail.icon}`"
+              class="flex gap-1 items-center"
+            >
+              <ContactIcon v-if="detail.icon" :icon="detail.icon" class="w-4" />
+              {{ detail.value }}
+            </li>
+          </ul>
           <ul class="leading-tight">
             <li
               v-for="link in socialLinks"
-              :key="link.url"
+              :key="`${link.url}${link.icon}`"
               class="flex gap-1 items-center"
             >
               <LinkIcon v-if="link.icon" :icon="link.icon" class="w-4" />
@@ -166,11 +159,11 @@ function getSectionCategory(indexToGetFrom: number) {
               <div>
                 <p
                   class="text-sm font-semibold"
-                  v-if="entry.nature === 'experience'"
+                  v-if="entry.nature === 'experience' && entry.summary"
                 >
                   {{ entry.summary }}
                 </p>
-                <ul class="italic text-xs">
+                <ul class="italic text-xs" v-if="entry.highlights.length">
                   <li
                     v-for="(highlight, highlightIndex) in entry.highlights"
                     :key="highlightIndex"
@@ -255,11 +248,11 @@ function getSectionCategory(indexToGetFrom: number) {
                 <div>
                   <p
                     class="text-sm font-semibold"
-                    v-if="entry.nature === 'experience'"
+                    v-if="entry.nature === 'experience' && entry.summary"
                   >
                     {{ entry.summary }}
                   </p>
-                  <ul class="italic text-xs">
+                  <ul class="italic text-xs" v-if="entry.highlights.length">
                     <li
                       v-for="(highlight, highlightIndex) in entry.highlights"
                       :key="highlightIndex"
@@ -327,11 +320,11 @@ function getSectionCategory(indexToGetFrom: number) {
                 <div>
                   <p
                     class="text-sm font-semibold"
-                    v-if="entry.nature === 'experience'"
+                    v-if="entry.nature === 'experience' && entry.summary"
                   >
                     {{ entry.summary }}
                   </p>
-                  <ul class="italic text-xs">
+                  <ul class="italic text-xs" v-if="entry.highlights.length">
                     <li
                       v-for="(highlight, highlightIndex) in entry.highlights"
                       :key="highlightIndex"
@@ -399,11 +392,11 @@ function getSectionCategory(indexToGetFrom: number) {
                 <div>
                   <p
                     class="text-sm font-semibold"
-                    v-if="entry.nature === 'experience'"
+                    v-if="entry.nature === 'experience' && entry.summary"
                   >
                     {{ entry.summary }}
                   </p>
-                  <ul class="italic text-xs">
+                  <ul class="italic text-xs" v-if="entry.highlights.length">
                     <li
                       v-for="(highlight, highlightIndex) in entry.highlights"
                       :key="highlightIndex"

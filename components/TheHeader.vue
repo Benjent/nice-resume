@@ -15,12 +15,9 @@ const { zoomLevel } = storeToRefs(useEditorStore());
 
 const {
   about,
-  address,
   categories,
-  drivingLicense,
-  email,
+  contactDetails,
   name,
-  phone,
   socialLinks,
   template,
   title,
@@ -33,12 +30,9 @@ function exportToJson() {
     isNiceResumeExport: true,
     template: template.value,
     about: about.value,
-    address: address.value,
     categories: categories.value,
-    drivingLicense: drivingLicense.value,
-    email: email.value,
+    contactDetails: contactDetails.value,
     name: name.value,
-    phone: phone.value,
     socialLinks: socialLinks.value,
     title: title.value,
   };
@@ -68,12 +62,9 @@ function importFromJson(event: Event) {
 
       template.value = resume.template;
       about.value = resume.about;
-      address.value = resume.address;
       categories.value = resume.categories;
-      drivingLicense.value = resume.drivingLicense;
-      email.value = resume.email;
+      contactDetails.value = resume.contactDetails;
       name.value = resume.name;
-      phone.value = resume.phone;
       socialLinks.value = resume.socialLinks;
       title.value = resume.title;
     };
@@ -127,16 +118,8 @@ function importFromJson(event: Event) {
 
       <label for="template">
         Template
-        <select
-          id="template"
-          v-model="template"
-          class="cursor-pointer bg-transparent text-blue-500 block"
-        >
-          <option
-            v-for="template in templates"
-            :key="template"
-            class="bg-white"
-          >
+        <select id="template" v-model="template" class="select block">
+          <option v-for="template in templates" :key="template" class="option">
             {{ template }}
           </option>
         </select>

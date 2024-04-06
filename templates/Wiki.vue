@@ -1,29 +1,25 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { useResumeStore } from "@/stores/resume";
+import ContactIcon from "../components/ContactIcon.vue";
 import LinkIcon from "../components/LinkIcon.vue";
 
-const {
-  about,
-  address,
-  categories,
-  drivingLicense,
-  email,
-  name,
-  phone,
-  socialLinks,
-  title,
-} = storeToRefs(useResumeStore());
+const { about, categories, contactDetails, name, socialLinks, title } =
+  storeToRefs(useResumeStore());
 </script>
 
 <template>
   <div class="bg-white h-full w-full flex flex-col py-2 px-6 text-xs font-body">
     <header class="flex mb-4">
       <ul class="flex flex-col">
-        <li>{{ phone }}</li>
-        <li>{{ address }}</li>
-        <li>{{ drivingLicense }}</li>
-        <li>{{ email }}</li>
+        <li
+          v-for="detail in contactDetails"
+          :key="`${detail.value}${detail.icon}`"
+          class="flex gap-1 items-center"
+        >
+          <ContactIcon v-if="detail.icon" :icon="detail.icon" class="w-4" />
+          {{ detail.value }}
+        </li>
       </ul>
       <div class="flex-1 text-center mb-1">
         <h1 class="text-3xl font-bold">{{ name }}</h1>
@@ -33,7 +29,7 @@ const {
       <ul class="flex flex-col items-end">
         <li
           v-for="link in socialLinks"
-          :key="link.url"
+          :key="`${link.url}${link.icon}`"
           class="flex gap-1 items-center"
         >
           <LinkIcon v-if="link.icon" :icon="link.icon" class="w-4" />
@@ -65,7 +61,10 @@ const {
               <div class="flex justify-between">
                 <div class="flex flex-col">
                   <div class="font-semibold">{{ entry.title }}</div>
-                  <div v-if="entry.nature === 'experience'" class="italic">
+                  <div
+                    v-if="entry.nature === 'experience' && entry.organization"
+                    class="italic"
+                  >
                     {{ entry.organization }}
                   </div>
                 </div>
@@ -73,7 +72,12 @@ const {
                   v-if="entry.nature === 'experience'"
                   class="flex flex-col text-right"
                 >
-                  <div>{{ entry.startDate }} - {{ entry.endDate }}</div>
+                  <div v-if="entry.startDate">
+                    {{ entry.startDate }}
+                    <template v-if="entry.endDate">
+                      - {{ entry.endDate }}
+                    </template>
+                  </div>
                   <div class="italic">{{ entry.location }}</div>
                 </div>
               </div>
@@ -112,7 +116,10 @@ const {
               <div class="flex justify-between">
                 <div class="flex flex-col">
                   <div class="font-semibold">{{ entry.title }}</div>
-                  <div v-if="entry.nature === 'experience'" class="italic">
+                  <div
+                    v-if="entry.nature === 'experience' && entry.organization"
+                    class="italic"
+                  >
                     {{ entry.organization }}
                   </div>
                 </div>
@@ -120,7 +127,12 @@ const {
                   v-if="entry.nature === 'experience'"
                   class="flex flex-col text-right"
                 >
-                  <div>{{ entry.startDate }} - {{ entry.endDate }}</div>
+                  <div v-if="entry.startDate">
+                    {{ entry.startDate }}
+                    <template v-if="entry.endDate">
+                      - {{ entry.endDate }}
+                    </template>
+                  </div>
                   <div class="italic">{{ entry.location }}</div>
                 </div>
               </div>

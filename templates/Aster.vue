@@ -1,19 +1,11 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { useResumeStore } from "@/stores/resume";
+import ContactIcon from "../components/ContactIcon.vue";
 import LinkIcon from "../components/LinkIcon.vue";
 
-const {
-  about,
-  address,
-  categories,
-  drivingLicense,
-  email,
-  name,
-  phone,
-  socialLinks,
-  title,
-} = storeToRefs(useResumeStore());
+const { about, categories, contactDetails, name, socialLinks, title } =
+  storeToRefs(useResumeStore());
 </script>
 
 <template>
@@ -38,13 +30,21 @@ const {
         <p v-if="about">{{ about }}</p>
       </div>
       <ul class="flex flex-col items-end w-[26%]">
-        <li v-if="phone">{{ phone }}</li>
-        <li v-if="address">{{ address }}</li>
-        <li v-if="drivingLicense">{{ drivingLicense }}</li>
-        <li v-if="email">{{ email }}</li>
+        <li
+          v-for="detail in contactDetails"
+          :key="`${detail.value}${detail.icon}`"
+          class="flex gap-1 items-center"
+        >
+          <ContactIcon
+            v-if="detail.icon"
+            :icon="detail.icon"
+            class="w-4 text-[#713C97]"
+          />
+          {{ detail.value }}
+        </li>
         <li
           v-for="link in socialLinks"
-          :key="link.url"
+          :key="`${link.url}${link.icon}`"
           class="flex gap-1 items-center"
         >
           <LinkIcon
@@ -81,14 +81,24 @@ const {
               class="flex flex-col"
             >
               <div>
-                <span v-if="entry.nature === 'experience'">
-                  {{ entry.startDate }} - {{ entry.endDate }} -{{ " " }}
+                <span v-if="entry.nature === 'experience' && entry.startDate">
+                  {{ entry.startDate }}
+                  <template v-if="entry.endDate">
+                    - {{ entry.endDate }}
+                  </template>
+                  -{{ " " }}
                 </span>
-                <span class="font-semibold">{{ entry.title }}</span>
-                <span v-if="entry.nature === 'experience'">
+                <span class="font-semibold" v-if="entry.title">
+                  {{ entry.title }}
+                </span>
+                <span
+                  v-if="entry.nature === 'experience' && entry.organization"
+                >
                   {{ " " }}-{{ " " }}
-                  <span class="italic">{{ entry.organization }},</span>
-                  {{ entry.location }}
+                  <span class="italic">{{ entry.organization }}</span>
+                  <template v-if="entry.location">
+                    ,{{ entry.location }}
+                  </template>
                 </span>
               </div>
               <p
@@ -130,14 +140,24 @@ const {
               class="flex flex-col"
             >
               <div class="flex gap-4 items-center">
-                <span v-if="entry.nature === 'experience'">
-                  {{ entry.startDate }} - {{ entry.endDate }} -{{ " " }}
+                <span v-if="entry.nature === 'experience' && entry.startDate">
+                  {{ entry.startDate }}
+                  <template v-if="entry.endDate">
+                    - {{ entry.endDate }}
+                  </template>
+                  -{{ " " }}
                 </span>
-                <span class="font-semibold">{{ entry.title }}</span>
-                <span v-if="entry.nature === 'experience'">
+                <span class="font-semibold" v-if="entry.title">
+                  {{ entry.title }}
+                </span>
+                <span
+                  v-if="entry.nature === 'experience' && entry.organization"
+                >
                   {{ " " }}-{{ " " }}
-                  <span class="italic">{{ entry.organization }},</span>
-                  {{ entry.location }}
+                  <span class="italic">{{ entry.organization }}</span>
+                  <template v-if="entry.location">
+                    ,{{ entry.location }}
+                  </template>
                 </span>
                 <div
                   v-if="entry.nature === 'experience'"

@@ -1,25 +1,11 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import {
-  EnvelopeIcon,
-  IdentificationIcon,
-  MapPinIcon,
-  PhoneIcon,
-} from "@heroicons/vue/16/solid";
 import { useResumeStore } from "@/stores/resume";
+import ContactIcon from "../components/ContactIcon.vue";
 import LinkIcon from "../components/LinkIcon.vue";
 
-const {
-  about,
-  address,
-  categories,
-  drivingLicense,
-  email,
-  name,
-  phone,
-  socialLinks,
-  title,
-} = storeToRefs(useResumeStore());
+const { about, categories, contactDetails, name, socialLinks, title } =
+  storeToRefs(useResumeStore());
 </script>
 
 <template>
@@ -48,25 +34,17 @@ const {
           </h3>
           <p v-if="about" class="mb-2">{{ about }}</p>
           <ul>
-            <li v-if="address" class="flex gap-2 items-center">
-              <MapPinIcon class="w-3" />
-              {{ address }}
-            </li>
-            <li v-if="drivingLicense" class="flex gap-2 items-center">
-              <IdentificationIcon class="w-3" />
-              {{ drivingLicense }}
-            </li>
-            <li v-if="email" class="flex gap-2 items-center">
-              <EnvelopeIcon class="w-3" />
-              {{ email }}
-            </li>
-            <li v-if="phone" class="flex gap-2 items-center">
-              <PhoneIcon class="w-3" />
-              {{ phone }}
+            <li
+              v-for="detail in contactDetails"
+              :key="`${detail.value}${detail.icon}`"
+              class="flex gap-1 items-center"
+            >
+              <ContactIcon v-if="detail.icon" :icon="detail.icon" class="w-4" />
+              {{ detail.value }}
             </li>
             <li
               v-for="link in socialLinks"
-              :key="link.url"
+              :key="`${link.url}${link.icon}`"
               class="flex gap-2 items-center"
             >
               <LinkIcon v-if="link.icon" :icon="link.icon" class="w-3" />
@@ -92,17 +70,18 @@ const {
             >
               <div
                 class="italic font-light"
-                v-if="entry.nature === 'experience'"
+                v-if="entry.nature === 'experience' && entry.startDate"
               >
-                {{ entry.startDate }} - {{ entry.endDate }}
+                {{ entry.startDate }}
+                <template v-if="entry.endDate">- {{ entry.endDate }}</template>
               </div>
               <div class="font-bold">{{ entry.title }}</div>
               <template v-if="entry.nature === 'experience'">
-                <div>{{ entry.organization }}</div>
-                <div>{{ entry.location }}</div>
-                <p>{{ entry.summary }}</p>
+                <div v-if="entry.organization">{{ entry.organization }}</div>
+                <div v-if="entry.location">{{ entry.location }}</div>
+                <p v-if="entry.summary">{{ entry.summary }}</p>
               </template>
-              <ul class="flex gap-1 flew-wrap">
+              <ul class="flex gap-1 flew-wrap" v-if="entry.highlights.length">
                 <li
                   v-for="(highlight, highlightIndex) in entry.highlights"
                   :key="highlightIndex"
@@ -135,17 +114,21 @@ const {
             >
               <div
                 class="italic text-right font-light"
-                v-if="entry.nature === 'experience'"
+                v-if="entry.nature === 'experience' && entry.startDate"
               >
-                {{ entry.startDate }} - {{ entry.endDate }}
+                {{ entry.startDate }}
+                <template v-if="entry.endDate">- {{ entry.endDate }}</template>
               </div>
               <div class="font-light">{{ entry.title }}</div>
               <template v-if="entry.nature === 'experience'">
-                <div>{{ entry.organization }}</div>
-                <div>{{ entry.location }}</div>
-                <p>{{ entry.summary }}</p>
+                <div v-if="entry.organization">{{ entry.organization }}</div>
+                <div v-if="entry.location">{{ entry.location }}</div>
+                <p v-if="entry.summary">{{ entry.summary }}</p>
               </template>
-              <ul class="list-disc list-inside ml-7">
+              <ul
+                class="list-disc list-inside ml-7"
+                v-if="entry.highlights.length"
+              >
                 <li
                   v-for="(highlight, highlightIndex) in entry.highlights"
                   :key="highlightIndex"
