@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { storeToRefs } from "pinia";
-import { PlusCircleIcon, XCircleIcon } from "@heroicons/vue/24/outline";
+import { PlusCircleIcon } from "@heroicons/vue/24/outline";
 import { useResumeStore } from "@/stores/resume";
 import { type Category, type Experience } from "@/types";
 import { moveDown, moveUp, remove } from "@/utils/array";
@@ -192,7 +192,7 @@ function getExperienceOrganizationLabel(experience: Experience) {
               class="flex items-center gap-2"
             >
               <input
-                class="bg-white bg-opacity-10 rounded px-2 py-1 flex-1"
+                class="bg-white bg-opacity-10 rounded px-2 py-1"
                 v-model="contactDetails[detailIndex].value"
               />
               <label for="detailIcon">
@@ -220,13 +220,14 @@ function getExperienceOrganizationLabel(experience: Experience) {
                   </option>
                 </select>
               </label>
-              <button
-                title="Remove"
-                class="text-white size-6"
-                @click="remove(contactDetails, detailIndex)"
-              >
-                <XCircleIcon class="size-full" />
-              </button>
+              <ListActions
+                class="mb-2"
+                :index="detailIndex"
+                :list-length="contactDetails.length"
+                @moveUp="moveUp(contactDetails, detailIndex)"
+                @moveDown="moveDown(contactDetails, detailIndex)"
+                @remove="remove(contactDetails, detailIndex)"
+              />
             </li>
           </ul>
         </label>
@@ -242,14 +243,14 @@ function getExperienceOrganizationLabel(experience: Experience) {
               <PlusCircleIcon class="size-full" />
             </button>
           </div>
-          <ul class="flex flex-col gap-2">
+          <ul class="flex flex-col gap-2 justify-between">
             <li
               v-for="(link, linkIndex) in socialLinks"
               :key="linkIndex"
               class="flex items-center gap-2"
             >
               <input
-                class="bg-white bg-opacity-10 rounded px-2 py-1 flex-1"
+                class="bg-white bg-opacity-10 rounded px-2 py-1"
                 v-model="socialLinks[linkIndex].url"
               />
               <label for="linkIcon">
@@ -276,13 +277,14 @@ function getExperienceOrganizationLabel(experience: Experience) {
                   </option>
                 </select>
               </label>
-              <button
-                title="Remove"
-                class="text-white size-6"
-                @click="remove(socialLinks, linkIndex)"
-              >
-                <XCircleIcon class="size-full" />
-              </button>
+              <ListActions
+                class="mb-2"
+                :index="linkIndex"
+                :list-length="socialLinks.length"
+                @moveUp="moveUp(socialLinks, linkIndex)"
+                @moveDown="moveDown(socialLinks, linkIndex)"
+                @remove="remove(socialLinks, linkIndex)"
+              />
             </li>
           </ul>
         </label>
@@ -418,16 +420,17 @@ function getExperienceOrganizationLabel(experience: Experience) {
                   class="flex items-center gap-2"
                 >
                   <input
-                    class="bg-white bg-opacity-10 rounded px-2 py-1 flex-1"
+                    class="bg-white bg-opacity-10 rounded px-2 py-1"
                     v-model="entry.highlights[taskIndex]"
                   />
-                  <button
-                    title="Remove"
-                    class="text-white size-6"
-                    @click="remove(entry.highlights, taskIndex)"
-                  >
-                    <XCircleIcon class="size-full" />
-                  </button>
+                  <ListActions
+                    class="mb-2"
+                    :index="taskIndex"
+                    :list-length="entry.highlights.length"
+                    @moveUp="moveUp(entry.highlights, taskIndex)"
+                    @moveDown="moveDown(entry.highlights, taskIndex)"
+                    @remove="remove(entry.highlights, taskIndex)"
+                  />
                 </li>
               </ul>
             </label>
