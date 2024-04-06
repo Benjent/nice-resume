@@ -442,7 +442,7 @@ function getExperienceOrganizationLabel(experience: Experience) {
       </ul>
       <footer class="flex justify-center mt-4">
         <button
-          class="bg-white px-3 py-2 rounded text-pink-500"
+          class="border-white border-2 px-3 py-1 rounded-full text-white"
           @click="addEntry(category)"
         >
           Add entry
@@ -450,7 +450,7 @@ function getExperienceOrganizationLabel(experience: Experience) {
       </footer>
     </EditorCategory>
 
-    <footer class="flex justify-center mt-4">
+    <footer class="flex justify-center p-8">
       <button
         class="bg-white px-3 py-2 rounded text-blue-500"
         @click="addCategory"
