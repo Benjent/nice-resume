@@ -1,6 +1,7 @@
 import {
   type Asset,
   type Category,
+  type Detail,
   type Experience,
   type Link,
   type Template,
@@ -34,7 +35,16 @@ export const discouragedLayoutTemplates: {
   Wiki: [],
 };
 
+export const contactIcons: Array<Detail["value"]> = [
+  // TODO wrong type
+  "address",
+  "drivingLicense",
+  "email",
+  "phone",
+];
+
 export const socialIcons: Array<Link["url"]> = [
+  // TODO wrong type shouldn't it be Link["icon"]
   "bandcamp",
   "behance",
   "mastodon",

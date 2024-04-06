@@ -1,25 +1,11 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import {
-  EnvelopeIcon,
-  IdentificationIcon,
-  MapPinIcon,
-  PhoneIcon,
-} from "@heroicons/vue/16/solid";
 import { useResumeStore } from "@/stores/resume";
+import ContactIcon from "../components/ContactIcon.vue";
 import LinkIcon from "../components/LinkIcon.vue";
 
-const {
-  about,
-  address,
-  categories,
-  drivingLicense,
-  email,
-  name,
-  phone,
-  socialLinks,
-  title,
-} = storeToRefs(useResumeStore());
+const { about, categories, contactDetails, name, socialLinks, title } =
+  storeToRefs(useResumeStore());
 </script>
 
 <template>
@@ -33,34 +19,24 @@ const {
       <h2 v-if="title" class="text-xl mb-2 font-bold">
         {{ title }}
       </h2>
-      <div class="flex justify-between gap-2 flex-wrap text-sm">
-        <div v-if="email" class="flex gap-1 items-center">
-          <EnvelopeIcon class="w-4" />
-          {{ email }}
-        </div>
-        <div v-if="phone" class="flex gap-1 items-center">
-          <PhoneIcon class="w-4" />
-          {{ phone }}
-        </div>
-        <div v-if="address" class="flex gap-1 items-center">
-          <MapPinIcon class="w-4" />
-          {{ address }}
-        </div>
-        <div v-if="drivingLicense" class="flex gap-1 items-center">
-          <IdentificationIcon class="w-4" />
-          {{ drivingLicense }}
-        </div>
-        <ul>
-          <li
-            v-for="link in socialLinks"
-            :key="link.url"
-            class="flex gap-1 items-center"
-          >
-            <LinkIcon v-if="link.icon" :icon="link.icon" class="w-4" />
-            {{ link.url }}
-          </li>
-        </ul>
-      </div>
+      <ul class="flex justify-between gap-2 flex-wrap text-sm">
+        <li
+          v-for="detail in contactDetails"
+          :key="detail.value"
+          class="flex gap-1 items-center"
+        >
+          <ContactIcon v-if="detail.icon" :icon="detail.icon" class="w-4" />
+          {{ detail.value }}
+        </li>
+        <li
+          v-for="link in socialLinks"
+          :key="link.url"
+          class="flex gap-1 items-center"
+        >
+          <LinkIcon v-if="link.icon" :icon="link.icon" class="w-4" />
+          {{ link.url }}
+        </li>
+      </ul>
 
       <p v-if="about" class="text-center mt-2 italic">
         {{ about }}

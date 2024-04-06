@@ -1,28 +1,11 @@
 <script setup lang="ts">
-import { computed } from "vue";
 import { storeToRefs } from "pinia";
 import { useResumeStore } from "@/stores/resume";
+import ContactIcon from "../components/ContactIcon.vue";
 import LinkIcon from "../components/LinkIcon.vue";
 
-const {
-  about,
-  address,
-  categories,
-  drivingLicense,
-  email,
-  name,
-  phone,
-  socialLinks,
-  title,
-} = storeToRefs(useResumeStore());
-
-const location = computed(() =>
-  [drivingLicense.value, address.value].filter(Boolean).join(" | "),
-);
-
-const contact = computed(() =>
-  [phone.value, email.value].filter(Boolean).join(" | "),
-);
+const { about, categories, contactDetails, name, socialLinks, title } =
+  storeToRefs(useResumeStore());
 </script>
 
 <template>
@@ -36,9 +19,23 @@ const contact = computed(() =>
       <h2 v-if="title" class="text-center text-xl mb-2">
         {{ title }}
       </h2>
-      <div class="text-center leading-tight">{{ location }}</div>
-      <div class="text-center leading-tight">{{ contact }}</div>
-      <ul class="text-center leading-tight">
+      <ul
+        v-if="contactDetails.length"
+        class="text-center leading-tight flex justify-center gap-x-6 flex-wrap mb-2"
+      >
+        <li
+          v-for="detail in contactDetails"
+          :key="detail.value"
+          class="flex gap-1 items-center"
+        >
+          <ContactIcon v-if="detail.icon" :icon="detail.icon" class="w-4" />
+          {{ detail.value }}
+        </li>
+      </ul>
+      <ul
+        v-if="socialLinks.length"
+        class="text-center leading-tight flex justify-center gap-x-6 flex-wrap"
+      >
         <li
           v-for="link in socialLinks"
           :key="link.url"

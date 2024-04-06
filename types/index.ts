@@ -9,6 +9,11 @@ export type Template =
   | "Toothpaste"
   | "Wiki";
 
+export interface Detail {
+  icon: null | "default" | "address" | "drivingLicense" | "email" | "phone";
+  value: string;
+}
+
 export interface Link {
   icon:
     | null
@@ -31,10 +36,7 @@ export interface Details {
   name: string;
   title: string;
   about: string;
-  address: string;
-  email: string;
-  phone: string;
-  drivingLicense: string;
+  contactDetails: Array<Detail>;
   socialLinks: Array<Link>;
 }
 

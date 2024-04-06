@@ -8,11 +8,12 @@ import { moveDown, moveUp, remove } from "@/utils/array";
 import { capitalize } from "@/utils/string";
 import EditorCategory from "./EditorCategory.vue";
 import ListActions from "./ListActions.vue";
-import type { Asset, Entry, Link } from "@/types";
+import type { Asset, Detail, Entry, Link } from "@/types";
 import {
   assetTypes,
   categoryTypes,
   categoryLayouts,
+  contactIcons,
   discouragedLayoutTemplates,
   experienceTypes,
   fixedLayoutTemplates,
@@ -81,6 +82,15 @@ function addEntry(category: Category) {
   }
 }
 
+function addContactDetail() {
+  const detail: Detail = {
+    icon: null,
+    value: "",
+  };
+
+  contactDetails.value.push(detail);
+}
+
 function addSocialLink() {
   const link: Link = {
     icon: null,
@@ -88,6 +98,10 @@ function addSocialLink() {
   };
 
   socialLinks.value.push(link);
+}
+
+function changeContactDetailIcon(detail: Detail, value: Detail["icon"]) {
+  detail.icon = value;
 }
 
 function changeSocialLinkIcon(link: Link, value: Link["icon"]) {
@@ -159,32 +173,69 @@ function getExperienceOrganizationLabel(experience: Experience) {
           About
           <textarea id="detailsAbout" class="input" v-model="about" />
         </label>
-        <div class="flex justify-center gap-5 flex-wrap">
-          <label class="flex flex-col flex-[60%]" for="detailsEmail">
-            Email
-            <input id="detailsEmail" class="input" v-model="email" />
-          </label>
-          <label class="flex flex-col flex-[40%]" for="detailsPhone">
-            Phone
-            <input id="detailsPhone" class="input" v-model="phone" />
-          </label>
-        </div>
-        <div class="flex justify-center gap-5 flex-wrap">
-          <label class="flex flex-col flex-[80%]" for="detailsAddress">
-            Address
-            <input id="detailsAddress" class="input" v-model="address" />
-          </label>
-          <label class="flex flex-col flex-[20%]" for="detailsDriving">
-            Driving license
-            <input id="detailsDriving" class="input" v-model="drivingLicense" />
-          </label>
-        </div>
-        <label class="flex flex-col" for="highlights">
+        <label class="flex flex-col" for="contactDetails">
+          <div class="flex gap-2">
+            Contact details
+            <button
+              id="links"
+              title="Add detail"
+              class="text-white size-6"
+              @click="addContactDetail"
+            >
+              <PlusCircleIcon class="size-full" />
+            </button>
+          </div>
+          <ul class="flex flex-col gap-2">
+            <li
+              v-for="(detail, detailIndex) in contactDetails"
+              :key="detailIndex"
+              class="flex items-center gap-2"
+            >
+              <input
+                class="bg-white bg-opacity-10 rounded px-2 py-1 flex-1"
+                v-model="contactDetails[detailIndex].value"
+              />
+              <label for="detailIcon">
+                Icon
+                <select
+                  id="detailIcon"
+                  :value="detail.icon"
+                  @change="
+                    changeContactDetailIcon(
+                      detail,
+                      ($event.target as HTMLInputElement)
+                        .value as Detail['icon'],
+                    )
+                  "
+                  class="cursor-pointer bg-transparent text-white block capitalize"
+                >
+                  <!-- <option value="">None</option> -->
+                  <option value="default">Default</option>
+                  <option
+                    v-for="icon in contactIcons"
+                    :key="icon"
+                    class="text-blue-500 capitalize"
+                  >
+                    {{ icon }}
+                  </option>
+                </select>
+              </label>
+              <button
+                title="Remove"
+                class="text-white size-6"
+                @click="remove(contactDetails, detailIndex)"
+              >
+                <XCircleIcon class="size-full" />
+              </button>
+            </li>
+          </ul>
+        </label>
+        <label class="flex flex-col" for="socialLinks">
           <div class="flex gap-2">
             Social links
             <button
               id="links"
-              title="Add task"
+              title="Add social link"
               class="text-white size-6"
               @click="addSocialLink"
             >

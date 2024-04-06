@@ -3,19 +3,11 @@ import { computed } from "vue";
 import { storeToRefs } from "pinia";
 import { useResumeStore } from "@/stores/resume";
 import type { Category } from "@/types";
+import ContactIcon from "../components/ContactIcon.vue";
 import LinkIcon from "../components/LinkIcon.vue";
 
-const {
-  about,
-  address,
-  categories,
-  drivingLicense,
-  email,
-  name,
-  phone,
-  socialLinks,
-  title,
-} = storeToRefs(useResumeStore());
+const { about, categories, contactDetails, name, socialLinks, title } =
+  storeToRefs(useResumeStore());
 
 const mainCategories = computed(() => {
   return categories.value.filter((category) => category.layout !== "aside");
@@ -72,15 +64,16 @@ function getSectionCategory(indexToGetFrom: number) {
         </h2>
       </div>
       <div class="flex flex-col gap-2 flex-1">
-        <div class="leading-none font-body text-xs italic">
-          <div v-if="drivingLicense || address">
-            <span v-if="drivingLicense">{{ drivingLicense }}</span>
-            <span v-if="drivingLicense && address">-</span>
-            <span v-if="address">{{ address }}</span>
-          </div>
-          <div v-if="email">{{ email }}</div>
-          <div v-if="phone">{{ phone }}</div>
-        </div>
+        <ul class="leading-none font-body text-xs italic">
+          <li
+            v-for="detail in contactDetails"
+            :key="detail.value"
+            class="flex gap-1 items-center"
+          >
+            <ContactIcon v-if="detail.icon" :icon="detail.icon" class="w-4" />
+            {{ detail.value }}
+          </li>
+        </ul>
         <ul class="leading-tight">
           <li
             v-for="link in socialLinks"

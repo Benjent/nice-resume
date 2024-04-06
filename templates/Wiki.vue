@@ -1,29 +1,25 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { useResumeStore } from "@/stores/resume";
+import ContactIcon from "../components/ContactIcon.vue";
 import LinkIcon from "../components/LinkIcon.vue";
 
-const {
-  about,
-  address,
-  categories,
-  drivingLicense,
-  email,
-  name,
-  phone,
-  socialLinks,
-  title,
-} = storeToRefs(useResumeStore());
+const { about, categories, contactDetails, name, socialLinks, title } =
+  storeToRefs(useResumeStore());
 </script>
 
 <template>
   <div class="bg-white h-full w-full flex flex-col py-2 px-6 text-xs font-body">
     <header class="flex mb-4">
       <ul class="flex flex-col">
-        <li>{{ phone }}</li>
-        <li>{{ address }}</li>
-        <li>{{ drivingLicense }}</li>
-        <li>{{ email }}</li>
+        <li
+          v-for="detail in contactDetails"
+          :key="detail.value"
+          class="flex gap-1 items-center"
+        >
+          <ContactIcon v-if="detail.icon" :icon="detail.icon" class="w-4" />
+          {{ detail.value }}
+        </li>
       </ul>
       <div class="flex-1 text-center mb-1">
         <h1 class="text-3xl font-bold">{{ name }}</h1>
