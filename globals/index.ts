@@ -35,16 +35,14 @@ export const discouragedLayoutTemplates: {
   Wiki: [],
 };
 
-export const contactIcons: Array<Detail["value"]> = [
-  // TODO wrong type
+export const contactIcons: Array<Detail["icon"]> = [
   "address",
   "drivingLicense",
   "email",
   "phone",
 ];
 
-export const socialIcons: Array<Link["url"]> = [
-  // TODO wrong type shouldn't it be Link["icon"]
+export const socialIcons: Array<Link["icon"]> = [
   "bandcamp",
   "behance",
   "mastodon",

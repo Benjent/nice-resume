@@ -221,7 +221,7 @@ function getExperienceOrganizationLabel(experience: Experience) {
                     <option class="option">default</option>
                     <option
                       v-for="icon in contactIcons"
-                      :key="icon"
+                      :key="icon as string"
                       class="option"
                     >
                       {{ icon }}
@@ -278,7 +278,7 @@ function getExperienceOrganizationLabel(experience: Experience) {
                     <option class="option">default</option>
                     <option
                       v-for="icon in socialIcons"
-                      :key="icon"
+                      :key="icon as string"
                       class="option"
                     >
                       {{ icon }}
