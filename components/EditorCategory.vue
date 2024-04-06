@@ -1,11 +1,11 @@
 <template>
-  <details class="flex flex-col p-8">
+  <details class="flex flex-col bg-white bg-opacity-10 rounded">
     <summary
-      class="cursor-pointer border-b-2 pb-2 mb-2 flex justify-between rounded-tl rounded-tr hover:bg-white hover:bg-opacity-10"
+      class="cursor-pointer p-6 flex justify-between items-center rounded bg-white text-pink-500 shadow-lg"
     >
       <slot name="header" />
     </summary>
-    <div class="p-2">
+    <div class="p-6">
       <slot />
     </div>
   </details>

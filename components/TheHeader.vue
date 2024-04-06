@@ -118,16 +118,8 @@ function importFromJson(event: Event) {
 
       <label for="template">
         Template
-        <select
-          id="template"
-          v-model="template"
-          class="cursor-pointer bg-transparent text-blue-500 block"
-        >
-          <option
-            v-for="template in templates"
-            :key="template"
-            class="bg-white"
-          >
+        <select id="template" v-model="template" class="select block">
+          <option v-for="template in templates" :key="template" class="option">
             {{ template }}
           </option>
         </select>
