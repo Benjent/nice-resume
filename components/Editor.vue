@@ -164,7 +164,7 @@ function getExperienceOrganizationLabel(experience: Experience) {
     <p v-if="isLayoutDiscouraged" class="text-center p-2 bg-amber-500">
       {{ discouragedLayoutText }}
     </p>
-    <div class="flex flex-col gap-8 p-8">
+    <div class="flex flex-col gap-8 p-8 w-full max-w-[860px] mx-auto">
       <EditorCategory class="w-full">
         <template v-slot:header>Details</template>
         <div class="flex flex-col gap-5">
