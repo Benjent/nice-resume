@@ -14,7 +14,7 @@ const envPath = fs.existsSync(userEnvPath) ? userEnvPath : defaultEnvPath;
 dotenv.config({ path: envPath });
 
 console.log(`Using env file: ${envPath}`);
-console.log(`baseurl: ${process.env.BASE_URL}`);
+console.log(`Base URL: ${process.env.BASE_URL}`);
 
 export default defineConfig<ConfigOptions>({
   fullyParallel: true,

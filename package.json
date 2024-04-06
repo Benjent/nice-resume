@@ -23,7 +23,7 @@
     "postinstall": "nuxt prepare",
     "test": "NUXT_DISABLE_BUILD_CACHE=true vitest run; pnpm exec playwright test e2e",
     "test:unit": "NUXT_DISABLE_BUILD_CACHE=true vitest run",
-    "test:playwright": "pnpm exec playwright test e2e",
+    "test:playwright": "NUXT_DISABLE_BUILD_CACHE=true pnpm exec playwright test e2e",
     "coverage": "NUXT_DISABLE_BUILD_CACHE=true vitest run --coverage",
     "typescript": "nuxt typecheck"
   },
