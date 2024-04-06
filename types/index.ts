@@ -5,6 +5,7 @@ export type Template =
   | "OpenResume"
   | "Paper"
   | "Pharmacy"
+  | "Red"
   | "Stone"
   | "Toothpaste"
   | "Wiki";
