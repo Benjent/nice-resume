@@ -1,6 +1,10 @@
 // @vitest-environment nuxt
+import { fileURLToPath } from "node:url";
 import { defineVitestConfig } from "@nuxt/test-utils/config";
 
 export default defineVitestConfig({
-  // any custom Vitest config you require
+  test: {
+    exclude: ["**/node_modules/**", "e2e/**"],
+    root: fileURLToPath(new URL("./", import.meta.url)),
+  },
 });

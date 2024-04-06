@@ -40,3 +40,6 @@ test/*.env
 
 # ESLint
 .eslintcache
+
+# Tests
+test-results

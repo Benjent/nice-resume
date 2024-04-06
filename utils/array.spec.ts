@@ -1,4 +1,4 @@
-import { moveUp, moveDown, remove } from "../../utils/array";
+import { moveUp, moveDown, remove } from "./array";
 import { test, expect, describe } from "vitest";
 
 describe("moveUp", () => {

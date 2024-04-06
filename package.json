@@ -21,10 +21,10 @@
     "prepare": "husky",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "test": "vitest run unit; pnpm exec playwright test",
-    "test:unit": "vitest run unit",
-    "test:playwright": "pnpm exec playwright test",
-    "coverage": "vitest run --coverage",
+    "test": "NUXT_DISABLE_BUILD_CACHE=true vitest run; pnpm exec playwright test e2e",
+    "test:unit": "NUXT_DISABLE_BUILD_CACHE=true vitest run",
+    "test:playwright": "pnpm exec playwright test e2e",
+    "coverage": "NUXT_DISABLE_BUILD_CACHE=true vitest run --coverage",
     "typescript": "nuxt typecheck"
   },
   "dependencies": {

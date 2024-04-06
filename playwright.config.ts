@@ -7,8 +7,8 @@ import fs from "fs";
 
 const currentDir = fileURLToPath(new URL(".", import.meta.url));
 
-const userEnvPath = path.resolve(currentDir, "test", "test.env");
-const defaultEnvPath = path.resolve(currentDir, "test", "default.env");
+const userEnvPath = path.resolve(currentDir, "e2e", ".test.env");
+const defaultEnvPath = path.resolve(currentDir, "e2e", ".default.test.env");
 const envPath = fs.existsSync(userEnvPath) ? userEnvPath : defaultEnvPath;
 
 dotenv.config({ path: envPath });
@@ -17,7 +17,6 @@ console.log(`Using env file: ${envPath}`);
 console.log(`baseurl: ${process.env.BASE_URL}`);
 
 export default defineConfig<ConfigOptions>({
-  testDir: "test/e2e",
   fullyParallel: true,
   use: {
     nuxt: {
