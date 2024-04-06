@@ -9,51 +9,38 @@ import { useEditorStore } from "@/stores/editor";
 import { useResumeStore } from "@/stores/resume";
 import { templates } from "@/globals";
 import { download } from "@/utils/file";
+import type { Resume } from "@/types";
 
 const { zoomLevel } = storeToRefs(useEditorStore());
 
 const {
   about,
   address,
+  categories,
   drivingLicense,
-  education,
-  educationLabel,
   email,
-  gitHub,
-  linkedIn,
   name,
   phone,
-  skills,
-  skillsLabel,
+  socialLinks,
   template,
   title,
-  website,
-  workExperience,
-  workExperienceLabel,
 } = storeToRefs(useResumeStore());
 
 const isImportError = ref(false);
 
 function exportToJson() {
-  const resume = {
+  const resume: Resume = {
     isNiceResumeExport: true,
     template: template.value,
     about: about.value,
     address: address.value,
+    categories: categories.value,
     drivingLicense: drivingLicense.value,
-    education: education.value,
-    educationLabel: educationLabel.value,
     email: email.value,
-    gitHub: gitHub.value,
-    linkedIn: linkedIn.value,
     name: name.value,
     phone: phone.value,
-    skills: skills.value,
-    skillsLabel: skillsLabel.value,
+    socialLinks: socialLinks.value,
     title: title.value,
-    website: website.value,
-    workExperience: workExperience.value,
-    workExperienceLabel: workExperienceLabel.value,
   };
 
   download(resume, "nice-resume");
@@ -62,8 +49,8 @@ function exportToJson() {
 function importFromJson(event: Event) {
   isImportError.value = false;
   try {
-    // @ts-expect-error It seems like TS does nos not have the files property attached to the Event type.
-    const file = event.target.files[0];
+    // @ts-expect-error It seems there is no default <input type=file /> native TS type...
+    const file = event.currentTarget?.files[0];
 
     const fileReader = new FileReader();
     fileReader.readAsText(file, "UTF-8");
@@ -79,22 +66,16 @@ function importFromJson(event: Event) {
         return;
       }
 
+      template.value = resume.template;
       about.value = resume.about;
       address.value = resume.address;
+      categories.value = resume.categories;
       drivingLicense.value = resume.drivingLicense;
-      education.value = resume.education;
-      educationLabel.value = resume.educationLabel;
       email.value = resume.email;
-      gitHub.value = resume.gitHub;
-      linkedIn.value = resume.linkedIn;
       name.value = resume.name;
       phone.value = resume.phone;
-      skills.value = resume.skills;
-      skillsLabel.value = resume.skillsLabel;
+      socialLinks.value = resume.socialLinks;
       title.value = resume.title;
-      website.value = resume.website;
-      workExperience.value = resume.workExperience;
-      workExperienceLabel.value = resume.workExperienceLabel;
     };
     fileReader.onerror = function () {
       isImportError.value = true;
@@ -122,7 +103,8 @@ function importFromJson(event: Event) {
           for="editorFileReader"
           class="text-blue-500 flex items-center gap-1 cursor-pointer"
         >
-          <ArrowUpOnSquareIcon class="h-6" />Import
+          <ArrowUpOnSquareIcon class="h-6" />
+          Import
           <input
             id="editorFileReader"
             class="hidden"
@@ -139,17 +121,22 @@ function importFromJson(event: Event) {
         class="text-blue-500 flex items-center gap-1"
         @click="exportToJson"
       >
-        <ArrowDownOnSquareIcon class="h-6" />Export
+        <ArrowDownOnSquareIcon class="h-6" />
+        Export
       </button>
 
-      <label for="editorTemplateSelector">
+      <label for="template">
         Template
         <select
-          id="editorTemplateSelector"
+          id="template"
           v-model="template"
-          class="bg-white cursor-pointer text-blue-500 block"
+          class="cursor-pointer bg-transparent text-blue-500 block"
         >
-          <option v-for="template in templates" :key="template">
+          <option
+            v-for="template in templates"
+            :key="template"
+            class="bg-white"
+          >
             {{ template }}
           </option>
         </select>

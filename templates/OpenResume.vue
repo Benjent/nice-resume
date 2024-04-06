@@ -3,31 +3,22 @@ import { storeToRefs } from "pinia";
 import {
   EnvelopeIcon,
   IdentificationIcon,
-  LinkIcon,
   MapPinIcon,
   PhoneIcon,
 } from "@heroicons/vue/16/solid";
-import GitHubIcon from "@/assets/images/icons/github.svg";
-import LinkedInIcon from "@/assets/images/icons/linkedin.svg";
 import { useResumeStore } from "@/stores/resume";
+import LinkIcon from "../components/LinkIcon.vue";
 
 const {
   about,
   address,
+  categories,
   drivingLicense,
-  education,
-  educationLabel,
   email,
-  gitHub,
-  linkedIn,
   name,
   phone,
-  skills,
-  skillsLabel,
+  socialLinks,
   title,
-  website,
-  workExperience,
-  workExperienceLabel,
 } = storeToRefs(useResumeStore());
 </script>
 
@@ -44,26 +35,31 @@ const {
       </h2>
       <div class="flex justify-between gap-2 flex-wrap text-sm">
         <div v-if="email" class="flex gap-1 items-center">
-          <EnvelopeIcon class="w-4" />{{ email }}
+          <EnvelopeIcon class="w-4" />
+          {{ email }}
         </div>
         <div v-if="phone" class="flex gap-1 items-center">
-          <PhoneIcon class="w-4" />{{ phone }}
+          <PhoneIcon class="w-4" />
+          {{ phone }}
         </div>
         <div v-if="address" class="flex gap-1 items-center">
-          <MapPinIcon class="w-4" />{{ address }}
+          <MapPinIcon class="w-4" />
+          {{ address }}
         </div>
         <div v-if="drivingLicense" class="flex gap-1 items-center">
-          <IdentificationIcon class="w-4" />{{ drivingLicense }}
+          <IdentificationIcon class="w-4" />
+          {{ drivingLicense }}
         </div>
-        <div v-if="website" class="flex gap-1 items-center">
-          <LinkIcon class="w-4" />{{ website }}
-        </div>
-        <div v-if="linkedIn" class="flex gap-1 items-center">
-          <LinkedInIcon />{{ linkedIn }}
-        </div>
-        <div v-if="gitHub" class="flex gap-1 items-center">
-          <GitHubIcon />{{ gitHub }}
-        </div>
+        <ul>
+          <li
+            v-for="link in socialLinks"
+            :key="link.url"
+            class="flex gap-1 items-center"
+          >
+            <LinkIcon v-if="link.icon" :icon="link.icon" class="w-4" />
+            {{ link.url }}
+          </li>
+        </ul>
       </div>
 
       <p v-if="about" class="text-center mt-2 italic">
@@ -71,66 +67,88 @@ const {
       </p>
     </header>
 
-    <section v-if="workExperience.length" class="mt-6">
-      <h3
-        class="mb-2 font-bold before:content-[''] before:inline-block before:mr-3 before:relative before:bottom-1 before:w-12 before:h-1 before:bg-amber-500"
+    <div class="flex gap-12">
+      <aside
+        v-if="categories.some((category) => category.layout === 'aside')"
+        class="w-[20%] flex flex-col gap-8"
       >
-        {{ workExperienceLabel }}
-      </h3>
-      <ul class="flex flex-col gap-4 text-sm">
-        <li v-for="(job, jobIndex) in workExperience" :key="jobIndex">
-          <div class="font-semibold">{{ job.position }}</div>
-          <div class="flex justify-between">
-            <div>{{ job.company }}, {{ job.location }}</div>
-            <div>{{ job.period }}</div>
-          </div>
-          <div>
-            <p class="italic">{{ job.description }}</p>
-            <ul class="list-disc list-inside ml-1 text-xs">
-              <li v-for="(task, taskIndex) in job.tasks" :key="taskIndex">
-                {{ task }}
-              </li>
-            </ul>
-          </div>
-        </li>
-      </ul>
-    </section>
-
-    <section v-if="education.length" class="mt-6">
-      <h3
-        class="mb-2 font-bold before:content-[''] before:inline-block before:mr-3 before:relative before:bottom-1 before:w-12 before:h-1 before:bg-amber-500"
-      >
-        {{ educationLabel }}
-      </h3>
-      <ul class="flex flex-col gap-4 text-sm">
-        <li v-for="(training, trainingIndex) in education" :key="trainingIndex">
-          <div class="font-semibold">{{ training.diploma }}</div>
-          <div class="flex justify-between">
-            <div>{{ training.institution }}, {{ training.location }}</div>
-            <div>{{ training.period }}</div>
-          </div>
-          <p class="italic text-xs">{{ training.description }}</p>
-        </li>
-      </ul>
-    </section>
-
-    <section v-if="skills.length" class="mt-6">
-      <h3
-        class="mb-2 font-bold before:content-[''] before:inline-block before:mr-3 before:relative before:bottom-1 before:w-12 before:h-1 before:bg-amber-500"
-      >
-        {{ skillsLabel }}
-      </h3>
-      <ul class="flex flex-col text-sm">
-        <li
-          v-for="(skill, skillIndex) in skills"
-          :key="skillIndex"
-          class="flex gap-2 items-baseline"
+        <div
+          v-for="(category, categoryIndex) in categories.filter(
+            (category) => category.layout === 'aside',
+          )"
+          :key="categoryIndex"
+          class="mt-6"
         >
-          <span>{{ skill.name }}</span
-          ><span v-if="skill.level">{{ skill.level }}</span>
-        </li>
-      </ul>
-    </section>
+          <h3
+            class="mb-2 font-bold before:content-[''] before:inline-block before:mr-3 before:relative before:bottom-1 before:w-12 before:h-1 before:bg-amber-500"
+          >
+            {{ category.name }}
+          </h3>
+          <ul class="flex flex-col gap-4 text-sm">
+            <li
+              v-for="(entry, entryIndex) in category.entries"
+              :key="entryIndex"
+            >
+              <div class="font-semibold">{{ entry.title }}</div>
+              <template v-if="entry.nature === 'experience'">
+                <div class="flex justify-between">
+                  <div>{{ entry.organization }}, {{ entry.location }}</div>
+                  <div>{{ entry.startDate }} - {{ entry.endDate }}</div>
+                </div>
+                <p class="italic">{{ entry.summary }}</p>
+              </template>
+              <ul class="list-disc list-inside ml-1 text-xs">
+                <li
+                  v-for="(highlight, highlightIndex) in entry.highlights"
+                  :key="highlightIndex"
+                >
+                  {{ highlight }}
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </aside>
+      <div class="grid grid-cols-2 gap-8 flex-1">
+        <section
+          v-for="(category, categoryIndex) in categories.filter(
+            (category) => category.layout !== 'aside',
+          )"
+          :key="categoryIndex"
+          class="mt-6"
+          :class="category.layout === 'half' ? 'col-span-1' : 'col-span-2'"
+        >
+          <h3
+            class="mb-2 font-bold before:content-[''] before:inline-block before:mr-3 before:relative before:bottom-1 before:w-12 before:h-1 before:bg-amber-500"
+          >
+            {{ category.name }}
+          </h3>
+          <ul class="flex flex-col gap-4 text-sm">
+            <li
+              v-for="(entry, entryIndex) in category.entries"
+              :key="entryIndex"
+            >
+              <div class="font-semibold">{{ entry.title }}</div>
+              <template v-if="entry.nature === 'experience'">
+                <div class="flex justify-between">
+                  <div>{{ entry.organization }}, {{ entry.location }}</div>
+                  <div>{{ entry.startDate }} - {{ entry.endDate }}</div>
+                </div>
+                <p class="italic">{{ entry.summary }}</p>
+              </template>
+              <ul class="list-disc list-inside ml-1 text-xs">
+                <li
+                  v-for="(highlight, highlightIndex) in entry.highlights"
+                  :key="highlightIndex"
+                >
+                  {{ highlight }}
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+      </div>
+    </div>
   </div>
 </template>
 

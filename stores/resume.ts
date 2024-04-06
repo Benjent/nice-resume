@@ -1,11 +1,6 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
-import {
-  type Education,
-  type Skill,
-  type Template,
-  type WorkExperience,
-} from "@/types";
+import { type Category, type Link, type Template } from "@/types";
 import { templates } from "@/globals";
 
 export const useResumeStore = defineStore("resume", () => {
@@ -20,34 +15,19 @@ export const useResumeStore = defineStore("resume", () => {
   const phone = ref("");
   const drivingLicense = ref("");
 
-  const linkedIn = ref("");
-  const gitHub = ref("");
-  const website = ref("");
-
-  const workExperience = ref<WorkExperience[]>([]);
-  const workExperienceLabel = ref("Work experience");
-  const education = ref<Education[]>([]);
-  const educationLabel = ref("Education");
-  const skills = ref<Skill[]>([]);
-  const skillsLabel = ref("Skills");
+  const socialLinks = ref<Link[]>([]);
+  const categories = ref<Category[]>([]);
 
   return {
     about,
     address,
+    categories,
     drivingLicense,
-    education,
-    educationLabel,
     email,
-    gitHub,
-    linkedIn,
     name,
     phone,
-    skills,
-    skillsLabel,
+    socialLinks,
     template,
     title,
-    website,
-    workExperience,
-    workExperienceLabel,
   };
 });
