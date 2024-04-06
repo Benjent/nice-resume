@@ -17,7 +17,7 @@ defineEmits(["moveDown", "moveUp", "remove"]);
     <button
       title="Move up"
       v-if="listLength > 1 && index > 0"
-      class="text-white size-8"
+      class="text-white size-7"
       @click="$emit('moveUp')"
     >
       <ArrowUpCircleIcon class="size-full" />
@@ -25,12 +25,12 @@ defineEmits(["moveDown", "moveUp", "remove"]);
     <button
       title="Move down"
       v-if="listLength > 1 && index < listLength - 1"
-      class="text-white size-8"
+      class="text-white size-7"
       @click="$emit('moveDown')"
     >
       <ArrowDownCircleIcon class="size-full" />
     </button>
-    <button title="Remove" class="text-white size-8" @click="$emit('remove')">
+    <button title="Remove" class="text-white size-7" @click="$emit('remove')">
       <XCircleIcon class="size-full" />
     </button>
   </div>

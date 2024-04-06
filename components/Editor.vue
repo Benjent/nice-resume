@@ -179,7 +179,7 @@ function getExperienceOrganizationLabel(experience: Experience) {
             <button
               id="links"
               title="Add detail"
-              class="text-white size-6"
+              class="text-white size-7"
               @click="addContactDetail"
             >
               <PlusCircleIcon class="size-full" />
@@ -237,7 +237,7 @@ function getExperienceOrganizationLabel(experience: Experience) {
             <button
               id="links"
               title="Add social link"
-              class="text-white size-6"
+              class="text-white size-7"
               @click="addSocialLink"
             >
               <PlusCircleIcon class="size-full" />
@@ -407,7 +407,7 @@ function getExperienceOrganizationLabel(experience: Experience) {
                 <button
                   id="highlights"
                   title="Add highlight"
-                  class="text-white size-6"
+                  class="text-white size-7"
                   @click="() => entry.highlights.push('')"
                 >
                   <PlusCircleIcon class="size-full" />
