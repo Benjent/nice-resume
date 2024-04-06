@@ -68,3 +68,12 @@ docker run \
     -p 3000:3000 \
     nice-resume:local
 ```
+
+## Troubleshooting
+
+```sh
+FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory
+```
+
+- Delete `.nuxt` and `/tmp/nitro`
+- Increase memory in `.pnpmrc`

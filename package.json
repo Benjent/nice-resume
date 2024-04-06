@@ -2,6 +2,10 @@
   "name": "nice-resume",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": "20.11",
+    "pnpm": "8.15.5"
+  },
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
@@ -23,8 +27,8 @@
     "@heroicons/vue": "^2.1.3",
     "@nuxtjs/tailwindcss": "^6.11.4",
     "@pinia/nuxt": "^0.5.1",
-    "nuxt": "^3.11.1",
     "nuxt-build-cache": "^0.1.1",
+    "nuxt": "^3.11.2",
     "pinia": "^2.1.7",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
@@ -33,19 +37,19 @@
     "@commitlint/cli": "^19.2.1",
     "@commitlint/config-conventional": "^19.1.0",
     "@nuxtjs/eslint-module": "^4.1.0",
-    "@typescript-eslint/eslint-plugin": "^7.3.1",
-    "@typescript-eslint/parser": "^7.3.1",
+    "@typescript-eslint/eslint-plugin": "^7.5.0",
+    "@typescript-eslint/parser": "^7.5.0",
     "commitlint": "^19.2.1",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",
-    "eslint-plugin-vue": "^9.23.0",
+    "eslint-plugin-vue": "^9.24.0",
     "eslint-plugin-vuejs-accessibility": "^2.2.1",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
     "nuxt-svgo": "^4.0.0",
     "prettier": "^3.2.5",
-    "typescript": "^5.4.3",
+    "typescript": "^5.4.4",
     "vue-tsc": "^1.8.27"
   },
   "packageManager": "pnpm@8.15.5+sha256.4b4efa12490e5055d59b9b9fc9438b7d581a6b7af3b5675eb5c5f447cee1a589"
