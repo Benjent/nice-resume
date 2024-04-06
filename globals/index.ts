@@ -9,10 +9,24 @@ import {
 export const templates: Array<Template> = [
   "CottonCandy",
   "OpenResume",
+  "Paper",
   "Pharmacy",
   "Stone",
   "Toothpaste",
 ];
+
+export const fixedLayoutTemplates: Array<Template> = ["Paper"];
+
+export const discouragedLayoutTemplates: {
+  [T in Template]: Array<Category["layout"]>;
+} = {
+  CottonCandy: ["aside"],
+  OpenResume: [],
+  Paper: [],
+  Pharmacy: [],
+  Stone: [],
+  Toothpaste: ["aside"],
+};
 
 export const socialIcons: Array<Link["url"]> = ["gitHub", "linkedIn"];
 
