@@ -155,11 +155,11 @@ function getSectionCategory(indexToGetFrom: number) {
               <div>
                 <p
                   class="text-sm font-semibold"
-                  v-if="entry.nature === 'experience'"
+                  v-if="entry.nature === 'experience' && entry.summary"
                 >
                   {{ entry.summary }}
                 </p>
-                <ul class="italic text-xs">
+                <ul class="italic text-xs" v-if="entry.highlights.length">
                   <li
                     v-for="(highlight, highlightIndex) in entry.highlights"
                     :key="highlightIndex"
@@ -195,16 +195,26 @@ function getSectionCategory(indexToGetFrom: number) {
                   </div>
                   <template v-if="entry.nature === 'experience'">
                     <div>
-                      {{ entry.organization }} · {{ entry.startDate }} -
-                      {{ entry.endDate }} ·
-                      {{ entry.location }}
+                      {{ entry.organization }}
+                      <template v-if="entry.startDate">
+                        · {{ entry.startDate }}
+                        <template v-if="entry.endDate">
+                          - {{ entry.endDate }}
+                        </template>
+                      </template>
+                      <template v-if="entry.location">
+                        · {{ entry.location }}
+                      </template>
                     </div>
                   </template>
                 </div>
-                <p v-if="entry.nature === 'experience'" class="text-sm">
+                <p
+                  v-if="entry.nature === 'experience' && entry.summary"
+                  class="text-sm"
+                >
                   {{ entry.summary }}
                 </p>
-                <ul class="italic text-xs">
+                <ul class="italic text-xs" v-if="entry.highlights.length">
                   <li
                     v-for="(highlight, highlightIndex) in entry.highlights"
                     :key="highlightIndex"
@@ -238,16 +248,22 @@ function getSectionCategory(indexToGetFrom: number) {
                   </div>
                   <template v-if="entry.nature === 'experience'">
                     <div>
-                      {{ entry.organization }} · {{ entry.startDate }} -
-                      {{ entry.endDate }} ·
+                      {{ entry.organization }} · {{ entry.startDate }}
+                      <template v-if="entry.endDate">
+                        - {{ entry.endDate }}
+                      </template>
+                      ·
                       {{ entry.location }}
                     </div>
                   </template>
                 </div>
-                <p v-if="entry.nature === 'experience'" class="text-sm">
+                <p
+                  v-if="entry.nature === 'experience' && entry.summary"
+                  class="text-sm"
+                >
                   {{ entry.summary }}
                 </p>
-                <ul class="italic text-xs">
+                <ul class="italic text-xs" v-if="entry.highlights.length">
                   <li
                     v-for="(highlight, highlightIndex) in entry.highlights"
                     :key="highlightIndex"
@@ -287,10 +303,13 @@ function getSectionCategory(indexToGetFrom: number) {
                     </div>
                   </template>
                 </div>
-                <p v-if="entry.nature === 'experience'" class="text-sm">
+                <p
+                  v-if="entry.nature === 'experience' && entry.summary"
+                  class="text-sm"
+                >
                   {{ entry.summary }}
                 </p>
-                <ul class="italic text-xs">
+                <ul class="italic text-xs" v-if="entry.highlights.length">
                   <li
                     v-for="(highlight, highlightIndex) in entry.highlights"
                     :key="highlightIndex"

@@ -78,18 +78,27 @@ const { about, categories, contactDetails, name, socialLinks, title } =
                 {{ entry.title }}
               </div>
               <template v-if="entry.nature === 'experience'">
-                <div class="text-zinc-400 leading-tight">
+                <div
+                  class="text-zinc-400 leading-tight"
+                  v-if="entry.organization"
+                >
                   {{ entry.organization }}
                 </div>
-                <div class="text-zinc-400 leading-tight">
+                <div class="text-zinc-400 leading-tight" v-if="entry.location">
                   {{ entry.location }}
                 </div>
-                <div class="text-zinc-400 leading-tight">
-                  {{ entry.startDate }} - {{ entry.endDate }}
+                <div class="text-zinc-400 leading-tight" v-if="entry.startDate">
+                  {{ entry.startDate }}
+                  <template v-if="entry.endDate">
+                    - {{ entry.endDate }}
+                  </template>
                 </div>
-                <p class="text-sm">{{ entry.summary }}</p>
+                <p class="text-sm" v-if="entry.summary">{{ entry.summary }}</p>
               </template>
-              <ul class="list-disc list-inside ml-3 text-sm">
+              <ul
+                class="list-disc list-inside ml-3 text-sm"
+                v-if="entry.highlights.length"
+              >
                 <li
                   v-for="(highlight, highlightIndex) in entry.highlights"
                   :key="highlightIndex"
@@ -124,12 +133,21 @@ const { about, categories, contactDetails, name, socialLinks, title } =
               </div>
               <template v-if="entry.nature === 'experience'">
                 <div class="text-zinc-400 mb-1">
-                  {{ entry.organization }} | {{ entry.location }} |
-                  {{ entry.startDate }} - {{ entry.endDate }}
+                  {{ entry.organization }} | {{ entry.location }}
+                  <template v-if="entry.startDate">
+                    |
+                    {{ entry.startDate }}
+                    <template v-if="entry.endDate">
+                      - {{ entry.endDate }}
+                    </template>
+                  </template>
                 </div>
-                <p class="text-sm">{{ entry.summary }}</p>
+                <p class="text-sm" v-if="entry.summary">{{ entry.summary }}</p>
               </template>
-              <ul class="list-disc list-inside ml-3 text-sm">
+              <ul
+                class="list-disc list-inside ml-3 text-sm"
+                v-if="entry.highlights.length"
+              >
                 <li
                   v-for="(highlight, highlightIndex) in entry.highlights"
                   :key="highlightIndex"

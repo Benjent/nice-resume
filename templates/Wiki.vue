@@ -61,7 +61,10 @@ const { about, categories, contactDetails, name, socialLinks, title } =
               <div class="flex justify-between">
                 <div class="flex flex-col">
                   <div class="font-semibold">{{ entry.title }}</div>
-                  <div v-if="entry.nature === 'experience'" class="italic">
+                  <div
+                    v-if="entry.nature === 'experience' && entry.organization"
+                    class="italic"
+                  >
                     {{ entry.organization }}
                   </div>
                 </div>
@@ -69,7 +72,12 @@ const { about, categories, contactDetails, name, socialLinks, title } =
                   v-if="entry.nature === 'experience'"
                   class="flex flex-col text-right"
                 >
-                  <div>{{ entry.startDate }} - {{ entry.endDate }}</div>
+                  <div v-if="entry.startDate">
+                    {{ entry.startDate }}
+                    <template v-if="entry.endDate">
+                      - {{ entry.endDate }}
+                    </template>
+                  </div>
                   <div class="italic">{{ entry.location }}</div>
                 </div>
               </div>
@@ -108,7 +116,10 @@ const { about, categories, contactDetails, name, socialLinks, title } =
               <div class="flex justify-between">
                 <div class="flex flex-col">
                   <div class="font-semibold">{{ entry.title }}</div>
-                  <div v-if="entry.nature === 'experience'" class="italic">
+                  <div
+                    v-if="entry.nature === 'experience' && entry.organization"
+                    class="italic"
+                  >
                     {{ entry.organization }}
                   </div>
                 </div>
@@ -116,7 +127,12 @@ const { about, categories, contactDetails, name, socialLinks, title } =
                   v-if="entry.nature === 'experience'"
                   class="flex flex-col text-right"
                 >
-                  <div>{{ entry.startDate }} - {{ entry.endDate }}</div>
+                  <div v-if="entry.startDate">
+                    {{ entry.startDate }}
+                    <template v-if="entry.endDate">
+                      - {{ entry.endDate }}
+                    </template>
+                  </div>
                   <div class="italic">{{ entry.location }}</div>
                 </div>
               </div>

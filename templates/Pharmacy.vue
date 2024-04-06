@@ -73,13 +73,23 @@ const { about, categories, contactDetails, name, socialLinks, title } =
                 {{ entry.title }}
               </div>
               <template v-if="entry.nature === 'experience'">
-                <div>{{ entry.startDate }} - {{ entry.endDate }}</div>
+                <div v-if="entry.startDate">
+                  {{ entry.startDate }}
+                  <template v-if="entry.endDate">
+                    - {{ entry.endDate }}
+                  </template>
+                </div>
                 <div class="text-cyan-500">
                   {{ entry.organization }} {{ entry.location }}
                 </div>
                 <div>
-                  <p class="text-xs text-slate-400">{{ entry.summary }}</p>
-                  <ul class="list-disc list-inside ml-1 text-xs text-slate-600">
+                  <p class="text-xs text-slate-400" v-if="entry.summary">
+                    {{ entry.summary }}
+                  </p>
+                  <ul
+                    class="list-disc list-inside ml-1 text-xs text-slate-600"
+                    v-if="entry.highlights.length"
+                  >
                     <li
                       v-for="(highlight, highlightIndex) in entry.highlights"
                       :key="highlightIndex"
@@ -89,7 +99,10 @@ const { about, categories, contactDetails, name, socialLinks, title } =
                   </ul>
                 </div>
               </template>
-              <ul class="list-disc list-inside ml-1 text-xs text-slate-600">
+              <ul
+                class="list-disc list-inside ml-1 text-xs text-slate-600"
+                v-if="entry.highlights.length"
+              >
                 <li
                   v-for="(highlight, highlightIndex) in entry.highlights"
                   :key="highlightIndex"
@@ -121,7 +134,10 @@ const { about, categories, contactDetails, name, socialLinks, title } =
               <div class="text-cyan-500" v-if="entry.nature === 'asset'">
                 {{ entry.title }}
               </div>
-              <ul class="list-disc list-inside ml-1 text-xs text-slate-600">
+              <ul
+                class="list-disc list-inside ml-1 text-xs text-slate-600"
+                v-if="entry.highlights.length"
+              >
                 <li
                   v-for="(highlight, highlightIndex) in entry.highlights"
                   :key="highlightIndex"
@@ -143,8 +159,12 @@ const { about, categories, contactDetails, name, socialLinks, title } =
                 <div class="relative">
                   <span
                     class="text-cyan-500 relative before:content-[''] before:absolute before:inline-block before:size-4 before:-left-[1.625rem] before:top-2 before:bg-slate-400 before:rounded-full"
+                    v-if="entry.startDate"
                   >
-                    {{ entry.startDate }} - {{ entry.endDate }}
+                    {{ entry.startDate }}
+                    <template v-if="entry.endDate">
+                      - {{ entry.endDate }}
+                    </template>
                   </span>
                   &nbsp;: {{ entry.title }}
                 </div>
@@ -152,8 +172,13 @@ const { about, categories, contactDetails, name, socialLinks, title } =
                   {{ entry.organization }} {{ entry.location }}
                 </div>
                 <div>
-                  <p class="text-xs text-slate-400">{{ entry.summary }}</p>
-                  <ul class="list-disc list-inside ml-1 text-xs text-slate-600">
+                  <p class="text-xs text-slate-400" v-if="entry.summary">
+                    {{ entry.summary }}
+                  </p>
+                  <ul
+                    class="list-disc list-inside ml-1 text-xs text-slate-600"
+                    v-if="entry.highlights.length"
+                  >
                     <li
                       v-for="(highlight, highlightIndex) in entry.highlights"
                       :key="highlightIndex"

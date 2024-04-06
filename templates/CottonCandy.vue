@@ -159,11 +159,11 @@ function getSectionCategory(indexToGetFrom: number) {
               <div>
                 <p
                   class="text-sm font-semibold"
-                  v-if="entry.nature === 'experience'"
+                  v-if="entry.nature === 'experience' && entry.summary"
                 >
                   {{ entry.summary }}
                 </p>
-                <ul class="italic text-xs">
+                <ul class="italic text-xs" v-if="entry.highlights.length">
                   <li
                     v-for="(highlight, highlightIndex) in entry.highlights"
                     :key="highlightIndex"
@@ -248,11 +248,11 @@ function getSectionCategory(indexToGetFrom: number) {
                 <div>
                   <p
                     class="text-sm font-semibold"
-                    v-if="entry.nature === 'experience'"
+                    v-if="entry.nature === 'experience' && entry.summary"
                   >
                     {{ entry.summary }}
                   </p>
-                  <ul class="italic text-xs">
+                  <ul class="italic text-xs" v-if="entry.highlights.length">
                     <li
                       v-for="(highlight, highlightIndex) in entry.highlights"
                       :key="highlightIndex"
@@ -320,11 +320,11 @@ function getSectionCategory(indexToGetFrom: number) {
                 <div>
                   <p
                     class="text-sm font-semibold"
-                    v-if="entry.nature === 'experience'"
+                    v-if="entry.nature === 'experience' && entry.summary"
                   >
                     {{ entry.summary }}
                   </p>
-                  <ul class="italic text-xs">
+                  <ul class="italic text-xs" v-if="entry.highlights.length">
                     <li
                       v-for="(highlight, highlightIndex) in entry.highlights"
                       :key="highlightIndex"
@@ -392,11 +392,11 @@ function getSectionCategory(indexToGetFrom: number) {
                 <div>
                   <p
                     class="text-sm font-semibold"
-                    v-if="entry.nature === 'experience'"
+                    v-if="entry.nature === 'experience' && entry.summary"
                   >
                     {{ entry.summary }}
                   </p>
-                  <ul class="italic text-xs">
+                  <ul class="italic text-xs" v-if="entry.highlights.length">
                     <li
                       v-for="(highlight, highlightIndex) in entry.highlights"
                       :key="highlightIndex"

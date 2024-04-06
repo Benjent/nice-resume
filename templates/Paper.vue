@@ -50,19 +50,26 @@ const { about, categories, contactDetails, name, socialLinks, title } =
           <div class="flex justify-between">
             <div>
               <span class="font-bold">{{ entry.title }}</span>
-              <span v-if="entry.nature === 'experience'">
+              <span v-if="entry.nature === 'experience' && entry.organization">
                 | {{ entry.organization }}
                 <span v-if="entry.location">, {{ entry.location }}</span>
               </span>
             </div>
-            <div v-if="entry.nature === 'experience'">
-              {{ entry.startDate }} - {{ entry.endDate }}
+            <div v-if="entry.nature === 'experience' && entry.startDate">
+              {{ entry.startDate }}
+              <template v-if="entry.endDate">- {{ entry.endDate }}</template>
             </div>
           </div>
-          <p v-if="entry.nature === 'experience'" class="text-xs">
+          <p
+            v-if="entry.nature === 'experience' && entry.summary"
+            class="text-xs"
+          >
             {{ entry.summary }}
           </p>
-          <ul class="list-disc list-inside ml-1 text-xs">
+          <ul
+            class="list-disc list-inside ml-1 text-xs"
+            v-if="entry.highlights.length"
+          >
             <li
               v-for="(highlight, highlightIndex) in entry.highlights"
               :key="highlightIndex"

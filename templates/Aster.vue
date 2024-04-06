@@ -81,14 +81,24 @@ const { about, categories, contactDetails, name, socialLinks, title } =
               class="flex flex-col"
             >
               <div>
-                <span v-if="entry.nature === 'experience'">
-                  {{ entry.startDate }} - {{ entry.endDate }} -{{ " " }}
+                <span v-if="entry.nature === 'experience' && entry.startDate">
+                  {{ entry.startDate }}
+                  <template v-if="entry.endDate">
+                    - {{ entry.endDate }}
+                  </template>
+                  -{{ " " }}
                 </span>
-                <span class="font-semibold">{{ entry.title }}</span>
-                <span v-if="entry.nature === 'experience'">
+                <span class="font-semibold" v-if="entry.title">
+                  {{ entry.title }}
+                </span>
+                <span
+                  v-if="entry.nature === 'experience' && entry.organization"
+                >
                   {{ " " }}-{{ " " }}
-                  <span class="italic">{{ entry.organization }},</span>
-                  {{ entry.location }}
+                  <span class="italic">{{ entry.organization }}</span>
+                  <template v-if="entry.location">
+                    ,{{ entry.location }}
+                  </template>
                 </span>
               </div>
               <p
@@ -130,14 +140,24 @@ const { about, categories, contactDetails, name, socialLinks, title } =
               class="flex flex-col"
             >
               <div class="flex gap-4 items-center">
-                <span v-if="entry.nature === 'experience'">
-                  {{ entry.startDate }} - {{ entry.endDate }} -{{ " " }}
+                <span v-if="entry.nature === 'experience' && entry.startDate">
+                  {{ entry.startDate }}
+                  <template v-if="entry.endDate">
+                    - {{ entry.endDate }}
+                  </template>
+                  -{{ " " }}
                 </span>
-                <span class="font-semibold">{{ entry.title }}</span>
-                <span v-if="entry.nature === 'experience'">
+                <span class="font-semibold" v-if="entry.title">
+                  {{ entry.title }}
+                </span>
+                <span
+                  v-if="entry.nature === 'experience' && entry.organization"
+                >
                   {{ " " }}-{{ " " }}
-                  <span class="italic">{{ entry.organization }},</span>
-                  {{ entry.location }}
+                  <span class="italic">{{ entry.organization }}</span>
+                  <template v-if="entry.location">
+                    ,{{ entry.location }}
+                  </template>
                 </span>
                 <div
                   v-if="entry.nature === 'experience'"
