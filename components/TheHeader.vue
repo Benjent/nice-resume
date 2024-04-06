@@ -95,7 +95,7 @@ function importFromJson(event: Event) {
   >
     <h1
       class="bg-gradient-to-br from-blue-700 to-pink-500 text-transparent bg-clip-text text-center text-4xl font-black tracking-widest uppercase"
-      :title="packageJson.version"
+      :data-version="packageJson.version"
     >
       Nice
       <br />
