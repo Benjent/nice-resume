@@ -185,7 +185,7 @@ function getExperienceOrganizationLabel(experience: Experience) {
               <PlusCircleIcon class="size-full" />
             </button>
           </div>
-          <ul class="flex flex-col gap-2">
+          <ul v-if="contactDetails.length" class="flex flex-col gap-2">
             <li
               v-for="(detail, detailIndex) in contactDetails"
               :key="detailIndex"
@@ -243,7 +243,10 @@ function getExperienceOrganizationLabel(experience: Experience) {
               <PlusCircleIcon class="size-full" />
             </button>
           </div>
-          <ul class="flex flex-col gap-2 justify-between">
+          <ul
+            v-if="socialLinks.length"
+            class="flex flex-col gap-2 justify-between"
+          >
             <li
               v-for="(link, linkIndex) in socialLinks"
               :key="linkIndex"
@@ -354,7 +357,7 @@ function getExperienceOrganizationLabel(experience: Experience) {
           @remove="remove(categories, categoryIndex)"
         />
       </template>
-      <ul class="flex flex-col gap-10">
+      <ul v-if="category.entries.length" class="flex flex-col gap-10">
         <li v-for="(entry, entryIndex) in category.entries" :key="entryIndex">
           <ListActions
             class="mb-2"
@@ -413,7 +416,7 @@ function getExperienceOrganizationLabel(experience: Experience) {
                   <PlusCircleIcon class="size-full" />
                 </button>
               </div>
-              <ul class="flex flex-col gap-2">
+              <ul v-if="entry.highlights.length" class="flex flex-col gap-2">
                 <li
                   v-for="(_highlight, highlightIndex) in entry.highlights"
                   :key="highlightIndex"
@@ -437,9 +440,9 @@ function getExperienceOrganizationLabel(experience: Experience) {
           </div>
         </li>
       </ul>
-      <footer class="flex justify-center mt-10">
+      <footer class="flex justify-center mt-4">
         <button
-          class="text-white px-3 py-2 rounded"
+          class="bg-white px-3 py-2 rounded text-pink-500"
           @click="addEntry(category)"
         >
           Add entry
@@ -447,8 +450,11 @@ function getExperienceOrganizationLabel(experience: Experience) {
       </footer>
     </EditorCategory>
 
-    <footer class="flex justify-center mt-10">
-      <button class="text-white px-3 py-2 rounded" @click="addCategory">
+    <footer class="flex justify-center mt-4">
+      <button
+        class="bg-white px-3 py-2 rounded text-blue-500"
+        @click="addCategory"
+      >
         Add category
       </button>
     </footer>
