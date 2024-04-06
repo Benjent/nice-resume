@@ -1,13 +1,29 @@
 export type Template =
+  | "Aster"
   | "CottonCandy"
+  | "Macchiato"
   | "OpenResume"
   | "Paper"
   | "Pharmacy"
   | "Stone"
-  | "Toothpaste";
+  | "Toothpaste"
+  | "Wiki";
 
 export interface Link {
-  icon: null | "default" | "gitHub" | "linkedIn";
+  icon:
+    | null
+    | "default"
+    | "bandcamp"
+    | "behance"
+    | "facebook"
+    | "gitHub"
+    | "instagram"
+    | "linkedIn"
+    | "mastodon"
+    | "soundCloud"
+    | "stackOverflow"
+    | "viadeo"
+    | "x";
   url: string;
 }
 

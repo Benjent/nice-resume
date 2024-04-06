@@ -49,8 +49,8 @@ function exportToJson() {
 function importFromJson(event: Event) {
   isImportError.value = false;
   try {
-    // @ts-expect-error TODO find a way to make a TS-compliant check
-    const file = event.target.files[0];
+    // @ts-expect-error It seems there is no default <input type=file /> native TS type...
+    const file = event.currentTarget?.files[0];
 
     const fileReader = new FileReader();
     fileReader.readAsText(file, "UTF-8");

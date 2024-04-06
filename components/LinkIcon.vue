@@ -1,7 +1,19 @@
 <script setup lang="ts">
 import { type Component, computed } from "vue";
 import { LinkIcon } from "@heroicons/vue/16/solid";
-import { GitHubIcon, LinkedInIcon } from "vue3-simple-icons";
+import {
+  BandcampIcon,
+  BehanceIcon,
+  FacebookIcon,
+  GitHubIcon,
+  InstagramIcon,
+  LinkedInIcon,
+  MastodonIcon,
+  SoundCloudIcon,
+  StackOverflowIcon,
+  ViadeoIcon,
+  XIcon,
+} from "vue3-simple-icons";
 import type { Link } from "@/types";
 
 const { icon } = defineProps<{
@@ -14,8 +26,17 @@ type IconMapper = {
 
 const iconMapper: IconMapper = {
   default: LinkIcon,
+  bandcamp: BandcampIcon,
+  behance: BehanceIcon,
+  facebook: FacebookIcon,
   gitHub: GitHubIcon,
+  instagram: InstagramIcon,
   linkedIn: LinkedInIcon,
+  mastodon: MastodonIcon,
+  soundCloud: SoundCloudIcon,
+  stackOverflow: StackOverflowIcon,
+  viadeo: ViadeoIcon,
+  x: XIcon,
 };
 
 const component: Component = computed(() => (icon ? iconMapper[icon] : null));

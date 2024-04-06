@@ -58,6 +58,7 @@ Templates offer an aside section on the left and a main section on the right tha
 
 Some themes come other tools:
 
+- _Macchiato_ is the theme from [JSON Resume](https://registry.jsonresume.org/thomasdavis?theme=macchiato) by Alessandro Biondi
 - _OpenResume_ is the theme from [OpenResume](https://www.open-resume.com/)
 - _Paper_ is adapted from the _One Page Plus_ theme from [JSON Resume](https://registry.jsonresume.org/thomasdavis?theme=onepage-plus)
 
