@@ -354,7 +354,6 @@ function getExperienceOrganizationLabel(experience: Experience) {
             </label>
           </div>
           <ListActions
-            class="mb-2"
             :index="categoryIndex"
             :list-length="categories.length"
             @moveUp="moveUp(categories, categoryIndex)"
@@ -387,7 +386,7 @@ function getExperienceOrganizationLabel(experience: Experience) {
                       v-model="entry.organization"
                     />
                   </label>
-                  <label class="flex flex-col flex-[20%]" for="location">
+                  <label class="flex flex-col flex-1" for="location">
                     Location
                     <input
                       id="location"
@@ -395,7 +394,9 @@ function getExperienceOrganizationLabel(experience: Experience) {
                       v-model="entry.location"
                     />
                   </label>
-                  <label class="flex flex-col flex-[10%]" for="startDate">
+                </div>
+                <div class="flex justify-center gap-5 flex-wrap">
+                  <label class="flex flex-col flex-1" for="startDate">
                     From
                     <input
                       id="startDate"
@@ -403,7 +404,7 @@ function getExperienceOrganizationLabel(experience: Experience) {
                       v-model="entry.startDate"
                     />
                   </label>
-                  <label class="flex flex-col flex-[10%]" for="endDate">
+                  <label class="flex flex-col flex-1" for="endDate">
                     To
                     <input id="endDate" class="input" v-model="entry.endDate" />
                   </label>
