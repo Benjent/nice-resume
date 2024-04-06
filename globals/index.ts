@@ -73,6 +73,19 @@ export const experienceTypes: Array<Experience["type"]> = [
   "work",
 ];
 
+export const fixedLayoutTemplates: Array<Template> = ["Paper"];
+
+export const discouragedLayoutTemplates: {
+  [T in Template]: Array<Category["layout"]>;
+} = {
+  CottonCandy: ["aside"],
+  OpenResume: [],
+  Paper: [],
+  Pharmacy: [],
+  Stone: [],
+  Toothpaste: ["aside"],
+};
+
 export const socialIcons: Array<Link["url"]> = ["gitHub", "linkedIn"];
 
 export const categoryTypes: Array<Category["type"]> = [
