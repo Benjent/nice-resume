@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     "@nuxtjs/tailwindcss",
     "nuxt-svgo",
     "nuxt-build-cache",
+    "@nuxt/test-utils/module",
   ],
   ssr: false,
   app: {

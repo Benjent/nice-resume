@@ -35,6 +35,11 @@ lerna-debug.log*
 .env
 .env.*
 !.env.example
+test/*.env
+!test/default.env
 
 # ESLint
 .eslintcache
+
+# Tests
+test-results

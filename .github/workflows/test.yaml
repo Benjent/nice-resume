@@ -70,3 +70,55 @@ jobs:
             --runner axe \
             --runner htmlcs \
             --ignore 'color-contrast;WCAG2AA.Principle1.Guideline1_4.1_4_3.G18.Fail'
+
+  tests:
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: pnpm/action-setup@v3
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Run tests
+        run: pnpm run test:unit
+
+  # https://playwright.dev/docs/ci-intro
+  # https://playwright.dev/docs/docker
+  test-playwright:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    container:
+      image: mcr.microsoft.com/playwright:v1.43.0-jammy
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: pnpm/action-setup@v3
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps
+      - name: Build
+        run: pnpm run build
+      - name: Launch server
+        run: pnpm run preview & pnpx wait-on $A11Y_HOST
+      - name: Run Playwright tests
+        run: pnpm exec playwright test
+        env:
+          HOME: /root
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30

@@ -17,7 +17,7 @@ module.exports = {
     ecmaVersion: "latest",
     sourceType: "module",
   },
-  plugins: ["vue", "@typescript-eslint", "vuejs-accessibility"],
+  plugins: ["vue", "@typescript-eslint", "vuejs-accessibility", "vitest"],
   rules: {
     "vue/multi-word-component-names": "off",
   },

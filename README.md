@@ -43,6 +43,23 @@ pnpm run build
 pnpm run preview
 ```
 
+## Tests
+
+<https://nuxt.com/docs/getting-started/testing>
+
+```bash
+pnpm run test:unit
+```
+
+### Playwright end-to-end
+
+```bash
+# Create and configure `./test/.env` based on `./test/default.env` if needed
+pnpm run test:playwright
+```
+
+[Test recording generation with Playwright](https://playwright.dev/docs/codegen)
+
 ## Add a template
 
 1. Create the Vue component in `/templates`
