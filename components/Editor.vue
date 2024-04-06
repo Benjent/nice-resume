@@ -209,7 +209,7 @@ function getExperienceOrganizationLabel(experience: Experience) {
                   "
                   class="cursor-pointer bg-transparent text-white block capitalize"
                 >
-                  <!-- <option value="">None</option> -->
+                  <option value="">None</option>
                   <option value="default">Default</option>
                   <option
                     v-for="icon in contactIcons"
@@ -265,7 +265,7 @@ function getExperienceOrganizationLabel(experience: Experience) {
                   "
                   class="cursor-pointer bg-transparent text-white block capitalize"
                 >
-                  <!-- <option value="">None</option> -->
+                  <option value="">None</option>
                   <option value="default">Default</option>
                   <option
                     v-for="icon in socialIcons"
