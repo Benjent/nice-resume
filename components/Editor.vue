@@ -158,10 +158,16 @@ function getExperienceOrganizationLabel(experience: Experience) {
 
 <template>
   <main class="flex flex-col overflow-y-auto text-white">
-    <p v-if="isLayoutDisabled" class="text-center p-2 bg-amber-500">
+    <p
+      v-if="isLayoutDisabled"
+      class="sticky top-0 text-center p-2 bg-amber-500"
+    >
       Category layouts are fixed for this template.
     </p>
-    <p v-if="isLayoutDiscouraged" class="text-center p-2 bg-amber-500">
+    <p
+      v-if="isLayoutDiscouraged"
+      class="sticky top-0 text-center p-2 bg-amber-500"
+    >
       {{ discouragedLayoutText }}
     </p>
     <div class="flex flex-col gap-8 p-8 w-full max-w-[860px] mx-auto">
