@@ -15,7 +15,7 @@ const { about, categories, contactDetails, name, socialLinks, title } =
       <ul class="flex gap-2">
         <li
           v-for="detail in contactDetails"
-          :key="detail.value"
+          :key="`${detail.value}${detail.icon}`"
           class="flex gap-1 items-center"
         >
           <ContactIcon v-if="detail.icon" :icon="detail.icon" class="w-4" />
@@ -25,7 +25,7 @@ const { about, categories, contactDetails, name, socialLinks, title } =
       <ul class="flex gap-2">
         <li
           v-for="link in socialLinks"
-          :key="link.url"
+          :key="`${link.url}${link.icon}`"
           class="flex gap-1 items-center"
         >
           <LinkIcon v-if="link.icon" :icon="link.icon" class="w-4" />

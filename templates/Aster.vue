@@ -32,7 +32,7 @@ const { about, categories, contactDetails, name, socialLinks, title } =
       <ul class="flex flex-col items-end w-[26%]">
         <li
           v-for="detail in contactDetails"
-          :key="detail.value"
+          :key="`${detail.value}${detail.icon}`"
           class="flex gap-1 items-center"
         >
           <ContactIcon
@@ -44,7 +44,7 @@ const { about, categories, contactDetails, name, socialLinks, title } =
         </li>
         <li
           v-for="link in socialLinks"
-          :key="link.url"
+          :key="`${link.url}${link.icon}`"
           class="flex gap-1 items-center"
         >
           <LinkIcon

@@ -24,7 +24,7 @@ const { about, categories, contactDetails, name, socialLinks, title } =
       >
         <li
           v-for="detail in contactDetails"
-          :key="detail.value"
+          :key="`${detail.value}${detail.icon}`"
           class="flex gap-1 items-center"
         >
           {{ detail.value }}
@@ -32,7 +32,7 @@ const { about, categories, contactDetails, name, socialLinks, title } =
         </li>
         <li
           v-for="link in socialLinks"
-          :key="link.url"
+          :key="`${link.url}${link.icon}`"
           class="flex gap-1 items-center"
         >
           {{ link.url }}

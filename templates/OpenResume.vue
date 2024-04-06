@@ -22,7 +22,7 @@ const { about, categories, contactDetails, name, socialLinks, title } =
       <ul class="flex justify-between gap-2 flex-wrap text-sm">
         <li
           v-for="detail in contactDetails"
-          :key="detail.value"
+          :key="`${detail.value}${detail.icon}`"
           class="flex gap-1 items-center"
         >
           <ContactIcon v-if="detail.icon" :icon="detail.icon" class="w-4" />
@@ -30,7 +30,7 @@ const { about, categories, contactDetails, name, socialLinks, title } =
         </li>
         <li
           v-for="link in socialLinks"
-          :key="link.url"
+          :key="`${link.url}${link.icon}`"
           class="flex gap-1 items-center"
         >
           <LinkIcon v-if="link.icon" :icon="link.icon" class="w-4" />
