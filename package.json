@@ -1,6 +1,7 @@
 {
   "name": "nice-resume",
   "private": true,
+  "version": "dev",
   "type": "module",
   "engines": {
     "node": "20.11",
