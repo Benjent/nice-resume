@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { useResumeStore } from "@/stores/resume";
-import ContactIcon from "../components/ContactIcon.vue";
-import LinkIcon from "../components/LinkIcon.vue";
+import ContactIcon from "@/components/ContactIcon.vue";
+import LinkIcon from "@/components/LinkIcon.vue";
 
 const { about, categories, contactDetails, name, socialLinks, title } =
   storeToRefs(useResumeStore());

@@ -3,8 +3,8 @@ import { computed } from "vue";
 import { storeToRefs } from "pinia";
 import { useResumeStore } from "@/stores/resume";
 import type { Category } from "@/types";
-import ContactIcon from "../components/ContactIcon.vue";
-import LinkIcon from "../components/LinkIcon.vue";
+import ContactIcon from "@/components/ContactIcon.vue";
+import LinkIcon from "@/components/LinkIcon.vue";
 
 const { about, categories, contactDetails, name, socialLinks, title } =
   storeToRefs(useResumeStore());
