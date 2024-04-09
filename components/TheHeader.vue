@@ -47,8 +47,9 @@ function exportToJson() {
 
   // @ts-expect-error Build object on the fly
   toExport.isNiceResumeExport = true;
-  const formattedDate = new Date().toISOString().slice(0, 10).replace(/-/g, "");
-  download(toExport, `${profile.name}-${formattedDate}`);
+  const formattedDate = new Date().toISOString().slice(0, 10);
+  const formattedName = profile.name ? `${profile.name}-` : "nice-resume-";
+  download(toExport, `${formattedName}-${formattedDate}`);
 }
 
 function importFromJson(event: Event) {

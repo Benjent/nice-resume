@@ -3,4 +3,5 @@
 
 .splitpanes__pane {
   background-color: transparent !important;
+  overflow: scroll !important;
 }
