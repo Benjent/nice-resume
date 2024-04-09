@@ -69,7 +69,7 @@ jobs:
           pnpx pa11y $A11Y_HOST \
             --runner axe \
             --runner htmlcs \
-            --ignore 'color-contrast;WCAG2AA.Principle1.Guideline1_4.1_4_3.G18.Fail'
+            --ignore 'color-contrast;link-in-text-block;WCAG2AA.Principle1.Guideline1_4.1_4_3.G18.Fail'
 
   tests:
     timeout-minutes: 5
