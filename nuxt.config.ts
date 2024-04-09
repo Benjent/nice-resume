@@ -6,11 +6,13 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
     "@pinia/nuxt",
+    "@nuxt/eslint",
     "@nuxtjs/tailwindcss",
     "nuxt-svgo",
     "nuxt-build-cache",
     "@nuxt/test-utils/module",
     "@pinia-plugin-persistedstate/nuxt",
+    "@nuxtjs/i18n",
   ],
   ssr: false,
   app: {
