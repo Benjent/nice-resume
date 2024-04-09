@@ -48,12 +48,11 @@ const title = ref("Nice resume");
           <p class="text-4xl font-bold font-serif italic">
             Not your first time?
           </p>
-          <NuxtLink
-            to="/editor"
-            class="font-bold flex gap-2 ml-auto hover:underline hover:underline-offset-4"
-          >
-            Continue where I left off
-            <ArrowLongRightIcon class="h-6" />
+          <NuxtLink to="/editor">
+            <Button class="mx-auto mt-8">
+              Continue where I left off
+              <ArrowLongRightIcon class="h-6 text-pink-500 float-right" />
+            </Button>
           </NuxtLink>
         </div>
       </section>
