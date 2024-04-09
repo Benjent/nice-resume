@@ -84,14 +84,16 @@ function importFromJson(event: Event) {
   <header
     class="sticky top-0 z-10 h-[100px] flex justify-between items-center gap-2 px-10 bg-white text-pink-500 shadow-lg"
   >
-    <h1
-      class="bg-gradient-to-br from-blue-700 to-pink-500 text-transparent bg-clip-text text-center text-4xl font-black tracking-widest uppercase"
-      :data-version="packageJson.version"
-    >
-      Nice
-      <br />
-      Resume
-    </h1>
+    <NuxtLink to="/">
+      <h1
+        class="bg-gradient-to-br from-blue-700 to-pink-500 text-transparent bg-clip-text text-center text-4xl font-black tracking-widest uppercase"
+        :data-version="packageJson.version"
+      >
+        Nice
+        <br />
+        Resume
+      </h1>
+    </NuxtLink>
     <div class="flex items-end gap-8 h-[60%]">
       <div>
         <label
