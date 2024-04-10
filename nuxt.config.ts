@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     "nuxt-svgo",
     "nuxt-build-cache",
     "@nuxt/test-utils/module",
+    "@pinia-plugin-persistedstate/nuxt",
   ],
   ssr: false,
   app: {
@@ -22,5 +23,9 @@ export default defineNuxtConfig({
   },
   typescript: {
     typeCheck: true,
+  },
+  // @ts-expect-error - TS cannot find schema for Nuxt modules
+  piniaPersistedstate: {
+    storage: "localStorage",
   },
 });
