@@ -101,6 +101,12 @@ function addContactDetail() {
   focusNextInput("#contactDetailsList input");
 }
 
+function addHighlight(entry: Entry) {
+  entry.highlights.push("");
+
+  focusNextInput("#highlightList input");
+}
+
 function addSocialLink() {
   const link: Link = {
     icon: null,
@@ -451,12 +457,16 @@ function getExperienceOrganizationLabel(experience: Experience) {
                     id="highlights"
                     title="Add highlight"
                     class="text-white bg-blue-500 rounded-full size-7"
-                    @click="() => entry.highlights.push('')"
+                    @click="addHighlight(entry)"
                   >
                     <PlusCircleIcon class="size-full" />
                   </button>
                 </div>
-                <ul v-if="entry.highlights.length" class="flex flex-col gap-2">
+                <ul
+                  v-if="entry.highlights.length"
+                  id="highlightList"
+                  class="flex flex-col gap-2"
+                >
                   <li
                     v-for="(_highlight, highlightIndex) in entry.highlights"
                     :key="highlightIndex"
@@ -465,6 +475,7 @@ function getExperienceOrganizationLabel(experience: Experience) {
                     <input
                       class="input"
                       v-model="entry.highlights[highlightIndex]"
+                      @keydown.enter.prevent="addHighlight(entry)"
                     />
                     <ListActions
                       class="mb-2"
