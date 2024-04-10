@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, nextTick, ref } from "vue";
 import { storeToRefs } from "pinia";
 import { PlusCircleIcon } from "@heroicons/vue/24/outline";
 import { useResumeStore } from "@/stores/resume";
@@ -97,6 +97,8 @@ function addContactDetail() {
   };
 
   contactDetails.value.push(detail);
+
+  focusNextInput("#contactDetailsList input");
 }
 
 function addSocialLink() {
@@ -106,6 +108,8 @@ function addSocialLink() {
   };
 
   socialLinks.value.push(link);
+
+  focusNextInput("#socialLinksList input");
 }
 
 function changeContactDetailIcon(detail: Detail, value: Detail["icon"]) {
@@ -126,6 +130,12 @@ function changeCategoryType(category: Category, value: Category["type"]) {
 
 function changeCategoryLayout(category: Category, value: Category["layout"]) {
   category.layout = value;
+}
+
+async function focusNextInput(selector: string) {
+  await nextTick(); // Wait for the new input to be rendered before querying it
+  const inputs = [...document.querySelectorAll(selector)];
+  (inputs[inputs.length - 1] as HTMLInputElement).focus();
 }
 
 function getEntryTitleLabel(entry: Entry) {
@@ -199,7 +209,11 @@ function getExperienceOrganizationLabel(experience: Experience) {
                 <PlusCircleIcon class="size-full" />
               </button>
             </div>
-            <ul v-if="contactDetails.length" class="flex flex-col gap-2">
+            <ul
+              v-if="contactDetails.length"
+              id="contactDetailsList"
+              class="flex flex-col gap-2"
+            >
               <li
                 v-for="(detail, detailIndex) in contactDetails"
                 :key="detailIndex"
@@ -208,6 +222,7 @@ function getExperienceOrganizationLabel(experience: Experience) {
                 <input
                   class="input"
                   v-model="contactDetails[detailIndex].value"
+                  @keydown.enter.prevent="addContactDetail"
                 />
                 <label for="detailIcon">
                   Icon
@@ -258,6 +273,7 @@ function getExperienceOrganizationLabel(experience: Experience) {
             </div>
             <ul
               v-if="socialLinks.length"
+              id="socialLinksList"
               class="flex flex-col gap-2 justify-between"
             >
               <li
@@ -265,7 +281,11 @@ function getExperienceOrganizationLabel(experience: Experience) {
                 :key="linkIndex"
                 class="flex items-center gap-2"
               >
-                <input class="input" v-model="socialLinks[linkIndex].url" />
+                <input
+                  class="input"
+                  v-model="socialLinks[linkIndex].url"
+                  @keydown.enter.prevent="addSocialLink"
+                />
                 <label for="linkIcon">
                   Icon
                   <select
