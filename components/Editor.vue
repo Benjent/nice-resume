@@ -98,7 +98,7 @@ function addContactDetail() {
 
   contactDetails.value.push(detail);
 
-  focusNextInput("#contactDetailsList input");
+  focusNextInput("#contactDetailList input");
 }
 
 function addHighlight(entry: Entry) {
@@ -115,7 +115,7 @@ function addSocialLink() {
 
   socialLinks.value.push(link);
 
-  focusNextInput("#socialLinksList input");
+  focusNextInput("#socialLinkList input");
 }
 
 function changeContactDetailIcon(detail: Detail, value: Detail["icon"]) {
@@ -217,7 +217,7 @@ function getExperienceOrganizationLabel(experience: Experience) {
             </div>
             <ul
               v-if="contactDetails.length"
-              id="contactDetailsList"
+              id="contactDetailList"
               class="flex flex-col gap-2"
             >
               <li
@@ -279,7 +279,7 @@ function getExperienceOrganizationLabel(experience: Experience) {
             </div>
             <ul
               v-if="socialLinks.length"
-              id="socialLinksList"
+              id="socialLinkList"
               class="flex flex-col gap-2 justify-between"
             >
               <li
