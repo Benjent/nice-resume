@@ -1,11 +1,14 @@
-import {
-  type Asset,
-  type Category,
-  type Detail,
-  type Experience,
-  type Link,
-  type Template,
+import type {
+  Asset,
+  Category,
+  Detail,
+  DocumentType,
+  Experience,
+  Link,
+  Template,
 } from "@/types";
+
+export const documentTypes: Array<DocumentType> = ["Resume", "Letter"];
 
 export const templates: Array<Template> = [
   "Aster",

@@ -6,41 +6,40 @@ import {
   ArrowDownOnSquareIcon,
 } from "@heroicons/vue/24/outline";
 import { useEditorStore } from "@/stores/editor";
+import { useLetterStore } from "@/stores/letter";
+import { useProfileStore } from "@/stores/profile";
 import { useResumeStore } from "@/stores/resume";
-import { templates } from "@/globals";
+import { documentTypes, templates } from "@/globals";
+import type { Export } from "@/types";
 import { download } from "@/utils/file";
-import type { Resume } from "@/types";
 import packageJson from "../package.json";
 
 console.log("Version: ", packageJson.version);
 
-const { zoomLevel } = storeToRefs(useEditorStore());
+const { documentType, zoomLevel } = storeToRefs(useEditorStore());
 
-const {
-  about,
-  categories,
-  contactDetails,
-  name,
-  socialLinks,
-  template,
-  title,
-} = storeToRefs(useResumeStore());
+const { template } = storeToRefs(useProfileStore());
+
+const profile = storeToRefs(useProfileStore());
+const letter = storeToRefs(useLetterStore());
+const resume = storeToRefs(useResumeStore());
 
 const isImportError = ref(false);
 
 function exportToJson() {
-  const resume: Resume = {
-    isNiceResumeExport: true,
-    template: template.value,
-    about: about.value,
-    categories: categories.value,
-    contactDetails: contactDetails.value,
-    name: name.value,
-    socialLinks: socialLinks.value,
-    title: title.value,
+  const toExport = {
+    ...letter,
+    ...profile,
+    ...resume,
   };
+  Object.entries(toExport).forEach(([key, value]) => {
+    // @ts-expect-error Build object on the fly
+    toExport[key] = value.value;
+  });
 
-  download(resume, "nice-resume");
+  // @ts-expect-error Build object on the fly
+  toExport.isNiceResumeExport = true;
+  download(toExport, "nice-resume");
 }
 
 function importFromJson(event: Event) {
@@ -57,19 +56,31 @@ function importFromJson(event: Event) {
         return;
       }
 
-      const resume = JSON.parse(fileReaderEvent.target.result.toString());
-      if (!resume.isNiceResumeExport) {
+      const toImport: Export = JSON.parse(
+        fileReaderEvent.target.result.toString(),
+      );
+      if (!toImport.isNiceResumeExport) {
         isImportError.value = true;
         return;
       }
 
-      template.value = resume.template;
-      about.value = resume.about;
-      categories.value = resume.categories;
-      contactDetails.value = resume.contactDetails;
-      name.value = resume.name;
-      socialLinks.value = resume.socialLinks;
-      title.value = resume.title;
+      Object.entries(toImport).forEach(([key, value]) => {
+        // @ts-expect-error Build object on the fly
+        if (letter[key]) {
+          // @ts-expect-error Build object on the fly
+          letter[key].value = value;
+        }
+        // @ts-expect-error Build object on the fly
+        if (profile[key]) {
+          // @ts-expect-error Build object on the fly
+          profile[key].value = value;
+        }
+        // @ts-expect-error Build object on the fly
+        if (resume[key]) {
+          // @ts-expect-error Build object on the fly
+          resume[key].value = value;
+        }
+      });
     };
     fileReader.onerror = function () {
       isImportError.value = true;
@@ -142,6 +153,18 @@ function importFromJson(event: Event) {
           />
           <output class="w-[3rem] text-blue-500">{{ zoomLevel }}%</output>
         </div>
+      </label>
+      <label for="documentType">
+        Document
+        <select id="documentType" v-model="documentType" class="select block">
+          <option
+            v-for="documentType in documentTypes"
+            :key="documentType"
+            class="option"
+          >
+            {{ documentType }}
+          </option>
+        </select>
       </label>
     </div>
   </header>
