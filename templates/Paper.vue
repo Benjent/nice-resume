@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
+import { useProfileStore } from "@/stores/profile";
 import { useResumeStore } from "@/stores/resume";
 import ContactIcon from "@/components/ContactIcon.vue";
 import LinkIcon from "@/components/LinkIcon.vue";
 
-const { about, categories, contactDetails, name, socialLinks, title } =
+const { name, title } = storeToRefs(useProfileStore());
+
+const { about, categories, contactDetails, socialLinks } =
   storeToRefs(useResumeStore());
 </script>
 

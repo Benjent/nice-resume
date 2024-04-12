@@ -10,6 +10,8 @@ export type Template =
   | "Toothpaste"
   | "Wiki";
 
+export type DocumentType = "Letter" | "Resume";
+
 export interface Detail {
   icon: null | "default" | "address" | "drivingLicense" | "email" | "phone";
   value: string;
@@ -31,14 +33,6 @@ export interface Link {
     | "viadeo"
     | "x";
   url: string;
-}
-
-export interface Details {
-  name: string;
-  title: string;
-  about: string;
-  contactDetails: Array<Detail>;
-  socialLinks: Array<Link>;
 }
 
 export interface Entry {
@@ -70,8 +64,27 @@ export interface Category {
   layout: "aside" | "full" | "half";
 }
 
-export interface Resume extends Details {
+export interface Profile {
   isNiceResumeExport: boolean;
   template: Template;
+  name: string;
+  title: string;
+  contactDetails: Array<Detail>;
+  socialLinks: Array<Link>;
+}
+
+export interface Resume extends Profile {
+  about: string;
   categories: Array<Category>;
+}
+
+export interface Letter extends Profile {
+  recipientDetails: string[];
+  subject: string;
+  reference: string;
+  paragraphs: string[];
+}
+
+export interface Export extends Resume, Letter {
+  isNiceResumeExport: boolean;
 }
