@@ -12,6 +12,7 @@ import LinkIcon from "@/components/LinkIcon.vue";
 const { documentType } = storeToRefs(useEditorStore());
 
 const { name, title } = storeToRefs(useProfileStore());
+
 const { paragraphs, recipientDetails, reference, subject } =
   storeToRefs(useLetterStore());
 
