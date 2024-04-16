@@ -509,15 +509,21 @@ function getExperienceOrganizationLabel(experience: Experience) {
             <li
               v-for="(entry, entryIndex) in category.entries"
               :key="entryIndex"
+              class="border-b-2 border-white border-opacity-5 pb-12"
             >
-              <ListActions
-                class="mb-2"
-                :index="entryIndex"
-                :list-length="category.entries.length"
-                @moveUp="moveUp(category.entries, entryIndex)"
-                @moveDown="moveDown(category.entries, entryIndex)"
-                @remove="remove(category.entries, entryIndex)"
-              />
+              <header class="flex items-center justify-between">
+                <div class="uppercase font-bold text-lg mb-5">
+                  Entry #{{ entryIndex + 1 }}
+                </div>
+                <ListActions
+                  class="mb-2"
+                  :index="entryIndex"
+                  :list-length="category.entries.length"
+                  @moveUp="moveUp(category.entries, entryIndex)"
+                  @moveDown="moveDown(category.entries, entryIndex)"
+                  @remove="remove(category.entries, entryIndex)"
+                />
+              </header>
               <div class="flex flex-col gap-5">
                 <label class="flex flex-col flex-1" for="title">
                   <span class="opacity-60">
