@@ -36,7 +36,7 @@ const { about, categories, contactDetails, socialLinks } =
         </li>
       </ul>
     </header>
-    <p class="border-t-2 border-dotted border-zinc-300 p-4 pl-0">
+    <p v-if="about" class="border-t-2 border-dotted border-zinc-300 p-4 pl-0">
       {{ about }}
     </p>
 
