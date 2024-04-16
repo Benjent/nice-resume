@@ -209,21 +209,21 @@ function getExperienceOrganizationLabel(experience: Experience) {
         <div class="flex flex-col gap-5">
           <div class="flex justify-center gap-5 flex-wrap">
             <label class="flex flex-col flex-1" for="detailsName">
-              Name
+              <span class="opacity-60">Name</span>
               <input id="detailsName" class="input" v-model="name" />
             </label>
             <label class="flex flex-col flex-1" for="detailsTitle">
-              Title
+              <span class="opacity-60">Title</span>
               <input id="detailsTitle" class="input" v-model="title" />
             </label>
           </div>
           <label class="flex flex-col" for="detailsAbout">
-            About
+            <span class="opacity-60">About</span>
             <textarea id="detailsAbout" class="input" v-model="about" />
           </label>
           <label class="flex flex-col" for="contactDetails">
             <div class="flex gap-2">
-              Contact details
+              <span class="opacity-60">Contact details</span>
               <button
                 title="Add detail"
                 class="bg-blue-500 size-7 text-white rounded-full"
@@ -285,7 +285,7 @@ function getExperienceOrganizationLabel(experience: Experience) {
           </label>
           <label class="flex flex-col" for="socialLinks">
             <div class="flex gap-2">
-              Social links
+              <span class="opacity-60">Social links</span>
               <button
                 title="Add social link"
                 class="bg-blue-500 size-7 text-white rounded-full"
@@ -353,7 +353,7 @@ function getExperienceOrganizationLabel(experience: Experience) {
           <div class="flex flex-col gap-5">
             <label class="flex flex-col" for="contactDetails">
               <div class="flex gap-2">
-                Recipient details
+                <span class="opacity-60">Recipient details</span>
                 <button
                   title="Add detail"
                   class="bg-blue-500 size-7 text-white rounded-full"
@@ -389,11 +389,11 @@ function getExperienceOrganizationLabel(experience: Experience) {
               </ul>
             </label>
             <label class="flex flex-col" for="letterSubject">
-              Subject
+              <span class="opacity-60">Subject</span>
               <textarea id="letterSubject" class="input" v-model="subject" />
             </label>
             <label class="flex flex-col" for="letterReference">
-              Reference
+              <span class="opacity-60">Reference</span>
               <input id="letterReference" class="input" v-model="reference" />
             </label>
           </div>
@@ -403,7 +403,7 @@ function getExperienceOrganizationLabel(experience: Experience) {
           <div class="flex flex-col gap-5">
             <label class="flex flex-col" for="paragraphList">
               <div class="flex gap-2">
-                Paragraphs
+                <span class="opacity-60">Paragraphs</span>
                 <button
                   title="Add paragraph"
                   class="bg-blue-500 size-7 text-white rounded-full"
@@ -520,13 +520,17 @@ function getExperienceOrganizationLabel(experience: Experience) {
               />
               <div class="flex flex-col gap-5">
                 <label class="flex flex-col flex-1" for="title">
-                  {{ getEntryTitleLabel(entry) }}
+                  <span class="opacity-60">
+                    {{ getEntryTitleLabel(entry) }}
+                  </span>
                   <input id="title" class="input" v-model="entry.title" />
                 </label>
                 <template v-if="entry.nature === 'experience'">
                   <div class="flex justify-center gap-5 flex-wrap">
                     <label class="flex flex-col flex-1" for="organization">
-                      {{ getExperienceOrganizationLabel(entry) }}
+                      <span class="opacity-60">
+                        {{ getExperienceOrganizationLabel(entry) }}
+                      </span>
                       <input
                         id="organization"
                         class="input"
@@ -534,7 +538,7 @@ function getExperienceOrganizationLabel(experience: Experience) {
                       />
                     </label>
                     <label class="flex flex-col flex-1" for="location">
-                      Location
+                      <span class="opacity-60">Location</span>
                       <input
                         id="location"
                         class="input"
@@ -544,7 +548,7 @@ function getExperienceOrganizationLabel(experience: Experience) {
                   </div>
                   <div class="flex justify-center gap-5 flex-wrap">
                     <label class="flex flex-col flex-1" for="startDate">
-                      From
+                      <span class="opacity-60">From</span>
                       <input
                         id="startDate"
                         class="input"
@@ -552,7 +556,7 @@ function getExperienceOrganizationLabel(experience: Experience) {
                       />
                     </label>
                     <label class="flex flex-col flex-1" for="endDate">
-                      To
+                      <span class="opacity-60">To</span>
                       <input
                         id="endDate"
                         class="input"
@@ -561,7 +565,7 @@ function getExperienceOrganizationLabel(experience: Experience) {
                     </label>
                   </div>
                   <label class="flex flex-col" for="summary">
-                    Description
+                    <span class="opacity-60">Description</span>
                     <textarea
                       id="summary"
                       class="input"
@@ -571,7 +575,7 @@ function getExperienceOrganizationLabel(experience: Experience) {
                 </template>
                 <label class="flex flex-col" for="highlights">
                   <div class="flex gap-2">
-                    Highlights
+                    <span class="opacity-60">Highlights</span>
                     <button
                       id="highlights"
                       title="Add highlight"
