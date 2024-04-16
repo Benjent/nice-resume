@@ -14,6 +14,12 @@
   .input {
     @apply bg-black bg-opacity-10 rounded px-2 py-1;
   }
+  .inputList {
+    @apply flex flex-col gap-2;
+  }
+  .inputListItem {
+    @apply flex items-center justify-between gap-4;
+  }
   .option {
     @apply bg-white text-blue-500 capitalize m-0;
   }
