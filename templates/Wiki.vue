@@ -19,7 +19,7 @@ const { about, categories, contactDetails, socialLinks } =
 </script>
 
 <template>
-  <div class="bg-white h-full w-full flex flex-col py-2 px-6 text-xs font-body">
+  <div class="bg-white h-full w-full flex flex-col py-5 px-6 text-xs font-body">
     <template v-if="documentType === 'Letter'">
       <header class="flex mb-4">
         <ul class="flex flex-col">
@@ -32,7 +32,7 @@ const { about, categories, contactDetails, socialLinks } =
             {{ detail.value }}
           </li>
         </ul>
-        <div class="flex-1 text-center mb-1">
+        <div class="flex-1 text-center mb-1 mx-1">
           <h1 class="text-3xl font-bold">{{ name }}</h1>
           <h2 class="text-xl">{{ title }}</h2>
         </div>
@@ -48,13 +48,13 @@ const { about, categories, contactDetails, socialLinks } =
         </ul>
       </header>
 
-      <ul class="text-right text-xs mb-4" v-if="recipientDetails.length">
+      <ul class="text-right text-xs mb-6" v-if="recipientDetails.length">
         <li v-for="detail in recipientDetails" :key="detail">
           {{ detail }}
         </li>
       </ul>
-      <div class="text-justify text-xs">
-        <header class="text-center text-sm mb-4">
+      <div class="text-justify text-xs px-4">
+        <header class="text-center text-sm mb-6">
           <h3 v-if="subject" class="">
             <span class="text-blue-900 uppercase">
               Objet TODO translate:{{ " " }}
@@ -89,7 +89,7 @@ const { about, categories, contactDetails, socialLinks } =
             {{ detail.value }}
           </li>
         </ul>
-        <div class="flex-1 text-center mb-1">
+        <div class="flex-1 text-center mb-1 mx-1">
           <h1 class="text-3xl font-bold">{{ name }}</h1>
           <h2 class="text-xl">{{ title }}</h2>
           <p>{{ about }}</p>
