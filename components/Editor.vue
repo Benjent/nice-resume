@@ -235,43 +235,45 @@ function getExperienceOrganizationLabel(experience: Experience) {
             <ul
               v-if="contactDetails.length"
               id="contactDetailList"
-              class="flex flex-col gap-2"
+              class="inputList"
             >
               <li
                 v-for="(detail, detailIndex) in contactDetails"
                 :key="detailIndex"
-                class="flex items-center gap-2"
+                class="inputListItem"
               >
-                <input
-                  class="input flex-1"
-                  v-model="contactDetails[detailIndex].value"
-                  @keydown.enter.prevent="addContactDetail"
-                />
-                <label for="detailIcon">
-                  Icon
-                  <select
-                    id="detailIcon"
-                    :value="detail.icon"
-                    @change="
-                      changeContactDetailIcon(
-                        detail,
-                        ($event.target as HTMLInputElement)
-                          .value as Detail['icon'],
-                      )
-                    "
-                    class="select block capitalize bg-transparent text-white"
-                  >
-                    <option class="option" value="">None</option>
-                    <option class="option">default</option>
-                    <option
-                      v-for="icon in contactIcons"
-                      :key="icon as string"
-                      class="option"
+                <div class="flex w-[70%] gap-3 items-end">
+                  <input
+                    class="input flex-1"
+                    v-model="contactDetails[detailIndex].value"
+                    @keydown.enter.prevent="addContactDetail"
+                  />
+                  <label for="detailIcon">
+                    Icon
+                    <select
+                      id="detailIcon"
+                      :value="detail.icon"
+                      @change="
+                        changeContactDetailIcon(
+                          detail,
+                          ($event.target as HTMLInputElement)
+                            .value as Detail['icon'],
+                        )
+                      "
+                      class="select block capitalize bg-transparent text-white"
                     >
-                      {{ icon }}
-                    </option>
-                  </select>
-                </label>
+                      <option class="option" value="">None</option>
+                      <option class="option">default</option>
+                      <option
+                        v-for="icon in contactIcons"
+                        :key="icon as string"
+                        class="option"
+                      >
+                        {{ icon }}
+                      </option>
+                    </select>
+                  </label>
+                </div>
                 <ListActions
                   class="mb-2"
                   :index="detailIndex"
@@ -294,46 +296,44 @@ function getExperienceOrganizationLabel(experience: Experience) {
                 <PlusCircleIcon class="size-full" />
               </button>
             </div>
-            <ul
-              v-if="socialLinks.length"
-              id="socialLinkList"
-              class="flex flex-col gap-2 justify-between"
-            >
+            <ul v-if="socialLinks.length" id="socialLinkList" class="inputList">
               <li
                 v-for="(link, linkIndex) in socialLinks"
                 :key="linkIndex"
-                class="flex items-center gap-2"
+                class="inputListItem"
               >
-                <input
-                  class="input flex-1"
-                  v-model="socialLinks[linkIndex].url"
-                  @keydown.enter.prevent="addSocialLink"
-                />
-                <label for="linkIcon">
-                  Icon
-                  <select
-                    id="linkIcon"
-                    :value="link.icon"
-                    @change="
-                      changeSocialLinkIcon(
-                        link,
-                        ($event.target as HTMLInputElement)
-                          .value as Link['icon'],
-                      )
-                    "
-                    class="select block capitalize bg-transparent text-white"
-                  >
-                    <option class="option" value="">None</option>
-                    <option class="option">default</option>
-                    <option
-                      v-for="icon in socialIcons"
-                      :key="icon as string"
-                      class="option"
+                <div class="flex w-[70%] gap-3 items-end">
+                  <input
+                    class="input flex-1"
+                    v-model="socialLinks[linkIndex].url"
+                    @keydown.enter.prevent="addSocialLink"
+                  />
+                  <label for="linkIcon">
+                    Icon
+                    <select
+                      id="linkIcon"
+                      :value="link.icon"
+                      @change="
+                        changeSocialLinkIcon(
+                          link,
+                          ($event.target as HTMLInputElement)
+                            .value as Link['icon'],
+                        )
+                      "
+                      class="select block capitalize bg-transparent text-white"
                     >
-                      {{ icon }}
-                    </option>
-                  </select>
-                </label>
+                      <option class="option" value="">None</option>
+                      <option class="option">default</option>
+                      <option
+                        v-for="icon in socialIcons"
+                        :key="icon as string"
+                        class="option"
+                      >
+                        {{ icon }}
+                      </option>
+                    </select>
+                  </label>
+                </div>
                 <ListActions
                   class="mb-2"
                   :index="linkIndex"
@@ -365,15 +365,15 @@ function getExperienceOrganizationLabel(experience: Experience) {
               <ul
                 v-if="recipientDetails.length"
                 id="recipientDetailList"
-                class="flex flex-col gap-2"
+                class="inputList"
               >
                 <li
                   v-for="(_detail, index) in recipientDetails"
                   :key="index"
-                  class="flex items-center gap-2"
+                  class="inputListItem"
                 >
                   <input
-                    class="input flex-1"
+                    class="input w-[70%]"
                     v-model="recipientDetails[index]"
                     @keydown.enter.prevent="addRecipientDetail"
                   />
@@ -412,18 +412,14 @@ function getExperienceOrganizationLabel(experience: Experience) {
                   <PlusCircleIcon class="size-full" />
                 </button>
               </div>
-              <ul
-                v-if="paragraphs.length"
-                id="paragraphList"
-                class="flex flex-col gap-2"
-              >
+              <ul v-if="paragraphs.length" id="paragraphList" class="inputList">
                 <li
-                  v-for="(_highlight, index) in paragraphs"
+                  v-for="(_paragraph, index) in paragraphs"
                   :key="index"
-                  class="flex items-center gap-2"
+                  class="inputListItem"
                 >
                   <textarea
-                    class="input flex-1"
+                    class="input w-[70%]"
                     v-model="paragraphs[index]"
                     @keydown.enter.prevent="addParagraph"
                   />
@@ -594,15 +590,15 @@ function getExperienceOrganizationLabel(experience: Experience) {
                   <ul
                     v-if="entry.highlights.length"
                     id="highlightList"
-                    class="flex flex-col gap-2"
+                    class="inputList"
                   >
                     <li
                       v-for="(_highlight, highlightIndex) in entry.highlights"
                       :key="highlightIndex"
-                      class="flex items-center gap-2"
+                      class="inputListItem"
                     >
                       <input
-                        class="input flex-1"
+                        class="input w-[70%]"
                         v-model="entry.highlights[highlightIndex]"
                         @keydown.enter.prevent="addHighlight(entry)"
                       />
