@@ -19,7 +19,9 @@ const { about, categories, contactDetails, socialLinks } =
 </script>
 
 <template>
-  <div class="bg-white h-full w-full flex flex-col p-20 font-serif text-xs">
+  <div
+    class="bg-white text-[color:var(--color1)] h-full w-full flex flex-col p-20 font-serif text-xs"
+  >
     <template v-if="documentType === 'Letter'">
       <header v-if="name" class="pb-4">
         <h1 v-if="name" class="text-xl">{{ name }}, {{ title }}</h1>
@@ -46,7 +48,7 @@ const { about, categories, contactDetails, socialLinks } =
       </header>
 
       <ul
-        class="text-right border-t-2 border-dotted border-zinc-300 pt-4"
+        class="text-right border-t-2 border-dotted border-[color:var(--color0)] pt-4"
         v-if="recipientDetails.length"
       >
         <li v-for="detail in recipientDetails" :key="detail">
@@ -92,14 +94,17 @@ const { about, categories, contactDetails, socialLinks } =
           </li>
         </ul>
       </header>
-      <p v-if="about" class="border-t-2 border-dotted border-zinc-300 p-4 pl-0">
+      <p
+        v-if="about"
+        class="border-t-2 border-dotted border-[color:var(--color0)] p-4 pl-0"
+      >
         {{ about }}
       </p>
 
       <section
         v-for="(category, index) in categories"
         :key="index"
-        class="border-t-2 border-dotted border-zinc-300 flex gap-4 p-4 pl-0"
+        class="border-t-2 border-dotted border-[color:var(--color0)] flex gap-4 p-4 pl-0"
       >
         <h3 class="uppercase w-[20%]">
           {{ category.name }}

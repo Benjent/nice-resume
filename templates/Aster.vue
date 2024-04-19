@@ -20,23 +20,23 @@ const { about, categories, contactDetails, socialLinks } =
 
 <template>
   <div
-    class="bg-white h-full w-full flex flex-col text-xs font-body font-light"
+    class="bg-white text--[color:var(--color3)] h-full w-full flex flex-col text-xs font-body font-light"
   >
     <template v-if="documentType === 'Letter'">
       <header class="flex p-8">
         <h1
-          class="text-3xl font-normal w-[26%] relative before:content-[''] before:absolute before:size-10 before:bg-[#f6881f] before:rotate-45 before:right-[103%] before:top-5 after:content-[''] after:absolute after:size-10 after:bg-[#713C97] after:rotate-45 after:right-[103%] after:top-3"
+          class="text-3xl font-normal w-[26%] relative before:content-[''] before:absolute before:size-10 before:bg-[color:var(--color1)] before:rotate-45 before:right-[103%] before:top-5 after:content-[''] after:absolute after:size-10 after:bg-[color:var(--color0)] after:rotate-45 after:right-[103%] after:top-3"
           v-if="name"
         >
           {{ name }}
         </h1>
         <div class="flex-1 text-center px-8">
           <div class="flex items-center" v-if="title">
-            <div class="flex-1 bg-[#713C97] h-1" />
+            <div class="flex-1 bg-[color:var(--color0)] h-1" />
             <h2 class="text-2xl font-normal px-8">
               {{ title }}
             </h2>
-            <div class="flex-1 bg-[#713C97] h-1" />
+            <div class="flex-1 bg-[color:var(--color0)] h-1" />
           </div>
         </div>
         <ul class="flex flex-col items-end w-[26%]">
@@ -48,7 +48,7 @@ const { about, categories, contactDetails, socialLinks } =
             <ContactIcon
               v-if="detail.icon"
               :icon="detail.icon"
-              class="w-4 text-[#713C97]"
+              class="w-4 text-[color:var(--color0)]"
             />
             {{ detail.value }}
           </li>
@@ -60,7 +60,7 @@ const { about, categories, contactDetails, socialLinks } =
             <LinkIcon
               v-if="link.icon"
               :icon="link.icon"
-              class="w-4 text-[#713C97]"
+              class="w-4 text-[color:var(--color0)]"
             />
             {{ link.url }}
           </li>
@@ -77,7 +77,7 @@ const { about, categories, contactDetails, socialLinks } =
           <h3 v-if="subject" class="text-lg font-display">
             {{ subject }}
           </h3>
-          <h4 v-if="reference" class="text-base text-[#713C97]">
+          <h4 v-if="reference" class="text-base text-[color:var(--color0)]">
             <span class="">Ref. TODO translate:</span>
             {{ reference }}
           </h4>
@@ -92,18 +92,18 @@ const { about, categories, contactDetails, socialLinks } =
     <template v-else>
       <header class="flex p-8">
         <h1
-          class="text-3xl font-normal w-[26%] relative before:content-[''] before:absolute before:size-10 before:bg-[#f6881f] before:rotate-45 before:right-[103%] before:top-5 after:content-[''] after:absolute after:size-10 after:bg-[#713C97] after:rotate-45 after:right-[103%] after:top-3"
+          class="text-3xl font-normal w-[26%] relative before:content-[''] before:absolute before:size-10 before:bg-[color:var(--color1)] before:rotate-45 before:right-[103%] before:top-5 after:content-[''] after:absolute after:size-10 after:bg-[color:var(--color0)] after:rotate-45 after:right-[103%] after:top-3"
           v-if="name"
         >
           {{ name }}
         </h1>
         <div class="flex-1 text-center px-8">
           <div class="flex items-center" v-if="title">
-            <div class="flex-1 bg-[#713C97] h-1" />
+            <div class="flex-1 bg-[color:var(--color0)] h-1" />
             <h2 class="text-2xl font-normal px-8">
               {{ title }}
             </h2>
-            <div class="flex-1 bg-[#713C97] h-1" />
+            <div class="flex-1 bg-[color:var(--color0)] h-1" />
           </div>
           <p v-if="about">{{ about }}</p>
         </div>
@@ -116,7 +116,7 @@ const { about, categories, contactDetails, socialLinks } =
             <ContactIcon
               v-if="detail.icon"
               :icon="detail.icon"
-              class="w-4 text-[#713C97]"
+              class="w-4 text-[color:var(--color0)]"
             />
             {{ detail.value }}
           </li>
@@ -128,7 +128,7 @@ const { about, categories, contactDetails, socialLinks } =
             <LinkIcon
               v-if="link.icon"
               :icon="link.icon"
-              class="w-4 text-[#713C97]"
+              class="w-4 text-[color:var(--color0)]"
             />
             {{ link.url }}
           </li>
@@ -147,11 +147,13 @@ const { about, categories, contactDetails, socialLinks } =
             :key="categoryIndex"
           >
             <h3
-              class="uppercase font-bold text-sm bg-[#713C97] text-white p-1 pl-8 w-[64%] relative z-20"
+              class="uppercase font-bold text-sm bg-[color:var(--color0)] text-[color:var(--color2)] p-1 pl-8 w-[64%] relative z-20"
             >
               {{ category.name }}
             </h3>
-            <div class="z-10 relative bottom-1 w-[65%] h-2 bg-[#f6881f]" />
+            <div
+              class="z-10 relative bottom-1 w-[65%] h-2 bg-[color:var(--color1)]"
+            />
             <ul class="flex flex-col gap-4 p-2 pl-8">
               <li
                 v-for="(entry, entryIndex) in category.entries"
@@ -181,7 +183,7 @@ const { about, categories, contactDetails, socialLinks } =
                 </div>
                 <p
                   v-if="entry.nature === 'experience' && entry.summary"
-                  class="before:content-[''] before:inline-block before:mr-1 before:size-2 before:bg-[#713C97]"
+                  class="before:content-[''] before:inline-block before:mr-1 before:size-2 before:bg-[color:var(--color0)]"
                 >
                   {{ entry.summary }}
                 </p>
@@ -206,11 +208,13 @@ const { about, categories, contactDetails, socialLinks } =
             :class="category.layout === 'half' ? 'col-span-1' : 'col-span-2'"
           >
             <h3
-              class="uppercase font-bold text-sm bg-[#713C97] text-white p-1 pl-8 w-[64%] relative z-20"
+              class="uppercase font-bold text-sm bg-[color:var(--color0)] text-[color:var(--color2)] p-1 pl-8 w-[64%] relative z-20"
             >
               {{ category.name }}
             </h3>
-            <div class="z-10 relative bottom-1 w-[65%] h-2 bg-[#f6881f]" />
+            <div
+              class="z-10 relative bottom-1 w-[65%] h-2 bg-[color:var(--color1)]"
+            />
             <ul class="flex flex-col gap-4 p-2 px-8">
               <li
                 v-for="(entry, entryIndex) in category.entries"
@@ -239,13 +243,13 @@ const { about, categories, contactDetails, socialLinks } =
                   </span>
                   <div
                     v-if="entry.nature === 'experience'"
-                    class="flex-1 bg-[#713C97] h-1"
+                    class="flex-1 bg-[color:var(--color0)] h-1"
                   />
                 </div>
                 <div class="pl-4">
                   <p
                     v-if="entry.nature === 'experience' && entry.summary"
-                    class="before:content-[''] before:inline-block before:mr-1 before:size-2 before:bg-[#713C97]"
+                    class="before:content-[''] before:inline-block before:mr-1 before:size-2 before:bg-[color:var(--color0)]"
                   >
                     {{ entry.summary }}
                   </p>

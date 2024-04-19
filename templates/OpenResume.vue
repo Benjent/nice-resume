@@ -20,11 +20,14 @@ const { about, categories, contactDetails, socialLinks } =
 
 <template>
   <div
-    class="bg-white h-full w-full flex flex-col py-6 px-12 border-t-8 border-amber-500 font-body"
+    class="bg-white text-[color:var(--color1)] h-full w-full flex flex-col py-6 px-12 border-t-8 border-[color:var(--color0)] font-body"
   >
     <template v-if="documentType === 'Letter'">
       <header>
-        <h1 v-if="name" class="text-3xl mb-2 text-amber-500 font-bold">
+        <h1
+          v-if="name"
+          class="text-3xl mb-2 text-[color:var(--color0)] font-bold"
+        >
           {{ name }}
         </h1>
         <h2 v-if="title" class="text-xl mb-2 font-bold">
@@ -60,7 +63,7 @@ const { about, categories, contactDetails, socialLinks } =
       </ul>
       <div class="mt-2 text-justify text-sm">
         <header class="mb-6 ml-12 font-bold">
-          <h4 v-if="reference" class="text-amber-500">
+          <h4 v-if="reference" class="text-[color:var(--color0)]">
             <span class="">Ref. TODO translate:</span>
             {{ reference }}
           </h4>
@@ -77,7 +80,10 @@ const { about, categories, contactDetails, socialLinks } =
     </template>
     <template v-else>
       <header>
-        <h1 v-if="name" class="text-3xl mb-2 text-amber-500 font-bold">
+        <h1
+          v-if="name"
+          class="text-3xl mb-2 text-[color:var(--color0)] font-bold"
+        >
           {{ name }}
         </h1>
         <h2 v-if="title" class="text-xl mb-2 font-bold">
@@ -120,7 +126,7 @@ const { about, categories, contactDetails, socialLinks } =
             class="mt-6"
           >
             <h3
-              class="mb-2 font-bold before:content-[''] before:inline-block before:mr-3 before:relative before:bottom-1 before:w-12 before:h-1 before:bg-amber-500"
+              class="mb-2 font-bold before:content-[''] before:inline-block before:mr-3 before:relative before:bottom-1 before:w-12 before:h-1 before:bg-[color:var(--color0)]"
             >
               {{ category.name }}
             </h3>
@@ -172,7 +178,7 @@ const { about, categories, contactDetails, socialLinks } =
             :class="category.layout === 'half' ? 'col-span-1' : 'col-span-2'"
           >
             <h3
-              class="mb-2 font-bold before:content-[''] before:inline-block before:mr-3 before:relative before:bottom-1 before:w-12 before:h-1 before:bg-amber-500"
+              class="mb-2 font-bold before:content-[''] before:inline-block before:mr-3 before:relative before:bottom-1 before:w-12 before:h-1 before:bg-[color:var(--color0)]"
             >
               {{ category.name }}
             </h3>

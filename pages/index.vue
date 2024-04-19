@@ -34,6 +34,8 @@ const title = ref("Nice resume");
             Build your resume
             <br />
             Write your cover letter
+            <br />
+            Adapt the design to your need
           </p>
           <p class="text-2xl font-semibold mt-8">
             It's

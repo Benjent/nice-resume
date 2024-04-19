@@ -20,7 +20,7 @@ const { about, categories, contactDetails, socialLinks } =
 
 <template>
   <div
-    class="bg-white h-full w-full flex flex-col p-12 border-t-[10px] border-teal-700 text-[#39424B] font-body text-xs"
+    class="bg-white text-[color:var(--color2)] h-full w-full flex flex-col p-12 border-t-[10px] border-[color:var(--color0)] font-body text-xs"
   >
     <template v-if="documentType === 'Letter'">
       <header>
@@ -63,7 +63,7 @@ const { about, categories, contactDetails, socialLinks } =
           <h3 v-if="subject" class="text-lg font-display">
             {{ subject }}
           </h3>
-          <h4 v-if="reference" class="text-xs text-teal-700">
+          <h4 v-if="reference" class="text-xs text-[color:var(--color0)]">
             <span class="">Ref. TODO translate:</span>
             {{ reference }}
           </h4>
@@ -92,7 +92,7 @@ const { about, categories, contactDetails, socialLinks } =
         <aside class="w-[20%] flex flex-col gap-4">
           <div>
             <h3
-              class="font-light tracking-wider after:content-[''] after:block after:border-b-[1px] after:border-teal-700 after:w-12 after:mt-2 after:mb-3"
+              class="font-light tracking-wider after:content-[''] after:block after:border-b-[1px] after:border-[color:var(--color0)] after:w-12 after:mt-2 after:mb-3"
             >
               About
             </h3>
@@ -127,7 +127,7 @@ const { about, categories, contactDetails, socialLinks } =
             :key="categoryIndex"
           >
             <h3
-              class="font-light tracking-wider after:content-[''] after:block after:border-b-[1px] after:border-teal-700 after:w-12 after:mt-2 after:mb-3"
+              class="font-light tracking-wider after:content-[''] after:block after:border-b-[1px] after:border-[color:var(--color0)] after:w-12 after:mt-2 after:mb-3"
             >
               {{ category.name }}
             </h3>
@@ -155,7 +155,7 @@ const { about, categories, contactDetails, socialLinks } =
                   <li
                     v-for="(highlight, highlightIndex) in entry.highlights"
                     :key="highlightIndex"
-                    class="bg-slate-100 p-[0.1rem] rounded"
+                    class="bg-[color:var(--color1)] p-[0.1rem] rounded"
                   >
                     {{ highlight }}
                   </li>
@@ -173,7 +173,7 @@ const { about, categories, contactDetails, socialLinks } =
             :class="category.layout === 'half' ? 'col-span-1' : 'col-span-2'"
           >
             <h3
-              class="font-light tracking-wider after:content-[''] after:block after:border-b-[1px] after:border-teal-700 after:w-12 after:mt-2 after:mb-3"
+              class="font-light tracking-wider after:content-[''] after:block after:border-b-[1px] after:border-[color:var(--color0)] after:w-12 after:mt-2 after:mb-3"
             >
               {{ category.name }}
             </h3>
