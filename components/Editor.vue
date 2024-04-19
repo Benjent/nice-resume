@@ -231,22 +231,39 @@ watch(
 
 <template>
   <main class="flex flex-col lg:overflow-y-auto text-white">
-    <template v-if="documentType === 'Resume'">
-      <p
-        v-if="isLayoutDisabled"
-        class="sticky top-[100px] lg:top-0 text-center p-2 bg-amber-500"
-      >
-        Category layouts are fixed for this template.
-      </p>
-      <p
-        v-if="isLayoutDiscouraged"
-        class="sticky top-[100px] lg:top-0 text-center p-2 bg-amber-500"
-      >
-        {{ discouragedLayoutText }}
-      </p>
-    </template>
+    <header class="sticky z-10 top-[100px] lg:top-0">
+      <nav class="bg-white px-10 py-2 text-blue-500 flex gap-x-5 flex-wrap">
+        <span class="text-pink-500">Navigate to</span>
+        <a href="#Details">Details</a>
+        <template v-if="documentType === 'Letter'">
+          <a href="#Header">Header</a>
+          <a href="#Body">Body</a>
+        </template>
+        <template v-else>
+          <a
+            v-for="category in categories"
+            :key="category.name"
+            :href="`#${category.name}`"
+          >
+            {{ category.name }}
+          </a>
+        </template>
+        <a href="#Customization">Customization</a>
+      </nav>
+      <template v-if="documentType === 'Resume'">
+        <p v-if="isLayoutDisabled" class="text-center px-10 py-2 bg-amber-500">
+          Category layouts are fixed for this template.
+        </p>
+        <p
+          v-if="isLayoutDiscouraged"
+          class="text-center px-10 py-2 bg-amber-500"
+        >
+          {{ discouragedLayoutText }}
+        </p>
+      </template>
+    </header>
     <div class="flex flex-col gap-8 p-8 w-full max-w-[860px] mx-auto">
-      <EditorCategory class="w-full">
+      <EditorCategory id="Details" class="w-full">
         <template v-slot:header>Details</template>
         <div class="flex flex-col gap-5">
           <div class="flex justify-center gap-5 flex-wrap">
@@ -390,7 +407,7 @@ watch(
         </div>
       </EditorCategory>
       <template v-if="documentType === 'Letter'">
-        <EditorCategory class="w-full">
+        <EditorCategory id="Header" class="w-full">
           <template v-slot:header>Header</template>
           <div class="flex flex-col gap-5">
             <label class="flex flex-col" for="contactDetails">
@@ -440,7 +457,7 @@ watch(
             </label>
           </div>
         </EditorCategory>
-        <EditorCategory class="w-full">
+        <EditorCategory id="Body" class="w-full">
           <template v-slot:header>Body</template>
           <div class="flex flex-col gap-5">
             <label class="flex flex-col" for="paragraphList">
@@ -484,6 +501,7 @@ watch(
           class="w-full"
           v-for="(category, categoryIndex) in categories"
           :key="categoryIndex"
+          :id="category.name"
         >
           <template v-slot:header>
             <div class="flex items-baseline gap-8">
@@ -670,7 +688,7 @@ watch(
         </footer>
       </template>
 
-      <EditorCategory class="w-full">
+      <EditorCategory id="Customization" class="w-full">
         <template v-slot:header>Customization</template>
         <div class="flex flex-col gap-5">
           <!-- TODO use nice toggle component -->
