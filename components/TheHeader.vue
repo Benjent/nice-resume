@@ -26,6 +26,10 @@ const resume = storeToRefs(useResumeStore());
 
 const isImportError = ref(false);
 
+function downloadPdf() {
+  window.print();
+}
+
 function exportToJson() {
   const toExport = {
     ...letter,
@@ -93,7 +97,7 @@ function importFromJson(event: Event) {
 
 <template>
   <header
-    class="sticky top-0 z-10 h-[100px] flex justify-between items-center gap-2 px-10 bg-white text-pink-500 shadow-lg"
+    class="print:hidden sticky top-0 z-10 h-[100px] flex justify-between items-center gap-2 px-10 bg-white text-pink-500 shadow-lg"
   >
     <NuxtLink to="/">
       <h1
@@ -166,6 +170,14 @@ function importFromJson(event: Event) {
           </option>
         </select>
       </label>
+
+      <button
+        class="text-blue-500 flex items-center gap-1"
+        @click="downloadPdf"
+      >
+        <ArrowDownOnSquareIcon class="h-6" />
+        Download
+      </button>
     </div>
   </header>
 </template>
