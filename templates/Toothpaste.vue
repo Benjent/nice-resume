@@ -58,11 +58,13 @@ function getSectionCategory(indexToGetFrom: number) {
 </script>
 
 <template>
-  <div class="bg-white h-full w-full flex flex-col font-body">
+  <div
+    class="bg-white text-[color:var(--color3)] h-full w-full flex flex-col font-body"
+  >
     <template v-if="documentType === 'Letter'">
       <header class="flex items-baseline mx-auto mt-8 p-8">
         <div
-          class="flex flex-col place-items-center w-fit border-y-4 border-[#ed3660] py-2 px-4 font-display text-center"
+          class="flex flex-col place-items-center w-fit border-y-4 border-[color:var(--color0)] py-2 px-4 font-display text-center"
         >
           <h1 v-if="name" class="text-4xl uppercase">
             {{ name }}
@@ -92,7 +94,7 @@ function getSectionCategory(indexToGetFrom: number) {
         </ul>
       </header>
       <ul
-        class="px-8 text-[#ed3660] text-right text-xs italic"
+        class="px-8 text-[color:var(--color0)] text-right text-xs italic"
         v-if="recipientDetails.length"
       >
         <li v-for="detail in recipientDetails" :key="detail">
@@ -102,11 +104,13 @@ function getSectionCategory(indexToGetFrom: number) {
       <div class="p-8 text-justify text-sm">
         <header class="text-center mb-6">
           <h3 v-if="subject" class="font-bold">
-            <span class="text-[#ed3660]">Objet TODO translate:</span>
+            <span class="text-[color:var(--color0)]">
+              Objet TODO translate:
+            </span>
             {{ subject }}
           </h3>
           <h4 v-if="reference" class="text-xs">
-            <span class="text-[#ed3660]">Ref. TODO translate:</span>
+            <span class="text-[color:var(--color0)]">Ref. TODO translate:</span>
             {{ reference }}
           </h4>
         </header>
@@ -120,10 +124,10 @@ function getSectionCategory(indexToGetFrom: number) {
     <template v-else>
       <header
         v-if="name"
-        class="flex items-start gap-12 px-10 py-6 text-[#1e1e1e] font-display"
+        class="flex items-start gap-12 px-10 py-6 font-display"
       >
         <div
-          class="flex flex-col place-items-center w-fit border-y-4 border-[#ed3660] py-2 px-4 flex-1"
+          class="flex flex-col place-items-center w-fit border-y-4 border-[color:var(--color0)] py-2 px-4 flex-1"
         >
           <h1 v-if="name" class="text-center uppercase text-4xl">
             {{ name }}
@@ -155,7 +159,7 @@ function getSectionCategory(indexToGetFrom: number) {
           </ul>
         </div>
         <p v-if="about" class="flex-1">
-          <span class="text-3xl text-[#5662e8] leading-4">“</span>
+          <span class="text-3xl text-[color:var(--color1)] leading-4">“</span>
           {{ about }}
         </p>
       </header>
@@ -250,10 +254,12 @@ function getSectionCategory(indexToGetFrom: number) {
             <section
               v-for="(category, categoryIndex) in firstSectionCategories"
               :key="categoryIndex"
-              class="px-10 py-6 border-t-2 border-[#ed3660]"
+              class="px-10 py-6 border-t-2 border-[color:var(--color0)]"
               :class="category.layout === 'half' ? 'col-span-1' : 'col-span-2'"
             >
-              <h3 class="font-display uppercase mb-2 text-2xl text-[#ed3660]">
+              <h3
+                class="font-display uppercase mb-2 text-2xl text-[color:var(--color0)]"
+              >
                 {{ category.name }}
               </h3>
               <ul class="flex flex-col gap-2">
@@ -262,7 +268,9 @@ function getSectionCategory(indexToGetFrom: number) {
                   :key="entryIndex"
                 >
                   <div class="flex items-baseline">
-                    <div class="text-[#ed3660] flex-1 font-display text-xl">
+                    <div
+                      class="text-[color:var(--color0)] flex-1 font-display text-xl"
+                    >
                       {{ entry.title }}
                     </div>
                     <template v-if="entry.nature === 'experience'">
@@ -303,10 +311,12 @@ function getSectionCategory(indexToGetFrom: number) {
             <section
               v-for="(category, categoryIndex) in secondSectionCategories"
               :key="categoryIndex"
-              class="px-10 py-6 border-t-2 border-[#5662e8]"
+              class="px-10 py-6 border-t-2 border-[color:var(--color1)]"
               :class="category.layout === 'half' ? 'col-span-1' : 'col-span-2'"
             >
-              <h3 class="font-display uppercase mb-2 text-2xl text-[#5662e8]">
+              <h3
+                class="font-display uppercase mb-2 text-2xl text-[color:var(--color1)]"
+              >
                 {{ category.name }}
               </h3>
               <ul class="flex flex-col gap-2">
@@ -315,7 +325,9 @@ function getSectionCategory(indexToGetFrom: number) {
                   :key="entryIndex"
                 >
                   <div class="flex items-baseline">
-                    <div class="text-[#5662e8] flex-1 font-display text-xl">
+                    <div
+                      class="text-[color:var(--color1)] flex-1 font-display text-xl"
+                    >
                       {{ entry.title }}
                     </div>
                     <template v-if="entry.nature === 'experience'">
@@ -352,10 +364,12 @@ function getSectionCategory(indexToGetFrom: number) {
             <section
               v-for="(category, categoryIndex) in thirdSectionCategories"
               :key="categoryIndex"
-              class="px-10 py-6 border-t-2 border-[#e8afcf]"
+              class="px-10 py-6 border-t-2 border-[color:var(--color2)]"
               :class="category.layout === 'half' ? 'col-span-1' : 'col-span-2'"
             >
-              <h3 class="font-display uppercase mb-2 text-2xl text-[#e8afcf]">
+              <h3
+                class="font-display uppercase mb-2 text-2xl text-[color:var(--color2)]"
+              >
                 {{ category.name }}
               </h3>
               <ul class="flex flex-col gap-2">
@@ -364,7 +378,9 @@ function getSectionCategory(indexToGetFrom: number) {
                   :key="entryIndex"
                 >
                   <div class="flex items-baseline">
-                    <div class="text-[#e8afcf] flex-1 font-display text-xl">
+                    <div
+                      class="text-[color:var(--color2)] flex-1 font-display text-xl"
+                    >
                       {{ entry.title }}
                     </div>
                     <template v-if="entry.nature === 'experience'">

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, nextTick, ref } from "vue";
+import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { storeToRefs } from "pinia";
 import { PlusCircleIcon } from "@heroicons/vue/24/outline";
 import { useEditorStore } from "@/stores/editor";
@@ -22,11 +22,13 @@ import {
   experienceTypes,
   fixedLayoutTemplates,
   socialIcons,
+  templateColors,
 } from "@/globals";
 
 const { documentType } = storeToRefs(useEditorStore());
 
-const { name, template, title } = storeToRefs(useProfileStore());
+const { colors, isThemeCustomized, name, template, title } =
+  storeToRefs(useProfileStore());
 
 const { about, categories, contactDetails, socialLinks } =
   storeToRefs(useResumeStore());
@@ -185,20 +187,60 @@ function getExperienceOrganizationLabel(experience: Experience) {
       return "Organization";
   }
 }
+
+function setCssVariable(name: string, value: string) {
+  const root = document.querySelector(":root");
+  // Rely on CSS variables to allow pseudo-element styling in templates
+  (root as HTMLElement).style.setProperty(`--${name}`, value);
+}
+
+function setThemeColors(isThemeCustomized: boolean) {
+  if (isThemeCustomized) {
+    colors.value.forEach((color, index) => {
+      setCssVariable(`color${index}`, color);
+    });
+  } else {
+    templateColors[template.value].forEach((color, index) => {
+      setCssVariable(`color${index}`, color);
+    });
+  }
+}
+
+onMounted(() => {
+  setThemeColors(isThemeCustomized.value);
+});
+
+watch(template, () => {
+  setThemeColors(isThemeCustomized.value);
+});
+
+watch(isThemeCustomized, (newValue) => {
+  setThemeColors(newValue);
+});
+
+watch(
+  colors,
+  (newValue) => {
+    newValue.forEach((color, index) => {
+      setCssVariable(`color${index}`, color);
+    });
+  },
+  { deep: true },
+);
 </script>
 
 <template>
-  <main class="flex flex-col overflow-y-auto text-white">
+  <main class="flex flex-col lg:overflow-y-auto text-white">
     <template v-if="documentType === 'Resume'">
       <p
         v-if="isLayoutDisabled"
-        class="sticky top-0 text-center p-2 bg-amber-500"
+        class="sticky top-[100px] lg:top-0 text-center p-2 bg-amber-500"
       >
         Category layouts are fixed for this template.
       </p>
       <p
         v-if="isLayoutDiscouraged"
-        class="sticky top-0 text-center p-2 bg-amber-500"
+        class="sticky top-[100px] lg:top-0 text-center p-2 bg-amber-500"
       >
         {{ discouragedLayoutText }}
       </p>
@@ -627,6 +669,47 @@ function getExperienceOrganizationLabel(experience: Experience) {
           </Button>
         </footer>
       </template>
+
+      <EditorCategory class="w-full">
+        <template v-slot:header>Customization</template>
+        <div class="flex flex-col gap-5">
+          <!-- TODO use nice toggle component -->
+          <label class="cursor-pointer" for="isThemeCustomized">
+            <input
+              id="isThemeCustomized"
+              class="input"
+              type="checkbox"
+              v-model="isThemeCustomized"
+            />
+            <span class="opacity-60">Use custom theme</span>
+          </label>
+          <div class="flex gap-5 flex-wrap">
+            <label
+              class="flex flex-col"
+              v-for="(color, index) in templateColors[template]"
+              :key="index"
+              :for="`color${index}`"
+            >
+              <input
+                v-if="isThemeCustomized"
+                :id="`color${index}`"
+                class="input cursor-pointer"
+                type="color"
+                :disabled="!isThemeCustomized"
+                v-model="colors[index]"
+              />
+              <input
+                v-else
+                :id="`color${index}`"
+                class="input cursor-pointer"
+                type="color"
+                disabled
+                :value="color"
+              />
+            </label>
+          </div>
+        </div>
+      </EditorCategory>
     </div>
   </main>
 </template>

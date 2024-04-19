@@ -19,7 +19,9 @@ const { about, categories, contactDetails, socialLinks } =
 </script>
 
 <template>
-  <div class="bg-white h-full w-full flex flex-col py-5 px-6 text-xs font-body">
+  <div
+    class="bg-white text-[color:var(--color1)] h-full w-full flex flex-col py-5 px-6 text-xs font-body"
+  >
     <template v-if="documentType === 'Letter'">
       <header class="flex mb-4">
         <ul class="flex flex-col">
@@ -56,7 +58,7 @@ const { about, categories, contactDetails, socialLinks } =
       <div class="text-justify text-xs px-4">
         <header class="text-center text-sm mb-6">
           <h3 v-if="subject" class="">
-            <span class="text-blue-900 uppercase">
+            <span class="text-[color:var(--color0)] uppercase">
               Objet TODO translate:{{ " " }}
             </span>
             <span class="italic">
@@ -64,7 +66,7 @@ const { about, categories, contactDetails, socialLinks } =
             </span>
           </h3>
           <h4 v-if="reference" class="text-xs">
-            <span class="text-blue-900 uppercase">
+            <span class="text-[color:var(--color0)] uppercase">
               Ref. TODO translate:{{ " " }}
             </span>
             <span class="italic">{{ reference }}</span>
@@ -118,7 +120,7 @@ const { about, categories, contactDetails, socialLinks } =
             :key="categoryIndex"
           >
             <h3
-              class="uppercase text-blue-900 border-b-[1px] border-black mb-1"
+              class="uppercase text-[color:var(--color0)] border-b-[1px] border-[color:var(--color1)] mb-1"
             >
               {{ category.name }}
             </h3>
@@ -175,7 +177,7 @@ const { about, categories, contactDetails, socialLinks } =
             :class="category.layout === 'half' ? 'col-span-1' : 'col-span-2'"
           >
             <h3
-              class="uppercase text-blue-900 border-b-[1px] border-black mb-1"
+              class="uppercase text-[color:var(--color0)] border-b-[1px] border-[color:var(--color1)] mb-1"
             >
               {{ category.name }}
             </h3>

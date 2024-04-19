@@ -20,7 +20,7 @@ const { about, categories, contactDetails, socialLinks } =
 
 <template>
   <div
-    class="bg-white h-full w-full flex flex-col p-12 text-zinc-600 font-sans"
+    class="bg-white text-[color:var(--color3)] h-full w-full flex flex-col p-12 font-sans"
   >
     <template v-if="documentType === 'Letter'">
       <header v-if="name">
@@ -59,7 +59,7 @@ const { about, categories, contactDetails, socialLinks } =
       </header>
 
       <ul
-        class="text-right border-t-[1px] border-zinc-200 py-6 leading-tight text-zinc-400 text-sm"
+        class="text-right border-t-[1px] border-[color:var(--color2)] py-6 leading-tight text-[color:var(--color1)] text-sm"
         v-if="recipientDetails.length"
       >
         <li v-for="detail in recipientDetails" :key="detail">
@@ -70,11 +70,11 @@ const { about, categories, contactDetails, socialLinks } =
         <header class="mb-6">
           <h3
             v-if="subject"
-            class="uppercase text-black font-bold font-display text-base leading-tight mb-5"
+            class="uppercase text-[color:var(--color0)] font-bold font-display text-base leading-tight mb-5"
           >
             {{ subject }}
           </h3>
-          <h4 v-if="reference" class="text-zinc-400">
+          <h4 v-if="reference" class="text-[color:var(--color1)]">
             Reference TODO translate {{ reference }}
           </h4>
         </header>
@@ -122,7 +122,7 @@ const { about, categories, contactDetails, socialLinks } =
 
       <p
         v-if="about"
-        class="py-6 border-t-[1px] border-zinc-200 text-center font-display"
+        class="py-6 border-t-[1px] border-[color:var(--color2)] text-center font-display"
       >
         {{ about }}
       </p>
@@ -140,7 +140,7 @@ const { about, categories, contactDetails, socialLinks } =
             class="mb-6"
           >
             <h3
-              class="font-display uppercase mb-5 text-xl text-black font-bold"
+              class="font-display uppercase mb-5 text-xl text-[color:var(--color0)] font-bold"
             >
               {{ category.name }}
             </h3>
@@ -149,24 +149,24 @@ const { about, categories, contactDetails, socialLinks } =
                 v-for="(entry, entryIndex) in category.entries"
                 :key="entryIndex"
               >
-                <div class="uppercase text-black leading-none">
+                <div class="uppercase text-[color:var(--color0)] leading-none">
                   {{ entry.title }}
                 </div>
                 <template v-if="entry.nature === 'experience'">
                   <div
-                    class="text-zinc-400 leading-tight"
+                    class="text-[color:var(--color1)] leading-tight"
                     v-if="entry.organization"
                   >
                     {{ entry.organization }}
                   </div>
                   <div
-                    class="text-zinc-400 leading-tight"
+                    class="text-[color:var(--color1)] leading-tight"
                     v-if="entry.location"
                   >
                     {{ entry.location }}
                   </div>
                   <div
-                    class="text-zinc-400 leading-tight"
+                    class="text-[color:var(--color1)] leading-tight"
                     v-if="entry.startDate"
                   >
                     {{ entry.startDate }}
@@ -200,11 +200,11 @@ const { about, categories, contactDetails, socialLinks } =
               (category) => category.layout !== 'aside',
             )"
             :key="index"
-            class="py-6 border-t-[1px] border-zinc-200"
+            class="py-6 border-t-[1px] border-[color:var(--color2)]"
             :class="category.layout === 'half' ? 'col-span-1' : 'col-span-2'"
           >
             <h3
-              class="font-display uppercase mb-5 text-xl text-black font-bold"
+              class="font-display uppercase mb-5 text-xl text-[color:var(--color0)] font-bold"
             >
               {{ category.name }}
             </h3>
@@ -213,11 +213,11 @@ const { about, categories, contactDetails, socialLinks } =
                 v-for="(entry, entryIndex) in category.entries"
                 :key="entryIndex"
               >
-                <div class="uppercase text-black leading-none">
+                <div class="uppercase text-[color:var(--color0)] leading-none">
                   {{ entry.title }}
                 </div>
                 <template v-if="entry.nature === 'experience'">
-                  <div class="text-zinc-400 mb-1">
+                  <div class="text-[color:var(--color1)] mb-1">
                     {{ entry.organization }} | {{ entry.location }}
                     <template v-if="entry.startDate">
                       |
