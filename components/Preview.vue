@@ -39,7 +39,7 @@ const component: Component = computed(() => templateMapper[template.value]);
 </script>
 
 <template>
-  <aside class="lg:overflow-y-auto">
+  <aside class="lg:overflow-y-auto print:hidden">
     <section
       class="w-[210mm] h-[297mm] bg-white shadow origin-top-center m-auto after:content-[''] after:block after:left-0 after:right-0 after:border-b-2 after:border-black after:border-dotted"
       :style="`transform: scale(${zoomLevel / 100})`"
@@ -47,4 +47,5 @@ const component: Component = computed(() => templateMapper[template.value]);
       <component :is="component" />
     </section>
   </aside>
+  <component class="hidden print:block" :is="component" />
 </template>
