@@ -10,6 +10,7 @@ import {
 export const templates: Array<Template> = [
   "Aster",
   "CottonCandy",
+  "Macaron",
   "Macchiato",
   "OpenResume",
   "Paper",
@@ -27,6 +28,7 @@ export const discouragedLayoutTemplates: {
 } = {
   Aster: ["aside", "half"],
   CottonCandy: ["aside"],
+  Macaron: [],
   Macchiato: [],
   OpenResume: [],
   Paper: [],
