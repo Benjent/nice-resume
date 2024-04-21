@@ -13,6 +13,7 @@ export const documentTypes: Array<DocumentType> = ["Resume", "Letter"];
 export const templates: Array<Template> = [
   "Aster",
   "CottonCandy",
+  "Macaron",
   "Macchiato",
   "OpenResume",
   "Paper",
@@ -30,6 +31,7 @@ export const discouragedLayoutTemplates: {
 } = {
   Aster: ["aside", "half"],
   CottonCandy: ["aside"],
+  Macaron: [],
   Macchiato: [],
   OpenResume: [],
   Paper: [],
@@ -45,6 +47,7 @@ export const templateColors: {
 } = {
   Aster: ["#713c97", "#f6881f", "#ffffff", "#000000"],
   CottonCandy: ["#ed3660", "#5662e8", "#e8afcf", "#ffffff", "#1e1e1e"],
+  Macaron: ["#d88277", "#f8aaa6", "#ffffff", "#414e66"],
   Macchiato: ["#56817a", "#f8f8ff", "#39424b"],
   OpenResume: ["#38bdf8", "#000000"],
   Paper: ["#cfcfcf", "#000000"],

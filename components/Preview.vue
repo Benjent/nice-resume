@@ -6,6 +6,7 @@ import { useEditorStore } from "@/stores/editor";
 import { useProfileStore } from "@/stores/profile";
 import Aster from "@/templates/Aster.vue";
 import CottonCandy from "@/templates/CottonCandy.vue";
+import Macaron from "@/templates/Macaron.vue";
 import Macchiato from "@/templates/Macchiato.vue";
 import OpenResume from "@/templates/OpenResume.vue";
 import Paper from "@/templates/Paper.vue";
@@ -25,6 +26,7 @@ type TemplateMapper = {
 const templateMapper: TemplateMapper = {
   Aster,
   CottonCandy,
+  Macaron,
   Macchiato,
   OpenResume,
   Paper,
