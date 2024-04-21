@@ -3,7 +3,7 @@ import { type Component, computed } from "vue";
 import { storeToRefs } from "pinia";
 import { type Template } from "@/types";
 import { useEditorStore } from "@/stores/editor";
-import { useResumeStore } from "@/stores/resume";
+import { useProfileStore } from "@/stores/profile";
 import Aster from "@/templates/Aster.vue";
 import CottonCandy from "@/templates/CottonCandy.vue";
 import Macchiato from "@/templates/Macchiato.vue";
@@ -16,7 +16,7 @@ import Toothpaste from "@/templates/Toothpaste.vue";
 import Wiki from "@/templates/Wiki.vue";
 
 const { zoomLevel } = storeToRefs(useEditorStore());
-const { template } = storeToRefs(useResumeStore());
+const { template } = storeToRefs(useProfileStore());
 
 type TemplateMapper = {
   [K in Template]: Component;

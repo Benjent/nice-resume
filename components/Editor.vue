@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { storeToRefs } from "pinia";
 import { PlusCircleIcon } from "@heroicons/vue/24/outline";
+import { useEditorStore } from "@/stores/editor";
+import { useLetterStore } from "@/stores/letter";
+import { useProfileStore } from "@/stores/profile";
 import { useResumeStore } from "@/stores/resume";
 import { type Category, type Experience } from "@/types";
 import { moveDown, moveUp, remove } from "@/utils/array";
@@ -19,17 +22,19 @@ import {
   experienceTypes,
   fixedLayoutTemplates,
   socialIcons,
+  templateColors,
 } from "@/globals";
 
-const {
-  about,
-  categories,
-  contactDetails,
-  name,
-  socialLinks,
-  template,
-  title,
-} = storeToRefs(useResumeStore());
+const { documentType } = storeToRefs(useEditorStore());
+
+const { colors, isThemeCustomized, name, template, title } =
+  storeToRefs(useProfileStore());
+
+const { about, categories, contactDetails, socialLinks } =
+  storeToRefs(useResumeStore());
+
+const { paragraphs, recipientDetails, reference, subject } =
+  storeToRefs(useLetterStore());
 
 const types = ref<Category["type"][]>(categoryTypes);
 const layouts = ref<Category["layout"][]>(categoryLayouts);
@@ -97,6 +102,26 @@ function addContactDetail() {
   };
 
   contactDetails.value.push(detail);
+
+  focusNextInput("#contactDetailList input");
+}
+
+function addHighlight(entry: Entry) {
+  entry.highlights.push("");
+
+  focusNextInput("#highlightList input");
+}
+
+function addParagraph() {
+  paragraphs.value.push("");
+
+  focusNextInput("#paragraphList textarea");
+}
+
+function addRecipientDetail() {
+  recipientDetails.value.push("");
+
+  focusNextInput("#recipientDetailList input");
 }
 
 function addSocialLink() {
@@ -106,6 +131,8 @@ function addSocialLink() {
   };
 
   socialLinks.value.push(link);
+
+  focusNextInput("#socialLinkList input");
 }
 
 function changeContactDetailIcon(detail: Detail, value: Detail["icon"]) {
@@ -126,6 +153,12 @@ function changeCategoryType(category: Category, value: Category["type"]) {
 
 function changeCategoryLayout(category: Category, value: Category["layout"]) {
   category.layout = value;
+}
+
+async function focusNextInput(selector: string) {
+  await nextTick(); // Wait for the new input to be rendered before querying it
+  const inputs = [...document.querySelectorAll(selector)];
+  (inputs[inputs.length - 1] as HTMLInputElement).focus();
 }
 
 function getEntryTitleLabel(entry: Entry) {
@@ -154,43 +187,102 @@ function getExperienceOrganizationLabel(experience: Experience) {
       return "Organization";
   }
 }
+
+function setCssVariable(name: string, value: string) {
+  const root = document.querySelector(":root");
+  // Rely on CSS variables to allow pseudo-element styling in templates
+  (root as HTMLElement).style.setProperty(`--${name}`, value);
+}
+
+function setThemeColors(isThemeCustomized: boolean) {
+  if (isThemeCustomized) {
+    colors.value.forEach((color, index) => {
+      setCssVariable(`color${index}`, color);
+    });
+  } else {
+    templateColors[template.value].forEach((color, index) => {
+      setCssVariable(`color${index}`, color);
+    });
+  }
+}
+
+onMounted(() => {
+  setThemeColors(isThemeCustomized.value);
+});
+
+watch(template, () => {
+  setThemeColors(isThemeCustomized.value);
+});
+
+watch(isThemeCustomized, (newValue) => {
+  setThemeColors(newValue);
+});
+
+watch(
+  colors,
+  (newValue) => {
+    newValue.forEach((color, index) => {
+      setCssVariable(`color${index}`, color);
+    });
+  },
+  { deep: true },
+);
 </script>
 
 <template>
-  <main class="flex flex-col overflow-y-auto text-white">
-    <p
-      v-if="isLayoutDisabled"
-      class="sticky top-0 text-center p-2 bg-amber-500"
-    >
-      Category layouts are fixed for this template.
-    </p>
-    <p
-      v-if="isLayoutDiscouraged"
-      class="sticky top-0 text-center p-2 bg-amber-500"
-    >
-      {{ discouragedLayoutText }}
-    </p>
+  <main class="flex flex-col lg:overflow-y-auto text-white">
+    <header class="sticky z-10 top-[100px] lg:top-0">
+      <nav class="bg-white px-10 py-2 text-blue-500 flex gap-x-5 flex-wrap">
+        <span class="text-pink-500">Navigate to</span>
+        <a href="#Details">Details</a>
+        <template v-if="documentType === 'Letter'">
+          <a href="#Header">Header</a>
+          <a href="#Body">Body</a>
+        </template>
+        <template v-else>
+          <a
+            v-for="category in categories"
+            :key="category.name"
+            :href="`#${category.name}`"
+          >
+            {{ category.name }}
+          </a>
+        </template>
+        <a href="#Customization">Customization</a>
+      </nav>
+      <template v-if="documentType === 'Resume'">
+        <p v-if="isLayoutDisabled" class="text-center px-10 py-2 bg-amber-500">
+          Category layouts are fixed for this template.
+        </p>
+        <p
+          v-if="isLayoutDiscouraged"
+          class="text-center px-10 py-2 bg-amber-500"
+        >
+          {{ discouragedLayoutText }}
+        </p>
+      </template>
+    </header>
     <div class="flex flex-col gap-8 p-8 w-full max-w-[860px] mx-auto">
-      <EditorCategory class="w-full">
+      <EditorCategory id="Details" class="w-full">
         <template v-slot:header>Details</template>
         <div class="flex flex-col gap-5">
           <div class="flex justify-center gap-5 flex-wrap">
             <label class="flex flex-col flex-1" for="detailsName">
-              Name
+              <span class="opacity-60">Name</span>
               <input id="detailsName" class="input" v-model="name" />
             </label>
             <label class="flex flex-col flex-1" for="detailsTitle">
-              Title
+              <span class="opacity-60">Title</span>
               <input id="detailsTitle" class="input" v-model="title" />
             </label>
           </div>
           <label class="flex flex-col" for="detailsAbout">
-            About
+            <span class="opacity-60">About</span>
             <textarea id="detailsAbout" class="input" v-model="about" />
           </label>
           <label class="flex flex-col" for="contactDetails">
             <div class="flex gap-2">
-              Contact details
+              <span class="opacity-60">Contact details</span>
               <button
                 title="Add detail"
                 class="bg-blue-500 size-7 text-white rounded-full"
@@ -199,41 +291,48 @@ function getExperienceOrganizationLabel(experience: Experience) {
                 <PlusCircleIcon class="size-full" />
               </button>
             </div>
-            <ul v-if="contactDetails.length" class="flex flex-col gap-2">
+            <ul
+              v-if="contactDetails.length"
+              id="contactDetailList"
+              class="inputList"
+            >
               <li
                 v-for="(detail, detailIndex) in contactDetails"
                 :key="detailIndex"
-                class="flex items-center gap-2"
+                class="inputListItem"
               >
-                <input
-                  class="input"
-                  v-model="contactDetails[detailIndex].value"
-                />
-                <label for="detailIcon">
-                  Icon
-                  <select
-                    id="detailIcon"
-                    :value="detail.icon"
-                    @change="
-                      changeContactDetailIcon(
-                        detail,
-                        ($event.target as HTMLInputElement)
-                          .value as Detail['icon'],
-                      )
-                    "
-                    class="select block capitalize bg-transparent text-white"
-                  >
-                    <option class="option" value="">None</option>
-                    <option class="option">default</option>
-                    <option
-                      v-for="icon in contactIcons"
-                      :key="icon as string"
-                      class="option"
+                <div class="flex w-[70%] gap-3 items-end">
+                  <input
+                    class="input flex-1"
+                    v-model="contactDetails[detailIndex].value"
+                    @keydown.enter.prevent="addContactDetail"
+                  />
+                  <label for="detailIcon">
+                    Icon
+                    <select
+                      id="detailIcon"
+                      :value="detail.icon"
+                      @change="
+                        changeContactDetailIcon(
+                          detail,
+                          ($event.target as HTMLInputElement)
+                            .value as Detail['icon'],
+                        )
+                      "
+                      class="select block capitalize bg-transparent text-white"
                     >
-                      {{ icon }}
-                    </option>
-                  </select>
-                </label>
+                      <option class="option" value="">None</option>
+                      <option class="option">default</option>
+                      <option
+                        v-for="icon in contactIcons"
+                        :key="icon as string"
+                        class="option"
+                      >
+                        {{ icon }}
+                      </option>
+                    </select>
+                  </label>
+                </div>
                 <ListActions
                   class="mb-2"
                   :index="detailIndex"
@@ -247,7 +346,7 @@ function getExperienceOrganizationLabel(experience: Experience) {
           </label>
           <label class="flex flex-col" for="socialLinks">
             <div class="flex gap-2">
-              Social links
+              <span class="opacity-60">Social links</span>
               <button
                 title="Add social link"
                 class="bg-blue-500 size-7 text-white rounded-full"
@@ -256,41 +355,44 @@ function getExperienceOrganizationLabel(experience: Experience) {
                 <PlusCircleIcon class="size-full" />
               </button>
             </div>
-            <ul
-              v-if="socialLinks.length"
-              class="flex flex-col gap-2 justify-between"
-            >
+            <ul v-if="socialLinks.length" id="socialLinkList" class="inputList">
               <li
                 v-for="(link, linkIndex) in socialLinks"
                 :key="linkIndex"
-                class="flex items-center gap-2"
+                class="inputListItem"
               >
-                <input class="input" v-model="socialLinks[linkIndex].url" />
-                <label for="linkIcon">
-                  Icon
-                  <select
-                    id="linkIcon"
-                    :value="link.icon"
-                    @change="
-                      changeSocialLinkIcon(
-                        link,
-                        ($event.target as HTMLInputElement)
-                          .value as Link['icon'],
-                      )
-                    "
-                    class="select block capitalize bg-transparent text-white"
-                  >
-                    <option class="option" value="">None</option>
-                    <option class="option">default</option>
-                    <option
-                      v-for="icon in socialIcons"
-                      :key="icon as string"
-                      class="option"
+                <div class="flex w-[70%] gap-3 items-end">
+                  <input
+                    class="input flex-1"
+                    v-model="socialLinks[linkIndex].url"
+                    @keydown.enter.prevent="addSocialLink"
+                  />
+                  <label for="linkIcon">
+                    Icon
+                    <select
+                      id="linkIcon"
+                      :value="link.icon"
+                      @change="
+                        changeSocialLinkIcon(
+                          link,
+                          ($event.target as HTMLInputElement)
+                            .value as Link['icon'],
+                        )
+                      "
+                      class="select block capitalize bg-transparent text-white"
                     >
-                      {{ icon }}
-                    </option>
-                  </select>
-                </label>
+                      <option class="option" value="">None</option>
+                      <option class="option">default</option>
+                      <option
+                        v-for="icon in socialIcons"
+                        :key="icon as string"
+                        class="option"
+                      >
+                        {{ icon }}
+                      </option>
+                    </select>
+                  </label>
+                </div>
                 <ListActions
                   class="mb-2"
                   :index="linkIndex"
@@ -304,172 +406,328 @@ function getExperienceOrganizationLabel(experience: Experience) {
           </label>
         </div>
       </EditorCategory>
-      <EditorCategory
-        class="w-full"
-        v-for="(category, categoryIndex) in categories"
-        :key="categoryIndex"
-      >
-        <template v-slot:header>
-          <div class="flex items-baseline gap-8">
-            <label for="name">
-              Category name
-              <input
-                id="name"
-                class="input text-blue-500 block bg-blue-700 bg-opacity-5"
-                v-model="category.name"
-              />
-            </label>
-            <label for="type">
-              Type
-              <select
-                id="type"
-                :value="category.type"
-                @change="
-                  changeCategoryType(
-                    category,
-                    ($event.target as HTMLInputElement)
-                      .value as Category['type'],
-                  )
-                "
-                class="select block capitalize px-2 py-1 pl-0"
+      <template v-if="documentType === 'Letter'">
+        <EditorCategory id="Header" class="w-full">
+          <template v-slot:header>Header</template>
+          <div class="flex flex-col gap-5">
+            <label class="flex flex-col" for="contactDetails">
+              <div class="flex gap-2">
+                <span class="opacity-60">Recipient details</span>
+                <button
+                  title="Add detail"
+                  class="bg-blue-500 size-7 text-white rounded-full"
+                  @click="addRecipientDetail"
+                >
+                  <PlusCircleIcon class="size-full" />
+                </button>
+              </div>
+              <ul
+                v-if="recipientDetails.length"
+                id="recipientDetailList"
+                class="inputList"
               >
-                <option v-for="item in types" :key="item" class="option">
-                  {{ item }}
-                </option>
-              </select>
+                <li
+                  v-for="(_detail, index) in recipientDetails"
+                  :key="index"
+                  class="inputListItem"
+                >
+                  <input
+                    class="input w-[70%]"
+                    v-model="recipientDetails[index]"
+                    @keydown.enter.prevent="addRecipientDetail"
+                  />
+                  <ListActions
+                    class="mb-2"
+                    :index="index"
+                    :list-length="recipientDetails.length"
+                    @moveUp="moveUp(recipientDetails, index)"
+                    @moveDown="moveDown(recipientDetails, index)"
+                    @remove="remove(recipientDetails, index)"
+                  />
+                </li>
+              </ul>
             </label>
-            <label for="layout">
-              Layout
-              <select
-                id="layout"
-                :disabled="fixedLayoutTemplates.includes(template)"
-                :value="category.layout"
-                @change="
-                  changeCategoryLayout(
-                    category,
-                    ($event.target as HTMLInputElement)
-                      .value as Category['layout'],
-                  )
-                "
-                class="select block capitalize px-2 py-1 pl-0 disabled:cursor-not-allowed"
-              >
-                <option v-for="item in layouts" :key="item" class="option">
-                  {{ item }}
-                </option>
-              </select>
+            <label class="flex flex-col" for="letterSubject">
+              <span class="opacity-60">Subject</span>
+              <textarea id="letterSubject" class="input" v-model="subject" />
+            </label>
+            <label class="flex flex-col" for="letterReference">
+              <span class="opacity-60">Reference</span>
+              <input id="letterReference" class="input" v-model="reference" />
             </label>
           </div>
-          <ListActions
-            :index="categoryIndex"
-            :list-length="categories.length"
-            @moveUp="moveUp(categories, categoryIndex)"
-            @moveDown="moveDown(categories, categoryIndex)"
-            @remove="remove(categories, categoryIndex)"
-          />
-        </template>
-        <ul v-if="category.entries.length" class="flex flex-col gap-10 mb-4">
-          <li v-for="(entry, entryIndex) in category.entries" :key="entryIndex">
-            <ListActions
-              class="mb-2"
-              :index="entryIndex"
-              :list-length="category.entries.length"
-              @moveUp="moveUp(category.entries, entryIndex)"
-              @moveDown="moveDown(category.entries, entryIndex)"
-              @remove="remove(category.entries, entryIndex)"
-            />
-            <div class="flex flex-col gap-5">
-              <label class="flex flex-col flex-1" for="title">
-                {{ getEntryTitleLabel(entry) }}
-                <input id="title" class="input" v-model="entry.title" />
-              </label>
-              <template v-if="entry.nature === 'experience'">
-                <div class="flex justify-center gap-5 flex-wrap">
-                  <label class="flex flex-col flex-1" for="organization">
-                    {{ getExperienceOrganizationLabel(entry) }}
-                    <input
-                      id="organization"
-                      class="input"
-                      v-model="entry.organization"
-                    />
-                  </label>
-                  <label class="flex flex-col flex-1" for="location">
-                    Location
-                    <input
-                      id="location"
-                      class="input"
-                      v-model="entry.location"
-                    />
-                  </label>
-                </div>
-                <div class="flex justify-center gap-5 flex-wrap">
-                  <label class="flex flex-col flex-1" for="startDate">
-                    From
-                    <input
-                      id="startDate"
-                      class="input"
-                      v-model="entry.startDate"
-                    />
-                  </label>
-                  <label class="flex flex-col flex-1" for="endDate">
-                    To
-                    <input id="endDate" class="input" v-model="entry.endDate" />
-                  </label>
-                </div>
-                <label class="flex flex-col" for="summary">
-                  Description
+        </EditorCategory>
+        <EditorCategory id="Body" class="w-full">
+          <template v-slot:header>Body</template>
+          <div class="flex flex-col gap-5">
+            <label class="flex flex-col" for="paragraphList">
+              <div class="flex gap-2">
+                <span class="opacity-60">Paragraphs</span>
+                <button
+                  title="Add paragraph"
+                  class="bg-blue-500 size-7 text-white rounded-full"
+                  @click="addParagraph"
+                >
+                  <PlusCircleIcon class="size-full" />
+                </button>
+              </div>
+              <ul v-if="paragraphs.length" id="paragraphList" class="inputList">
+                <li
+                  v-for="(_paragraph, index) in paragraphs"
+                  :key="index"
+                  class="inputListItem"
+                >
                   <textarea
-                    id="summary"
-                    class="input"
-                    v-model="entry.summary"
+                    class="input w-[70%]"
+                    v-model="paragraphs[index]"
+                    @keydown.enter.prevent="addParagraph"
                   />
-                </label>
-              </template>
-              <label class="flex flex-col" for="highlights">
-                <div class="flex gap-2">
-                  Highlights
-                  <button
-                    id="highlights"
-                    title="Add highlight"
-                    class="text-white bg-blue-500 rounded-full size-7"
-                    @click="() => entry.highlights.push('')"
-                  >
-                    <PlusCircleIcon class="size-full" />
-                  </button>
-                </div>
-                <ul v-if="entry.highlights.length" class="flex flex-col gap-2">
-                  <li
-                    v-for="(_highlight, highlightIndex) in entry.highlights"
-                    :key="highlightIndex"
-                    class="flex items-center gap-2"
-                  >
-                    <input
-                      class="input"
-                      v-model="entry.highlights[highlightIndex]"
-                    />
-                    <ListActions
-                      class="mb-2"
-                      :index="highlightIndex"
-                      :list-length="entry.highlights.length"
-                      @moveUp="moveUp(entry.highlights, highlightIndex)"
-                      @moveDown="moveDown(entry.highlights, highlightIndex)"
-                      @remove="remove(entry.highlights, highlightIndex)"
-                    />
-                  </li>
-                </ul>
+                  <ListActions
+                    class="mb-2"
+                    :index="index"
+                    :list-length="paragraphs.length"
+                    @moveUp="moveUp(paragraphs, index)"
+                    @moveDown="moveDown(paragraphs, index)"
+                    @remove="remove(paragraphs, index)"
+                  />
+                </li>
+              </ul>
+            </label>
+          </div>
+        </EditorCategory>
+      </template>
+      <template v-else>
+        <EditorCategory
+          class="w-full"
+          v-for="(category, categoryIndex) in categories"
+          :key="categoryIndex"
+          :id="category.name"
+        >
+          <template v-slot:header>
+            <div class="flex items-baseline gap-8">
+              <label for="name">
+                Category name
+                <input
+                  id="name"
+                  class="input text-blue-500 block bg-blue-700 bg-opacity-5"
+                  v-model="category.name"
+                />
+              </label>
+              <label for="type">
+                Type
+                <select
+                  id="type"
+                  :value="category.type"
+                  @change="
+                    changeCategoryType(
+                      category,
+                      ($event.target as HTMLInputElement)
+                        .value as Category['type'],
+                    )
+                  "
+                  class="select block capitalize px-2 py-1 pl-0"
+                >
+                  <option v-for="item in types" :key="item" class="option">
+                    {{ item }}
+                  </option>
+                </select>
+              </label>
+              <label for="layout">
+                Layout
+                <select
+                  id="layout"
+                  :disabled="fixedLayoutTemplates.includes(template)"
+                  :value="category.layout"
+                  @change="
+                    changeCategoryLayout(
+                      category,
+                      ($event.target as HTMLInputElement)
+                        .value as Category['layout'],
+                    )
+                  "
+                  class="select block capitalize px-2 py-1 pl-0 disabled:cursor-not-allowed"
+                >
+                  <option v-for="item in layouts" :key="item" class="option">
+                    {{ item }}
+                  </option>
+                </select>
               </label>
             </div>
-          </li>
-        </ul>
-        <footer class="flex justify-center">
-          <Button @click="addEntry(category)">Add entry</Button>
-        </footer>
-      </EditorCategory>
+            <ListActions
+              :index="categoryIndex"
+              :list-length="categories.length"
+              @moveUp="moveUp(categories, categoryIndex)"
+              @moveDown="moveDown(categories, categoryIndex)"
+              @remove="remove(categories, categoryIndex)"
+            />
+          </template>
+          <ul v-if="category.entries.length" class="flex flex-col gap-10 mb-4">
+            <li
+              v-for="(entry, entryIndex) in category.entries"
+              :key="entryIndex"
+              class="border-b-2 border-white border-opacity-5 pb-12"
+            >
+              <header class="flex items-center justify-between">
+                <div class="uppercase font-bold text-lg mb-5">
+                  Entry #{{ entryIndex + 1 }}
+                </div>
+                <ListActions
+                  class="mb-2"
+                  :index="entryIndex"
+                  :list-length="category.entries.length"
+                  @moveUp="moveUp(category.entries, entryIndex)"
+                  @moveDown="moveDown(category.entries, entryIndex)"
+                  @remove="remove(category.entries, entryIndex)"
+                />
+              </header>
+              <div class="flex flex-col gap-5">
+                <label class="flex flex-col flex-1" for="title">
+                  <span class="opacity-60">
+                    {{ getEntryTitleLabel(entry) }}
+                  </span>
+                  <input id="title" class="input" v-model="entry.title" />
+                </label>
+                <template v-if="entry.nature === 'experience'">
+                  <div class="flex justify-center gap-5 flex-wrap">
+                    <label class="flex flex-col flex-1" for="organization">
+                      <span class="opacity-60">
+                        {{ getExperienceOrganizationLabel(entry) }}
+                      </span>
+                      <input
+                        id="organization"
+                        class="input"
+                        v-model="entry.organization"
+                      />
+                    </label>
+                    <label class="flex flex-col flex-1" for="location">
+                      <span class="opacity-60">Location</span>
+                      <input
+                        id="location"
+                        class="input"
+                        v-model="entry.location"
+                      />
+                    </label>
+                  </div>
+                  <div class="flex justify-center gap-5 flex-wrap">
+                    <label class="flex flex-col flex-1" for="startDate">
+                      <span class="opacity-60">From</span>
+                      <input
+                        id="startDate"
+                        class="input"
+                        v-model="entry.startDate"
+                      />
+                    </label>
+                    <label class="flex flex-col flex-1" for="endDate">
+                      <span class="opacity-60">To</span>
+                      <input
+                        id="endDate"
+                        class="input"
+                        v-model="entry.endDate"
+                      />
+                    </label>
+                  </div>
+                  <label class="flex flex-col" for="summary">
+                    <span class="opacity-60">Description</span>
+                    <textarea
+                      id="summary"
+                      class="input"
+                      v-model="entry.summary"
+                    />
+                  </label>
+                </template>
+                <label class="flex flex-col" for="highlights">
+                  <div class="flex gap-2">
+                    <span class="opacity-60">Highlights</span>
+                    <button
+                      id="highlights"
+                      title="Add highlight"
+                      class="text-white bg-blue-500 rounded-full size-7"
+                      @click="addHighlight(entry)"
+                    >
+                      <PlusCircleIcon class="size-full" />
+                    </button>
+                  </div>
+                  <ul
+                    v-if="entry.highlights.length"
+                    id="highlightList"
+                    class="inputList"
+                  >
+                    <li
+                      v-for="(_highlight, highlightIndex) in entry.highlights"
+                      :key="highlightIndex"
+                      class="inputListItem"
+                    >
+                      <input
+                        class="input w-[70%]"
+                        v-model="entry.highlights[highlightIndex]"
+                        @keydown.enter.prevent="addHighlight(entry)"
+                      />
+                      <ListActions
+                        class="mb-2"
+                        :index="highlightIndex"
+                        :list-length="entry.highlights.length"
+                        @moveUp="moveUp(entry.highlights, highlightIndex)"
+                        @moveDown="moveDown(entry.highlights, highlightIndex)"
+                        @remove="remove(entry.highlights, highlightIndex)"
+                      />
+                    </li>
+                  </ul>
+                </label>
+              </div>
+            </li>
+          </ul>
+          <footer class="flex justify-center">
+            <Button @click="addEntry(category)">Add entry</Button>
+          </footer>
+        </EditorCategory>
 
-      <footer class="flex justify-center">
-        <Button class="shadow-lg w-full" @click="addCategory">
-          Add category
-        </Button>
-      </footer>
+        <footer class="flex justify-center">
+          <Button class="shadow-lg w-full" @click="addCategory">
+            Add category
+          </Button>
+        </footer>
+      </template>
+
+      <EditorCategory id="Customization" class="w-full">
+        <template v-slot:header>Customization</template>
+        <div class="flex flex-col gap-5">
+          <!-- TODO use nice toggle component -->
+          <label class="cursor-pointer" for="isThemeCustomized">
+            <input
+              id="isThemeCustomized"
+              class="input"
+              type="checkbox"
+              v-model="isThemeCustomized"
+            />
+            <span class="opacity-60">Use custom theme</span>
+          </label>
+          <div class="flex gap-5 flex-wrap">
+            <label
+              class="flex flex-col"
+              v-for="(color, index) in templateColors[template]"
+              :key="index"
+              :for="`color${index}`"
+            >
+              <input
+                v-if="isThemeCustomized"
+                :id="`color${index}`"
+                class="input cursor-pointer"
+                type="color"
+                :disabled="!isThemeCustomized"
+                v-model="colors[index]"
+              />
+              <input
+                v-else
+                :id="`color${index}`"
+                class="input cursor-pointer"
+                type="color"
+                disabled
+                :value="color"
+              />
+            </label>
+          </div>
+        </div>
+      </EditorCategory>
     </div>
   </main>
 </template>

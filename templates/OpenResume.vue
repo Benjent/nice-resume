@@ -1,156 +1,227 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
+import { useEditorStore } from "@/stores/editor";
+import { useLetterStore } from "@/stores/letter";
+import { useProfileStore } from "@/stores/profile";
 import { useResumeStore } from "@/stores/resume";
 import ContactIcon from "@/components/ContactIcon.vue";
 import LinkIcon from "@/components/LinkIcon.vue";
 
-const { about, categories, contactDetails, name, socialLinks, title } =
+const { documentType } = storeToRefs(useEditorStore());
+
+const { name, title } = storeToRefs(useProfileStore());
+
+const { paragraphs, recipientDetails, reference, subject } =
+  storeToRefs(useLetterStore());
+
+const { about, categories, contactDetails, socialLinks } =
   storeToRefs(useResumeStore());
 </script>
 
 <template>
   <div
-    class="bg-white h-full w-full flex flex-col py-6 px-12 border-t-8 border-amber-500 font-body"
+    class="bg-white text-[color:var(--color1)] h-full w-full flex flex-col py-6 px-12 border-t-8 border-[color:var(--color0)] font-body"
   >
-    <header>
-      <h1 v-if="name" class="text-3xl mb-2 text-amber-500 font-bold">
-        {{ name }}
-      </h1>
-      <h2 v-if="title" class="text-xl mb-2 font-bold">
-        {{ title }}
-      </h2>
-      <ul class="flex justify-between gap-2 flex-wrap text-sm">
-        <li
-          v-for="detail in contactDetails"
-          :key="`${detail.value}${detail.icon}`"
-          class="flex gap-1 items-center"
+    <template v-if="documentType === 'Letter'">
+      <header>
+        <h1
+          v-if="name"
+          class="text-3xl mb-2 text-[color:var(--color0)] font-bold"
         >
-          <ContactIcon v-if="detail.icon" :icon="detail.icon" class="w-4" />
-          {{ detail.value }}
-        </li>
-        <li
-          v-for="link in socialLinks"
-          :key="`${link.url}${link.icon}`"
-          class="flex gap-1 items-center"
-        >
-          <LinkIcon v-if="link.icon" :icon="link.icon" class="w-4" />
-          {{ link.url }}
+          {{ name }}
+        </h1>
+        <h2 v-if="title" class="text-xl mb-2 font-bold">
+          {{ title }}
+        </h2>
+        <ul class="flex justify-between gap-2 flex-wrap text-sm">
+          <li
+            v-for="detail in contactDetails"
+            :key="`${detail.value}${detail.icon}`"
+            class="flex gap-1 items-center"
+          >
+            <ContactIcon v-if="detail.icon" :icon="detail.icon" class="w-4" />
+            {{ detail.value }}
+          </li>
+          <li
+            v-for="link in socialLinks"
+            :key="`${link.url}${link.icon}`"
+            class="flex gap-1 items-center"
+          >
+            <LinkIcon v-if="link.icon" :icon="link.icon" class="w-4" />
+            {{ link.url }}
+          </li>
+        </ul>
+      </header>
+
+      <ul
+        class="text-right italic text-sm mt-10"
+        v-if="recipientDetails.length"
+      >
+        <li v-for="detail in recipientDetails" :key="detail">
+          {{ detail }}
         </li>
       </ul>
-
-      <p v-if="about" class="text-center mt-2 italic">
-        {{ about }}
-      </p>
-    </header>
-
-    <div class="flex gap-12">
-      <aside
-        v-if="categories.some((category) => category.layout === 'aside')"
-        class="w-[20%] flex flex-col gap-8"
-      >
-        <div
-          v-for="(category, categoryIndex) in categories.filter(
-            (category) => category.layout === 'aside',
-          )"
-          :key="categoryIndex"
-          class="mt-6"
-        >
-          <h3
-            class="mb-2 font-bold before:content-[''] before:inline-block before:mr-3 before:relative before:bottom-1 before:w-12 before:h-1 before:bg-amber-500"
-          >
-            {{ category.name }}
+      <div class="mt-2 text-justify text-sm">
+        <header class="mb-6 ml-12 font-bold">
+          <h4 v-if="reference" class="text-[color:var(--color0)]">
+            <span class="">Ref. TODO translate:</span>
+            {{ reference }}
+          </h4>
+          <h3 v-if="subject" class="text-justify font-display">
+            {{ subject }}
           </h3>
-          <ul class="flex flex-col gap-4 text-sm">
-            <li
-              v-for="(entry, entryIndex) in category.entries"
-              :key="entryIndex"
-            >
-              <div class="font-semibold">{{ entry.title }}</div>
-              <template v-if="entry.nature === 'experience'">
-                <div class="flex justify-between">
-                  <div v-if="entry.organization">
-                    {{ entry.organization }}
-                    <template v-if="entry.location">
-                      , {{ entry.location }}
-                    </template>
-                  </div>
-                  <div v-if="entry.startDate">
-                    {{ entry.startDate }}
-                    <template v-if="entry.endDate">
-                      - {{ entry.endDate }}
-                    </template>
-                  </div>
-                </div>
-                <p class="italic" v-if="entry.summary">{{ entry.summary }}</p>
-              </template>
-              <ul
-                class="list-disc list-inside ml-1 text-xs"
-                v-if="entry.highlights.length"
-              >
-                <li
-                  v-for="(highlight, highlightIndex) in entry.highlights"
-                  :key="highlightIndex"
-                >
-                  {{ highlight }}
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </aside>
-      <div class="grid grid-cols-2 gap-8 flex-1">
-        <section
-          v-for="(category, categoryIndex) in categories.filter(
-            (category) => category.layout !== 'aside',
-          )"
-          :key="categoryIndex"
-          class="mt-6"
-          :class="category.layout === 'half' ? 'col-span-1' : 'col-span-2'"
-        >
-          <h3
-            class="mb-2 font-bold before:content-[''] before:inline-block before:mr-3 before:relative before:bottom-1 before:w-12 before:h-1 before:bg-amber-500"
-          >
-            {{ category.name }}
-          </h3>
-          <ul class="flex flex-col gap-4 text-sm">
-            <li
-              v-for="(entry, entryIndex) in category.entries"
-              :key="entryIndex"
-            >
-              <div class="font-semibold">{{ entry.title }}</div>
-              <template v-if="entry.nature === 'experience'">
-                <div class="flex justify-between">
-                  <div v-if="entry.organization">
-                    {{ entry.organization }}
-                    <template v-if="entry.location">
-                      , {{ entry.location }}
-                    </template>
-                  </div>
-                  <div v-if="entry.startDate">
-                    {{ entry.startDate }}
-                    <template v-if="entry.endDate">
-                      - {{ entry.endDate }}
-                    </template>
-                  </div>
-                </div>
-                <p class="italic" v-if="entry.summary">{{ entry.summary }}</p>
-              </template>
-              <ul
-                class="list-disc list-inside ml-1 text-xs"
-                v-if="entry.highlights.length"
-              >
-                <li
-                  v-for="(highlight, highlightIndex) in entry.highlights"
-                  :key="highlightIndex"
-                >
-                  {{ highlight }}
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </section>
+        </header>
+        <p v-for="(paragraph, index) in paragraphs" :key="index" class="mb-4">
+          <span class="inline-block w-12" />
+          {{ paragraph }}
+        </p>
+        <div class="text-right">{{ name }}</div>
       </div>
-    </div>
+    </template>
+    <template v-else>
+      <header>
+        <h1
+          v-if="name"
+          class="text-3xl mb-2 text-[color:var(--color0)] font-bold"
+        >
+          {{ name }}
+        </h1>
+        <h2 v-if="title" class="text-xl mb-2 font-bold">
+          {{ title }}
+        </h2>
+        <ul class="flex justify-between gap-2 flex-wrap text-sm">
+          <li
+            v-for="detail in contactDetails"
+            :key="`${detail.value}${detail.icon}`"
+            class="flex gap-1 items-center"
+          >
+            <ContactIcon v-if="detail.icon" :icon="detail.icon" class="w-4" />
+            {{ detail.value }}
+          </li>
+          <li
+            v-for="link in socialLinks"
+            :key="`${link.url}${link.icon}`"
+            class="flex gap-1 items-center"
+          >
+            <LinkIcon v-if="link.icon" :icon="link.icon" class="w-4" />
+            {{ link.url }}
+          </li>
+        </ul>
+
+        <p v-if="about" class="text-center mt-2 italic">
+          {{ about }}
+        </p>
+      </header>
+
+      <div class="flex gap-12">
+        <aside
+          v-if="categories.some((category) => category.layout === 'aside')"
+          class="w-[20%] flex flex-col gap-8"
+        >
+          <div
+            v-for="(category, categoryIndex) in categories.filter(
+              (category) => category.layout === 'aside',
+            )"
+            :key="categoryIndex"
+            class="mt-6"
+          >
+            <h3
+              class="mb-2 font-bold before:content-[''] before:inline-block before:mr-3 before:relative before:bottom-1 before:w-12 before:h-1 before:bg-[color:var(--color0)]"
+            >
+              {{ category.name }}
+            </h3>
+            <ul class="flex flex-col gap-4 text-sm">
+              <li
+                v-for="(entry, entryIndex) in category.entries"
+                :key="entryIndex"
+              >
+                <div class="font-semibold">{{ entry.title }}</div>
+                <template v-if="entry.nature === 'experience'">
+                  <div class="flex justify-between">
+                    <div v-if="entry.organization">
+                      {{ entry.organization }}
+                      <template v-if="entry.location">
+                        , {{ entry.location }}
+                      </template>
+                    </div>
+                    <div v-if="entry.startDate">
+                      {{ entry.startDate }}
+                      <template v-if="entry.endDate">
+                        - {{ entry.endDate }}
+                      </template>
+                    </div>
+                  </div>
+                  <p class="italic" v-if="entry.summary">{{ entry.summary }}</p>
+                </template>
+                <ul
+                  class="list-disc list-inside ml-1 text-xs"
+                  v-if="entry.highlights.length"
+                >
+                  <li
+                    v-for="(highlight, highlightIndex) in entry.highlights"
+                    :key="highlightIndex"
+                  >
+                    {{ highlight }}
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </aside>
+        <div class="grid grid-cols-2 gap-8 flex-1">
+          <section
+            v-for="(category, categoryIndex) in categories.filter(
+              (category) => category.layout !== 'aside',
+            )"
+            :key="categoryIndex"
+            class="mt-6"
+            :class="category.layout === 'half' ? 'col-span-1' : 'col-span-2'"
+          >
+            <h3
+              class="mb-2 font-bold before:content-[''] before:inline-block before:mr-3 before:relative before:bottom-1 before:w-12 before:h-1 before:bg-[color:var(--color0)]"
+            >
+              {{ category.name }}
+            </h3>
+            <ul class="flex flex-col gap-4 text-sm">
+              <li
+                v-for="(entry, entryIndex) in category.entries"
+                :key="entryIndex"
+              >
+                <div class="font-semibold">{{ entry.title }}</div>
+                <template v-if="entry.nature === 'experience'">
+                  <div class="flex justify-between">
+                    <div v-if="entry.organization">
+                      {{ entry.organization }}
+                      <template v-if="entry.location">
+                        , {{ entry.location }}
+                      </template>
+                    </div>
+                    <div v-if="entry.startDate">
+                      {{ entry.startDate }}
+                      <template v-if="entry.endDate">
+                        - {{ entry.endDate }}
+                      </template>
+                    </div>
+                  </div>
+                  <p class="italic" v-if="entry.summary">{{ entry.summary }}</p>
+                </template>
+                <ul
+                  class="list-disc list-inside ml-1 text-xs"
+                  v-if="entry.highlights.length"
+                >
+                  <li
+                    v-for="(highlight, highlightIndex) in entry.highlights"
+                    :key="highlightIndex"
+                  >
+                    {{ highlight }}
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </section>
+        </div>
+      </div>
+    </template>
   </div>
 </template>
 

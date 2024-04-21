@@ -24,7 +24,7 @@ function toggleDisplay() {
         <ChevronDownIcon v-else class="size-full" />
       </button>
     </header>
-    <div class="p-6" v-if="isOpen">
+    <div class="p-10 pt-6" v-if="isOpen">
       <slot />
     </div>
   </div>
