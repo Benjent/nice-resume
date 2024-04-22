@@ -8,6 +8,7 @@ import Aster from "@/templates/Aster.vue";
 import CottonCandy from "@/templates/CottonCandy.vue";
 import Macaron from "@/templates/Macaron.vue";
 import Macchiato from "@/templates/Macchiato.vue";
+import Oilcloth from "@/templates/Oilcloth.vue";
 import OpenResume from "@/templates/OpenResume.vue";
 import Paper from "@/templates/Paper.vue";
 import Pharmacy from "@/templates/Pharmacy.vue";
@@ -28,6 +29,7 @@ const templateMapper: TemplateMapper = {
   CottonCandy,
   Macaron,
   Macchiato,
+  Oilcloth,
   OpenResume,
   Paper,
   Pharmacy,

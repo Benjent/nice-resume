@@ -4,6 +4,7 @@ export type Template =
   | "Macaron"
   | "Macchiato"
   | "OpenResume"
+  | "Oilcloth"
   | "Paper"
   | "Pharmacy"
   | "Red"
