@@ -1,6 +1,7 @@
 export type Template =
   | "Aster"
   | "CottonCandy"
+  | "Cupcake"
   | "Macaron"
   | "Macchiato"
   | "OpenResume"
