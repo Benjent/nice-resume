@@ -135,46 +135,51 @@ const { about, categories, contactDetails, socialLinks } =
             )"
             :key="categoryIndex"
           >
-            <h3 class="uppercase font-display text-3xl mb-1 text-center">
+            <h3 class="uppercase text-3xl mb-1 font-light tracking-widest">
               {{ category.name }}
             </h3>
-            <ul class="flex flex-col gap-3 text-sm">
+            <ul class="flex flex-col gap-4">
               <li
                 v-for="(entry, entryIndex) in category.entries"
                 :key="entryIndex"
-                class="flex items-baseline before:content-[''] before:inline-block before:mr-2 before:size-2 before:bg-[color:var(--color0)]"
               >
                 <div class="flex flex-col">
-                  <div>
-                    {{ entry.title }}
-                    <template
-                      v-if="entry.nature === 'experience' && entry.organization"
-                    >
-                      -
-                      <span class="text-[color:var(--color0)]">
-                        {{ entry.organization }}
-                      </span>
-                    </template>
-                  </div>
                   <div v-if="entry.nature === 'experience'">
-                    <span v-if="entry.startDate">
+                    <span
+                      v-if="entry.startDate"
+                      class="text-[color:var(--color1)] text-lg leading-none"
+                    >
                       {{ entry.startDate }}
                       <template v-if="entry.endDate">
                         - {{ entry.endDate }}
                       </template>
                     </span>
-                    <template v-if="entry.location">
-                      , {{ entry.location }}
-                    </template>
                   </div>
+                  <div
+                    class="font-bold text-lg leading-none"
+                    :class="
+                      category.type === 'education'
+                        ? 'text-[color:var(--color2)]'
+                        : 'text-[color:var(--color4)]'
+                    "
+                  >
+                    {{ entry.title }}
+                  </div>
+                  <div
+                    v-if="entry.nature === 'experience' && entry.organization"
+                    class="font-light leading-none"
+                  >
+                    {{ entry.organization }} - {{ entry.location }}
+                  </div>
+
                   <p
                     v-if="entry.nature === 'experience' && entry.summary"
-                    class="text-xs"
+                    class="text-[color:var(--color0)] font-bold leading-none mb-2"
                   >
                     {{ entry.summary }}
                   </p>
                   <ul
-                    class="list-inside leading-none ml-5 text-xs italic"
+                    class="list-inside text-sm font-light leading-tight"
                     v-if="entry.highlights.length"
                   >
                     <li
@@ -235,7 +240,7 @@ const { about, categories, contactDetails, socialLinks } =
                         "
                         class="font-light leading-none"
                       >
-                        {{ entry.organization }}
+                        {{ entry.organization }} - {{ entry.location }}
                       </div>
                     </div>
                   </div>
