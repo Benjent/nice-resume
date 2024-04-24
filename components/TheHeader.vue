@@ -2,8 +2,9 @@
 import { ref } from "vue";
 import { storeToRefs } from "pinia";
 import {
-  ArrowUpOnSquareIcon,
   ArrowDownOnSquareIcon,
+  ArrowUpOnSquareIcon,
+  ArrowPathIcon,
 } from "@heroicons/vue/24/outline";
 import { useEditorStore } from "@/stores/editor";
 import { useLetterStore } from "@/stores/letter";
@@ -20,9 +21,12 @@ const { documentType, zoomLevel } = storeToRefs(useEditorStore());
 
 const { template } = storeToRefs(useProfileStore());
 
-const profile = storeToRefs(useProfileStore());
-const letter = storeToRefs(useLetterStore());
-const resume = storeToRefs(useResumeStore());
+const profileStore = useProfileStore();
+const profile = storeToRefs(profileStore);
+const letterStore = useLetterStore();
+const letter = storeToRefs(letterStore);
+const resumeStore = useResumeStore();
+const resume = storeToRefs(resumeStore);
 
 const isImportError = ref(false);
 
@@ -93,6 +97,12 @@ function importFromJson(event: Event) {
     isImportError.value = true;
   }
 }
+
+function resetStores() {
+  profileStore.$reset();
+  letterStore.$reset();
+  resumeStore.$reset();
+}
 </script>
 
 <template>
@@ -110,6 +120,13 @@ function importFromJson(event: Event) {
       </h1>
     </NuxtLink>
     <div class="flex items-end gap-8 h-[60%]">
+      <button
+        class="text-blue-500 flex items-center gap-1"
+        @click="resetStores"
+      >
+        <ArrowPathIcon class="h-6" />
+        Reset
+      </button>
       <div>
         <label
           for="editorFileReader"

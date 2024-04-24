@@ -1,21 +1,14 @@
-import { ref } from "vue";
 import { defineStore } from "pinia";
 import type { Category, Detail, Link } from "@/types";
 
-// @ts-expect-error - TS error with "state: () => {}" syntax
+// Use option API to take advantage of automatic persistence
+// @ts-expect-error - TS does not handle option API syntax
 export const useResumeStore = defineStore("resume", {
-  state: () => {
-    const about = ref("");
-    const contactDetails = ref<Detail[]>([]);
-    const socialLinks = ref<Link[]>([]);
-    const categories = ref<Category[]>([]);
-
-    return {
-      about,
-      categories,
-      contactDetails,
-      socialLinks,
-    };
-  },
+  state: () => ({
+    about: "",
+    categories: [] as Category[],
+    contactDetails: [] as Detail[],
+    socialLinks: [] as Link[],
+  }),
   persist: true,
 });
