@@ -4,12 +4,19 @@ import Button from "@/components/Button.vue";
 import Card from "@/components/Card.vue";
 
 const title = ref("Nice resume");
+const description = ref(
+  "Pick a design, build your resume, write your cover letter, adapt the design to your need with Nice Resume.",
+);
 </script>
 
 <template>
   <Head>
     <Title>{{ title }}</Title>
-    <Meta name="description" :content="title" />
+    <Meta name="description" :content="description" />
+    <Meta name="og:title" :content="title" />
+    <Meta name="og:description" :content="description" />
+    <!-- TODO og:url -->
+    <!-- TODO og:image -->
   </Head>
   <NuxtLayout name="landing">
     <section class="p-20">
