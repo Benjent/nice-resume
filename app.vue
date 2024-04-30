@@ -1,30 +1,9 @@
-<script setup lang="ts">
-import { ref } from "vue";
-import Editor from "./components/Editor.vue";
-import Preview from "./components/Preview.vue";
-import TheHeader from "./components/TheHeader.vue";
-import { Splitpanes, Pane } from "splitpanes";
-import "splitpanes/dist/splitpanes.css";
-
-const title = ref("Nice resume");
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <Head>
-    <Title>{{ title }}</Title>
-    <Meta name="description" :content="title" />
-  </Head>
-  <TheHeader />
-  <section
-    class="flex flex-col bg-gradient-to-br from-blue-700 to-pink-500 lg:h-[calc(100svh-100px)] lg:flex-row"
-  >
-    <splitpanes class="default-theme">
-      <pane>
-        <Editor class="flex-1" />
-      </pane>
-      <pane>
-        <Preview />
-      </pane>
-    </splitpanes>
-  </section>
+  <div>
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
+  </div>
 </template>
