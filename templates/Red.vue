@@ -26,7 +26,7 @@ const { about, categories, contactDetails, socialLinks } =
       <div class="bg-[color:var(--color0)] h-10" />
       <div class="bg-[color:var(--color0)] h-1 mt-2" v-for="i in 3" :key="i" />
     </div>
-    <template v-if="documentType === 'Letter'">
+    <template v-if="documentType === 'letter'">
       <header class="flex mx-auto mt-8 p-8">
         <div
           class="flex flex-col place-items-center w-fit border-y-4 border-[color:var(--color0)] p-2 font-display text-center tracking-wider"

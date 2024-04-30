@@ -13,7 +13,7 @@ export type Template =
   | "Toothpaste"
   | "Wiki";
 
-export type DocumentType = "Letter" | "Resume";
+export type DocumentType = "letter" | "resume";
 
 export interface Detail {
   icon: null | "default" | "address" | "drivingLicense" | "email" | "phone";

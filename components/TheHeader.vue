@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
+import { navigateTo } from "nuxt/app";
 import { storeToRefs } from "pinia";
 import {
   ArrowDownOnSquareIcon,
@@ -103,6 +104,10 @@ function resetStores() {
   letterStore.$reset();
   resumeStore.$reset();
 }
+
+watch(documentType, (newValue) => {
+  newValue === "letter" ? navigateTo("/letter") : navigateTo("/resume");
+});
 </script>
 
 <template>

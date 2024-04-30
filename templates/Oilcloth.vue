@@ -22,7 +22,7 @@ const { about, categories, contactDetails, socialLinks } =
   <div
     class="bg-white text-[color:var(--color4)] h-full w-full flex flex-col font-body relative"
   >
-    <template v-if="documentType === 'Letter'">
+    <template v-if="documentType === 'letter'">
       <header
         class="text-[color:var(--color0)] border-b-4 border-[color:var(--color1)] flex gap-8 px-8 py-6"
       >
@@ -270,7 +270,7 @@ const { about, categories, contactDetails, socialLinks } =
       </div>
     </template>
     <div
-      v-if="documentType === 'Resume'"
+      v-if="documentType === 'resume'"
       class="-rotate-[10deg] w-full absolute -bottom-16 -right-16 h-20 bg-[color:var(--color2)] border-t-[1rem] border-[color:var(--color1)]"
     />
   </div>

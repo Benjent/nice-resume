@@ -59,7 +59,7 @@ function getSectionCategory(indexToGetFrom: number) {
 
 <template>
   <div class="h-full w-full flex flex-col text-[color:var(--color4)]">
-    <template v-if="documentType === 'Letter'">
+    <template v-if="documentType === 'letter'">
       <header
         class="flex items-start gap-10 py-8 px-10 bg-[color:var(--color3)] font-display"
       >

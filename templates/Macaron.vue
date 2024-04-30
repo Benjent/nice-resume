@@ -22,7 +22,7 @@ const { about, categories, contactDetails, socialLinks } =
   <div
     class="bg-white text-[color:var(--color3)] h-full w-full flex flex-col font-body"
   >
-    <template v-if="documentType === 'Letter'">
+    <template v-if="documentType === 'letter'">
       <header
         class="flex items-start gap-4 py-8 px-10 bg-[color:var(--color0)] text-[color:var(--color2)]"
       >

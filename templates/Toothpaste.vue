@@ -61,7 +61,7 @@ function getSectionCategory(indexToGetFrom: number) {
   <div
     class="bg-white text-[color:var(--color3)] h-full w-full flex flex-col font-body"
   >
-    <template v-if="documentType === 'Letter'">
+    <template v-if="documentType === 'letter'">
       <header class="flex items-baseline mx-auto mt-8 p-8">
         <div
           class="flex flex-col place-items-center w-fit border-y-4 border-[color:var(--color0)] py-2 px-4 font-display text-center"

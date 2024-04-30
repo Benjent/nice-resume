@@ -22,7 +22,7 @@ const { about, categories, contactDetails, socialLinks } =
   <div
     class="bg-white text-[color:var(--color1)] h-full w-full flex flex-col p-20 font-serif text-xs"
   >
-    <template v-if="documentType === 'Letter'">
+    <template v-if="documentType === 'letter'">
       <header v-if="name" class="pb-4">
         <h1 v-if="name" class="text-xl">{{ name }}, {{ title }}</h1>
         <ul class="flex gap-2">

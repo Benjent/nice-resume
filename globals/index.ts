@@ -8,7 +8,7 @@ import type {
   Template,
 } from "@/types";
 
-export const documentTypes: Array<DocumentType> = ["Resume", "Letter"];
+export const documentTypes: Array<DocumentType> = ["resume", "letter"];
 
 export const templates: Array<Template> = [
   "Aster",

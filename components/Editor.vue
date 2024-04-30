@@ -17,7 +17,9 @@ import {
   templateColors,
 } from "@/globals";
 
-const { documentType } = storeToRefs(useEditorStore());
+const { documentType } = defineProps<{
+  documentType: string;
+}>();
 
 const { colors, isThemeCustomized, template } = storeToRefs(useProfileStore());
 
@@ -87,7 +89,7 @@ watch(
       <nav class="bg-white px-10 py-2 text-blue-500 flex gap-x-5 flex-wrap">
         <span class="text-pink-500">Navigate to</span>
         <a href="#Details">Details</a>
-        <template v-if="documentType === 'Letter'">
+        <template v-if="documentType === 'letter'">
           <a href="#Header">Header</a>
           <a href="#Body">Body</a>
         </template>
@@ -102,7 +104,7 @@ watch(
         </template>
         <a href="#Customization">Customization</a>
       </nav>
-      <template v-if="documentType === 'Resume'">
+      <template v-if="documentType === 'resume'">
         <p v-if="isLayoutDisabled" class="text-center px-10 py-2 bg-amber-500">
           Category layouts are fixed for this template.
         </p>
@@ -116,7 +118,7 @@ watch(
     </header>
     <div class="flex flex-col gap-8 p-8 w-full max-w-[860px] mx-auto">
       <PersonalDetailsEditor />
-      <template v-if="documentType === 'Letter'">
+      <template v-if="documentType === 'letter'">
         <LetterHeaderEditor />
         <LetterBodyEditor />
       </template>

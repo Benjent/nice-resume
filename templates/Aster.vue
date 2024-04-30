@@ -22,7 +22,7 @@ const { about, categories, contactDetails, socialLinks } =
   <div
     class="bg-white text--[color:var(--color3)] h-full w-full flex flex-col text-xs font-body font-light"
   >
-    <template v-if="documentType === 'Letter'">
+    <template v-if="documentType === 'letter'">
       <header class="flex p-8">
         <h1
           class="text-3xl font-normal w-[26%] relative before:content-[''] before:absolute before:size-10 before:bg-[color:var(--color1)] before:rotate-45 before:right-[103%] before:top-5 after:content-[''] after:absolute after:size-10 after:bg-[color:var(--color0)] after:rotate-45 after:right-[103%] after:top-3"
