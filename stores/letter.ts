@@ -1,20 +1,13 @@
-import { ref } from "vue";
 import { defineStore } from "pinia";
 
-// @ts-expect-error - TS error with "state: () => {}" syntax
+// Use option API to take advantage of automatic persistence
+// @ts-expect-error - TS does not handle option API syntax
 export const useLetterStore = defineStore("letter", {
-  state: () => {
-    const recipientDetails = ref<string[]>([]);
-    const subject = ref("");
-    const reference = ref("");
-    const paragraphs = ref<string[]>([]);
-
-    return {
-      paragraphs,
-      recipientDetails,
-      reference,
-      subject,
-    };
-  },
+  state: () => ({
+    paragraphs: [] as string[],
+    recipientDetails: [] as string[],
+    reference: "",
+    subject: "",
+  }),
   persist: true,
 });
