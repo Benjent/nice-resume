@@ -13,7 +13,10 @@ export const documentTypes: Array<DocumentType> = ["Resume", "Letter"];
 export const templates: Array<Template> = [
   "Aster",
   "CottonCandy",
+  "Cupcake",
+  "Macaron",
   "Macchiato",
+  "Oilcloth",
   "OpenResume",
   "Paper",
   "Pharmacy",
@@ -23,14 +26,17 @@ export const templates: Array<Template> = [
   "Wiki",
 ];
 
-export const fixedLayoutTemplates: Array<Template> = ["Paper"];
+export const fixedLayoutTemplates: Array<Template> = ["Cupcake", "Paper"];
 
 export const discouragedLayoutTemplates: {
   [T in Template]: Array<Category["layout"]>;
 } = {
   Aster: ["aside", "half"],
   CottonCandy: ["aside"],
+  Cupcake: [],
+  Macaron: [],
   Macchiato: [],
+  Oilcloth: [],
   OpenResume: [],
   Paper: [],
   Pharmacy: [],
@@ -45,7 +51,10 @@ export const templateColors: {
 } = {
   Aster: ["#713c97", "#f6881f", "#ffffff", "#000000"],
   CottonCandy: ["#ed3660", "#5662e8", "#e8afcf", "#ffffff", "#1e1e1e"],
+  Cupcake: ["#f2b150", "#e593aa", "#a9d7e2", "#231f20"],
+  Macaron: ["#d88277", "#f8aaa6", "#ffffff", "#414e66"],
   Macchiato: ["#56817a", "#f8f8ff", "#39424b"],
+  Oilcloth: ["#0076c0", "#f6ba62", "#43a385", "#ffffff", "#231f20"],
   OpenResume: ["#38bdf8", "#000000"],
   Paper: ["#cfcfcf", "#000000"],
   Pharmacy: ["#06b6d4", "#475569", "#94a3b8", "#0f172a"],
