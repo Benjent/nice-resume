@@ -8,7 +8,7 @@ import "splitpanes/dist/splitpanes.css";
 import { useMediaQuery } from "@vueuse/core";
 
 const title = ref("Nice resume");
-const isSmallScreen = useMediaQuery("(max-width: 1024px)");
+const isBigScreen = useMediaQuery("(min-width: 1024px)");
 </script>
 <template>
   <Head>
@@ -21,7 +21,7 @@ const isSmallScreen = useMediaQuery("(max-width: 1024px)");
       class="default-theme flex flex-col lg:h-[calc(100svh-100px)] lg:flex-row"
       :min="0"
       :max="100"
-      :horizontal="isSmallScreen"
+      :horizontal="!isBigScreen"
     >
       <pane min-size="50">
         <Editor class="flex-1" />
