@@ -18,7 +18,7 @@ import { useI18n } from "#imports";
 
 console.log("Version: ", packageJson.version);
 
-// @ts-expect-error - You see the error here, but it's not a problem
+// @ts-expect-error - You see the error here, it's not a problem
 const { setLocale } = useI18n();
 
 const { documentType, zoomLevel } = storeToRefs(useEditorStore());
@@ -205,6 +205,8 @@ function resetStores() {
         <button @click="setLocale('en')">en</button>
         <br />
         <button @click="setLocale('fr')">fr</button>
+        <br />
+        <button @click="setLocale('br')">br</button>
       </div>
     </div>
   </header>

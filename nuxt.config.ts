@@ -9,7 +9,6 @@ export default defineNuxtConfig({
     "@nuxt/eslint",
     "@nuxtjs/tailwindcss",
     "nuxt-svgo",
-    "nuxt-build-cache",
     "@nuxt/test-utils/module",
     "@pinia-plugin-persistedstate/nuxt",
     "@nuxtjs/i18n",
@@ -31,6 +30,6 @@ export default defineNuxtConfig({
     storage: "localStorage",
   },
   i18n: {
-    vueI18n: "./i18n.config.ts", // if you are using custom path, default
+    vueI18n: "./i18n.config.ts",
   },
 });

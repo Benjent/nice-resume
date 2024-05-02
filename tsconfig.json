@@ -5,7 +5,7 @@
     "module": "ESNext",
     "lib": ["ES2020", "ES2021.String", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
-    "types": ["vitest/globals"],
+    "types": ["vitest/globals", "@types/node"],
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
@@ -20,7 +20,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "extends": "./.nuxt/tsconfig.json",
+  "extends": ["./.nuxt/tsconfig.json"],
   "include": ["./**/*.ts", "./**/*.tsx", "./**/*.vue"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
