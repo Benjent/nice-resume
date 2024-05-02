@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-import type { Template } from "@/types";
 import { templates } from "@/globals";
 
 // Use option API to take advantage of automatic persistence
@@ -13,7 +12,7 @@ export const useProfileStore = defineStore("profile", {
     // Design
     isCustomizationForAllDocumentTypes: true,
     isThemeCustomized: false,
-    template: templates[0] as Template,
+    template: templates[0],
   }),
   persist: true,
 });
