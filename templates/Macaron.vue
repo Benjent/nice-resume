@@ -168,15 +168,12 @@ const { about, categories, contactDetails, socialLinks } =
                 :key="entryIndex"
               >
                 <template v-if="entry.nature === 'experience'">
-                  <div v-if="entry.startDate && entry.title" class="font-bold">
+                  <div v-if="entry.period && entry.title" class="font-bold">
                     <span
-                      v-if="entry.startDate"
+                      v-if="entry.period"
                       class="text-[color:var(--resume-color0)]"
                     >
-                      {{ entry.startDate }}
-                      <template v-if="entry.endDate">
-                        - {{ entry.endDate }}
-                      </template>
+                      {{ entry.period }}
                     </span>
                     <span class="ml-2" v-if="entry.title">
                       {{ entry.title }}
@@ -235,15 +232,12 @@ const { about, categories, contactDetails, socialLinks } =
                 :key="entryIndex"
               >
                 <template v-if="entry.nature === 'experience'">
-                  <div v-if="entry.startDate && entry.title" class="font-bold">
+                  <div v-if="entry.period && entry.title" class="font-bold">
                     <span
-                      v-if="entry.startDate"
+                      v-if="entry.period"
                       class="text-[color:var(--resume-color0)]"
                     >
-                      {{ entry.startDate }}
-                      <template v-if="entry.endDate">
-                        - {{ entry.endDate }}
-                      </template>
+                      {{ entry.period }}
                     </span>
                     <span class="ml-2" v-if="entry.title">
                       {{ entry.title }}

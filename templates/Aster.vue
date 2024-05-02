@@ -170,11 +170,9 @@ const { about, categories, contactDetails, socialLinks } =
                 class="flex flex-col"
               >
                 <div>
-                  <span v-if="entry.nature === 'experience' && entry.startDate">
-                    {{ entry.startDate }}
-                    <template v-if="entry.endDate">
-                      - {{ entry.endDate }}
-                    </template>
+                  <span v-if="entry.nature === 'experience' && entry.period">
+                    {{ entry.period }}
+
                     -{{ " " }}
                   </span>
                   <span class="font-semibold" v-if="entry.title">
@@ -231,11 +229,9 @@ const { about, categories, contactDetails, socialLinks } =
                 class="flex flex-col"
               >
                 <div class="flex gap-4 items-center">
-                  <span v-if="entry.nature === 'experience' && entry.startDate">
-                    {{ entry.startDate }}
-                    <template v-if="entry.endDate">
-                      - {{ entry.endDate }}
-                    </template>
+                  <span v-if="entry.nature === 'experience' && entry.period">
+                    {{ entry.period }}
+
                     -{{ " " }}
                   </span>
                   <span class="font-semibold" v-if="entry.title">

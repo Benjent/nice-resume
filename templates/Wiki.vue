@@ -164,11 +164,8 @@ const { about, categories, contactDetails, socialLinks } =
                     v-if="entry.nature === 'experience'"
                     class="flex flex-col text-right"
                   >
-                    <div v-if="entry.startDate">
-                      {{ entry.startDate }}
-                      <template v-if="entry.endDate">
-                        - {{ entry.endDate }}
-                      </template>
+                    <div v-if="entry.period">
+                      {{ entry.period }}
                     </div>
                     <div class="italic">{{ entry.location }}</div>
                   </div>
@@ -221,11 +218,8 @@ const { about, categories, contactDetails, socialLinks } =
                     v-if="entry.nature === 'experience'"
                     class="flex flex-col text-right"
                   >
-                    <div v-if="entry.startDate">
-                      {{ entry.startDate }}
-                      <template v-if="entry.endDate">
-                        - {{ entry.endDate }}
-                      </template>
+                    <div v-if="entry.period">
+                      {{ entry.period }}
                     </div>
                     <div class="italic">{{ entry.location }}</div>
                   </div>

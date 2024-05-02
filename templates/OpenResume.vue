@@ -163,11 +163,8 @@ const { about, categories, contactDetails, socialLinks } =
                         , {{ entry.location }}
                       </template>
                     </div>
-                    <div v-if="entry.startDate">
-                      {{ entry.startDate }}
-                      <template v-if="entry.endDate">
-                        - {{ entry.endDate }}
-                      </template>
+                    <div v-if="entry.period">
+                      {{ entry.period }}
                     </div>
                   </div>
                   <p class="italic" v-if="entry.summary">{{ entry.summary }}</p>
@@ -215,11 +212,8 @@ const { about, categories, contactDetails, socialLinks } =
                         , {{ entry.location }}
                       </template>
                     </div>
-                    <div v-if="entry.startDate">
-                      {{ entry.startDate }}
-                      <template v-if="entry.endDate">
-                        - {{ entry.endDate }}
-                      </template>
+                    <div v-if="entry.period">
+                      {{ entry.period }}
                     </div>
                   </div>
                   <p class="italic" v-if="entry.summary">{{ entry.summary }}</p>

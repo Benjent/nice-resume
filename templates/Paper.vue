@@ -142,9 +142,8 @@ const { about, categories, contactDetails, socialLinks } =
                   <span v-if="entry.location">, {{ entry.location }}</span>
                 </span>
               </div>
-              <div v-if="entry.nature === 'experience' && entry.startDate">
-                {{ entry.startDate }}
-                <template v-if="entry.endDate">- {{ entry.endDate }}</template>
+              <div v-if="entry.nature === 'experience' && entry.period">
+                {{ entry.period }}
               </div>
             </div>
             <p

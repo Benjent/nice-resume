@@ -192,12 +192,9 @@ const { about, categories, contactDetails, socialLinks } =
                   </div>
                   <div
                     class="text-[color:var(--resume-color1)] leading-tight"
-                    v-if="entry.startDate"
+                    v-if="entry.period"
                   >
-                    {{ entry.startDate }}
-                    <template v-if="entry.endDate">
-                      - {{ entry.endDate }}
-                    </template>
+                    {{ entry.period }}
                   </div>
                   <p class="text-sm" v-if="entry.summary">
                     {{ entry.summary }}
@@ -246,12 +243,9 @@ const { about, categories, contactDetails, socialLinks } =
                 <template v-if="entry.nature === 'experience'">
                   <div class="text-[color:var(--resume-color1)] mb-1">
                     {{ entry.organization }} | {{ entry.location }}
-                    <template v-if="entry.startDate">
+                    <template v-if="entry.period">
                       |
-                      {{ entry.startDate }}
-                      <template v-if="entry.endDate">
-                        - {{ entry.endDate }}
-                      </template>
+                      {{ entry.period }}
                     </template>
                   </div>
                   <p class="text-sm" v-if="entry.summary">

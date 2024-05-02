@@ -61,8 +61,7 @@ export interface Experience extends Entry {
   type: "education" | "project" | "voluntary" | "work";
   organization: string; // Institution, Company, ...
   location: string;
-  startDate: string; // No strict format to allow custom values
-  endDate: string;
+  period: string; // No strict format to allow custom values
   summary: string;
 }
 

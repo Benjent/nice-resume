@@ -53,8 +53,7 @@ function addEntry(category: Category) {
       type: experienceTypes.find((type) => category.type === type) || "work",
       title: "",
       organization: "",
-      startDate: "",
-      endDate: "",
+      period: "",
       location: "",
       summary: "",
       highlights: [],
@@ -216,16 +215,10 @@ function getExperienceOrganizationLabel(experience: Experience) {
                 <input id="location" class="input" v-model="entry.location" />
               </label>
             </div>
-            <div class="flex justify-center gap-5 flex-wrap">
-              <label class="flex flex-col flex-1" for="startDate">
-                <span class="opacity-60">From</span>
-                <input id="startDate" class="input" v-model="entry.startDate" />
-              </label>
-              <label class="flex flex-col flex-1" for="endDate">
-                <span class="opacity-60">To</span>
-                <input id="endDate" class="input" v-model="entry.endDate" />
-              </label>
-            </div>
+            <label class="flex flex-col" for="period">
+              <span class="opacity-60">Period</span>
+              <input id="period" class="input" v-model="entry.period" />
+            </label>
             <label class="flex flex-col" for="summary">
               <span class="opacity-60">Description</span>
               <textarea id="summary" class="input" v-model="entry.summary" />

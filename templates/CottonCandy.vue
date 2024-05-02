@@ -211,11 +211,8 @@ function getSectionCategory(indexToGetFrom: number) {
                     {{ entry.title }}
                   </div>
                   <template v-if="entry.nature === 'experience'">
-                    <div v-if="entry.startDate" class="text-sm font-semibold">
-                      {{ entry.startDate }}
-                      <template v-if="entry.endDate">
-                        - {{ entry.endDate }}
-                      </template>
+                    <div v-if="entry.period" class="text-sm font-semibold">
+                      {{ entry.period }}
                     </div>
                     <div
                       v-if="entry.organization"
@@ -240,10 +237,8 @@ function getSectionCategory(indexToGetFrom: number) {
                     v-if="entry.nature === 'experience'"
                     class="text-sm font-semibold"
                   >
-                    {{ entry.startDate }}
-                    <template v-if="entry.endDate">
-                      - {{ entry.endDate }}
-                    </template>
+                    {{ entry.period }}
+
                     , {{ entry.organization }}, {{ entry.location }}
                   </div>
                 </div>
@@ -303,11 +298,8 @@ function getSectionCategory(indexToGetFrom: number) {
                       <div class="font-display text-xl">
                         {{ entry.title }}
                       </div>
-                      <div v-if="entry.startDate" class="text-sm font-semibold">
-                        {{ entry.startDate }}
-                        <template v-if="entry.endDate">
-                          - {{ entry.endDate }}
-                        </template>
+                      <div v-if="entry.period" class="text-sm font-semibold">
+                        {{ entry.period }}
                       </div>
                       <div
                         v-if="entry.organization"
@@ -328,10 +320,8 @@ function getSectionCategory(indexToGetFrom: number) {
                         {{ entry.title }}
                       </div>
                       <div class="text-sm font-semibold">
-                        {{ entry.startDate }}
-                        <template v-if="entry.endDate">
-                          - {{ entry.endDate }}
-                        </template>
+                        {{ entry.period }}
+
                         , {{ entry.organization }}, {{ entry.location }}
                       </div>
                     </div>
@@ -392,7 +382,7 @@ function getSectionCategory(indexToGetFrom: number) {
                         {{ entry.title }}
                       </div>
                       <div class="text-sm font-semibold">
-                        {{ entry.startDate }} - {{ entry.endDate }}
+                        {{ entry.period }}
                       </div>
                       <div class="text-sm font-semibold">
                         {{ entry.organization }}, {{ entry.location }}
@@ -403,8 +393,8 @@ function getSectionCategory(indexToGetFrom: number) {
                         {{ entry.title }}
                       </div>
                       <div class="text-sm font-semibold">
-                        {{ entry.startDate }} - {{ entry.endDate }},
-                        {{ entry.organization }}, {{ entry.location }}
+                        {{ entry.period }}, {{ entry.organization }},
+                        {{ entry.location }}
                       </div>
                     </div>
                   </template>
@@ -464,7 +454,7 @@ function getSectionCategory(indexToGetFrom: number) {
                         {{ entry.title }}
                       </div>
                       <div class="text-sm font-semibold">
-                        {{ entry.startDate }} - {{ entry.endDate }}
+                        {{ entry.period }}
                       </div>
                       <div class="text-sm font-semibold">
                         {{ entry.organization }}, {{ entry.location }}
@@ -475,8 +465,8 @@ function getSectionCategory(indexToGetFrom: number) {
                         {{ entry.title }}
                       </div>
                       <div class="text-sm font-semibold">
-                        {{ entry.startDate }} - {{ entry.endDate }},
-                        {{ entry.organization }}, {{ entry.location }}
+                        {{ entry.period }}, {{ entry.organization }},
+                        {{ entry.location }}
                       </div>
                     </div>
                   </template>

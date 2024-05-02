@@ -224,11 +224,8 @@ function getSectionCategory(indexToGetFrom: number) {
                     {{ entry.title }}
                   </div>
                   <template v-if="entry.nature === 'experience'">
-                    <div v-if="entry.startDate" class="text-sm font-semibold">
-                      {{ entry.startDate }}
-                      <template v-if="entry.endDate">
-                        - {{ entry.endDate }}
-                      </template>
+                    <div v-if="entry.period" class="text-sm font-semibold">
+                      {{ entry.period }}
                     </div>
                     <div
                       v-if="entry.organization"
@@ -253,10 +250,8 @@ function getSectionCategory(indexToGetFrom: number) {
                     v-if="entry.nature === 'experience'"
                     class="text-sm font-semibold"
                   >
-                    {{ entry.startDate }}
-                    <template v-if="entry.endDate">
-                      - {{ entry.endDate }}
-                    </template>
+                    {{ entry.period }}
+
                     , {{ entry.organization }}, {{ entry.location }}
                   </div>
                 </div>
@@ -308,11 +303,8 @@ function getSectionCategory(indexToGetFrom: number) {
                     <template v-if="entry.nature === 'experience'">
                       <div>
                         {{ entry.organization }}
-                        <template v-if="entry.startDate">
-                          · {{ entry.startDate }}
-                          <template v-if="entry.endDate">
-                            - {{ entry.endDate }}
-                          </template>
+                        <template v-if="entry.period">
+                          · {{ entry.period }}
                         </template>
                         <template v-if="entry.location">
                           · {{ entry.location }}
@@ -364,10 +356,8 @@ function getSectionCategory(indexToGetFrom: number) {
                     </div>
                     <template v-if="entry.nature === 'experience'">
                       <div>
-                        {{ entry.organization }} · {{ entry.startDate }}
-                        <template v-if="entry.endDate">
-                          - {{ entry.endDate }}
-                        </template>
+                        {{ entry.organization }} · {{ entry.period }}
+
                         ·
                         {{ entry.location }}
                       </div>
@@ -417,8 +407,7 @@ function getSectionCategory(indexToGetFrom: number) {
                     </div>
                     <template v-if="entry.nature === 'experience'">
                       <div>
-                        {{ entry.organization }} · {{ entry.startDate }} -
-                        {{ entry.endDate }} ·
+                        {{ entry.organization }} · {{ entry.period }} ·
                         {{ entry.location }}
                       </div>
                     </template>

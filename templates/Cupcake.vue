@@ -163,13 +163,10 @@ const { about, categories, contactDetails, socialLinks } =
                 <div class="flex gap-2 items-baseline">
                   <div class="text-base">
                     <span
-                      v-if="entry.nature === 'experience' && entry.startDate"
+                      v-if="entry.nature === 'experience' && entry.period"
                       class="text-[color:var(--resume-color1)] leading-none mr-2"
                     >
-                      {{ entry.startDate }}
-                      <template v-if="entry.endDate">
-                        - {{ entry.endDate }}
-                      </template>
+                      {{ entry.period }}
                     </span>
                     <span class="italic leading-none">{{ entry.title }}</span>
                   </div>

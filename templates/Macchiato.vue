@@ -147,12 +147,9 @@ const { about, categories, contactDetails, socialLinks } =
               >
                 <div
                   class="italic font-light"
-                  v-if="entry.nature === 'experience' && entry.startDate"
+                  v-if="entry.nature === 'experience' && entry.period"
                 >
-                  {{ entry.startDate }}
-                  <template v-if="entry.endDate">
-                    - {{ entry.endDate }}
-                  </template>
+                  {{ entry.period }}
                 </div>
                 <div class="font-bold">{{ entry.title }}</div>
                 <template v-if="entry.nature === 'experience'">
@@ -193,12 +190,9 @@ const { about, categories, contactDetails, socialLinks } =
               >
                 <div
                   class="italic text-right font-light"
-                  v-if="entry.nature === 'experience' && entry.startDate"
+                  v-if="entry.nature === 'experience' && entry.period"
                 >
-                  {{ entry.startDate }}
-                  <template v-if="entry.endDate">
-                    - {{ entry.endDate }}
-                  </template>
+                  {{ entry.period }}
                 </div>
                 <div class="font-light">{{ entry.title }}</div>
                 <template v-if="entry.nature === 'experience'">

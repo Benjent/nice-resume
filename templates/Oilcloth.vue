@@ -152,13 +152,10 @@ const { about, categories, contactDetails, socialLinks } =
                 <div class="flex flex-col">
                   <div v-if="entry.nature === 'experience'">
                     <span
-                      v-if="entry.startDate"
+                      v-if="entry.period"
                       class="text-[color:var(--resume-color1)] text-lg leading-none"
                     >
-                      {{ entry.startDate }}
-                      <template v-if="entry.endDate">
-                        - {{ entry.endDate }}
-                      </template>
+                      {{ entry.period }}
                     </span>
                   </div>
                   <div
@@ -220,13 +217,10 @@ const { about, categories, contactDetails, socialLinks } =
                   <div class="flex gap-2 items-baseline mb-2">
                     <div v-if="entry.nature === 'experience'">
                       <span
-                        v-if="entry.startDate"
+                        v-if="entry.period"
                         class="text-[color:var(--resume-color1)] text-lg leading-none"
                       >
-                        {{ entry.startDate }}
-                        <template v-if="entry.endDate">
-                          - {{ entry.endDate }}
-                        </template>
+                        {{ entry.period }}
                       </span>
                     </div>
                     <div class="flex flex-col flex-1">
