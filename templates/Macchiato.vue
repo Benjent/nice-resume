@@ -9,7 +9,8 @@ import LinkIcon from "@/components/LinkIcon.vue";
 
 const { documentType } = storeToRefs(useEditorStore());
 
-const { name, title } = storeToRefs(useProfileStore());
+const { isCustomizationForAllDocumentTypes, name, title } =
+  storeToRefs(useProfileStore());
 
 const { paragraphs, recipientDetails, reference, subject } =
   storeToRefs(useLetterStore());
@@ -20,7 +21,12 @@ const { about, categories, contactDetails, socialLinks } =
 
 <template>
   <div
-    class="bg-white text-[color:var(--color2)] h-full w-full flex flex-col p-12 border-t-[10px] border-[color:var(--color0)] font-body text-xs"
+    class="bg-white h-full w-full flex flex-col border-t-[10px] font-body text-xs"
+    :class="
+      documentType === 'letter' && !isCustomizationForAllDocumentTypes
+        ? 'text-[color:var(--letter-color2)] border-[color:var(--letter-color0)] px-[var(--letter-margin0)] py-[var(--letter-margin1)]'
+        : 'text-[color:var(--resume-color2)] border-[color:var(--resume-color0)] px-[var(--resume-margin0)] py-[var(--resume-margin1)]'
+    "
   >
     <template v-if="documentType === 'letter'">
       <header>
@@ -63,7 +69,10 @@ const { about, categories, contactDetails, socialLinks } =
           <h3 v-if="subject" class="text-lg font-display">
             {{ subject }}
           </h3>
-          <h4 v-if="reference" class="text-xs text-[color:var(--color0)]">
+          <h4
+            v-if="reference"
+            class="text-xs text-[color:var(--resume-color0)]"
+          >
             <span class="">Ref. TODO translate:</span>
             {{ reference }}
           </h4>
@@ -92,7 +101,7 @@ const { about, categories, contactDetails, socialLinks } =
         <aside class="w-[20%] flex flex-col gap-4">
           <div>
             <h3
-              class="font-light tracking-wider after:content-[''] after:block after:border-b-[1px] after:border-[color:var(--color0)] after:w-12 after:mt-2 after:mb-3"
+              class="font-light tracking-wider after:content-[''] after:block after:border-b-[1px] after:border-[color:var(--resume-color0)] after:w-12 after:mt-2 after:mb-3"
             >
               About
             </h3>
@@ -127,7 +136,7 @@ const { about, categories, contactDetails, socialLinks } =
             :key="categoryIndex"
           >
             <h3
-              class="font-light tracking-wider after:content-[''] after:block after:border-b-[1px] after:border-[color:var(--color0)] after:w-12 after:mt-2 after:mb-3"
+              class="font-light tracking-wider after:content-[''] after:block after:border-b-[1px] after:border-[color:var(--resume-color0)] after:w-12 after:mt-2 after:mb-3"
             >
               {{ category.name }}
             </h3>
@@ -155,7 +164,7 @@ const { about, categories, contactDetails, socialLinks } =
                   <li
                     v-for="(highlight, highlightIndex) in entry.highlights"
                     :key="highlightIndex"
-                    class="bg-[color:var(--color1)] p-[0.1rem] rounded"
+                    class="bg-[color:var(--resume-color1)] p-[0.1rem] rounded"
                   >
                     {{ highlight }}
                   </li>
@@ -173,7 +182,7 @@ const { about, categories, contactDetails, socialLinks } =
             :class="category.layout === 'half' ? 'col-span-1' : 'col-span-2'"
           >
             <h3
-              class="font-light tracking-wider after:content-[''] after:block after:border-b-[1px] after:border-[color:var(--color0)] after:w-12 after:mt-2 after:mb-3"
+              class="font-light tracking-wider after:content-[''] after:block after:border-b-[1px] after:border-[color:var(--resume-color0)] after:w-12 after:mt-2 after:mb-3"
             >
               {{ category.name }}
             </h3>

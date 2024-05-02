@@ -1,27 +1,20 @@
 <script setup lang="ts">
-import { computed, onMounted, watch } from "vue";
+import { computed } from "vue";
 import { storeToRefs } from "pinia";
 import { useEditorStore } from "@/stores/editor";
 import { useProfileStore } from "@/stores/profile";
 import { useResumeStore } from "@/stores/resume";
 import { capitalize } from "@/utils/string";
+import CustomizationEditor from "@/fragments/CustomizationEditor.vue";
 import LetterBodyEditor from "@/fragments/LetterBodyEditor.vue";
 import ResumeCategoriesEditor from "@/fragments/ResumeCategoriesEditor.vue";
 import LetterHeaderEditor from "@/fragments/LetterHeaderEditor.vue";
 import PersonalDetailsEditor from "@/fragments/PersonalDetailsEditor.vue";
+import { discouragedLayoutTemplates, fixedLayoutTemplates } from "@/globals";
 
-import EditorCategory from "./EditorCategory.vue";
-import {
-  discouragedLayoutTemplates,
-  fixedLayoutTemplates,
-  templateColors,
-} from "@/globals";
+const { documentType } = storeToRefs(useEditorStore());
 
-const { documentType } = defineProps<{
-  documentType: string;
-}>();
-
-const { colors, isThemeCustomized, template } = storeToRefs(useProfileStore());
+const { template } = storeToRefs(useProfileStore());
 
 const { categories } = storeToRefs(useResumeStore());
 
@@ -41,46 +34,6 @@ const discouragedLayoutText = computed(() => {
   const layouts = discouragedLayoutTemplates[template.value].join(" and ");
   return `${capitalize(layouts)} ${isPlural ? "layouts are" : "layout is"} discouraged for this template.`;
 });
-
-function setCssVariable(name: string, value: string) {
-  const root = document.querySelector(":root");
-  // Rely on CSS variables to allow pseudo-element styling in templates
-  (root as HTMLElement).style.setProperty(`--${name}`, value);
-}
-
-function setThemeColors(isThemeCustomized: boolean) {
-  if (isThemeCustomized) {
-    colors.value.forEach((color, index) => {
-      setCssVariable(`color${index}`, color);
-    });
-  } else {
-    templateColors[template.value].forEach((color, index) => {
-      setCssVariable(`color${index}`, color);
-    });
-  }
-}
-
-onMounted(() => {
-  setThemeColors(isThemeCustomized.value);
-});
-
-watch(template, () => {
-  setThemeColors(isThemeCustomized.value);
-});
-
-watch(isThemeCustomized, (newValue) => {
-  setThemeColors(newValue);
-});
-
-watch(
-  colors,
-  (newValue) => {
-    newValue.forEach((color, index) => {
-      setCssVariable(`color${index}`, color);
-    });
-  },
-  { deep: true },
-);
 </script>
 
 <template>
@@ -125,47 +78,7 @@ watch(
       <template v-else>
         <ResumeCategoriesEditor />
       </template>
-
-      <EditorCategory id="Customization" class="w-full">
-        <template v-slot:header>Customization</template>
-        <div class="flex flex-col gap-5">
-          <!-- TODO use nice toggle component -->
-          <label class="cursor-pointer" for="isThemeCustomized">
-            <input
-              id="isThemeCustomized"
-              class="input"
-              type="checkbox"
-              v-model="isThemeCustomized"
-            />
-            <span class="opacity-60">Use custom theme</span>
-          </label>
-          <div class="flex gap-5 flex-wrap">
-            <label
-              class="flex flex-col"
-              v-for="(color, index) in templateColors[template]"
-              :key="index"
-              :for="`color${index}`"
-            >
-              <input
-                v-if="isThemeCustomized"
-                :id="`color${index}`"
-                class="input cursor-pointer"
-                type="color"
-                :disabled="!isThemeCustomized"
-                v-model="colors[index]"
-              />
-              <input
-                v-else
-                :id="`color${index}`"
-                class="input cursor-pointer"
-                type="color"
-                disabled
-                :value="color"
-              />
-            </label>
-          </div>
-        </div>
-      </EditorCategory>
+      <CustomizationEditor />
     </div>
   </main>
 </template>

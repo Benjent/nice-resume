@@ -9,7 +9,8 @@ import LinkIcon from "@/components/LinkIcon.vue";
 
 const { documentType } = storeToRefs(useEditorStore());
 
-const { name, title } = storeToRefs(useProfileStore());
+const { isCustomizationForAllDocumentTypes, name, title } =
+  storeToRefs(useProfileStore());
 
 const { paragraphs, recipientDetails, reference, subject } =
   storeToRefs(useLetterStore());
@@ -20,7 +21,12 @@ const { about, categories, contactDetails, socialLinks } =
 
 <template>
   <div
-    class="bg-white text-[color:var(--color1)] h-full w-full flex flex-col py-5 px-6 text-xs font-body"
+    class="bg-white h-full w-full flex flex-col text-xs font-body"
+    :class="
+      documentType === 'letter' && !isCustomizationForAllDocumentTypes
+        ? 'text-[color:var(--letter-color1)] px-[var(--letter-margin0)] py-[var(--letter-margin1)]'
+        : 'text-[color:var(--resume-color1)] px-[var(--resume-margin0)] py-[var(--resume-margin1)]'
+    "
   >
     <template v-if="documentType === 'letter'">
       <header class="flex mb-4">
@@ -58,7 +64,14 @@ const { about, categories, contactDetails, socialLinks } =
       <div class="text-justify text-xs px-4">
         <header class="text-center text-sm mb-6">
           <h3 v-if="subject" class="">
-            <span class="text-[color:var(--color0)] uppercase">
+            <span
+              class="uppercase"
+              :class="
+                !isCustomizationForAllDocumentTypes
+                  ? 'text-[color:var(--letter-color0)]'
+                  : 'text-[color:var(--resume-color0)]'
+              "
+            >
               Objet TODO translate:{{ " " }}
             </span>
             <span class="italic">
@@ -66,7 +79,14 @@ const { about, categories, contactDetails, socialLinks } =
             </span>
           </h3>
           <h4 v-if="reference" class="text-xs">
-            <span class="text-[color:var(--color0)] uppercase">
+            <span
+              class="uppercase"
+              :class="
+                !isCustomizationForAllDocumentTypes
+                  ? 'text-[color:var(--letter-color0)]'
+                  : 'text-[color:var(--resume-color0)]'
+              "
+            >
               Ref. TODO translate:{{ " " }}
             </span>
             <span class="italic">{{ reference }}</span>
@@ -120,7 +140,7 @@ const { about, categories, contactDetails, socialLinks } =
             :key="categoryIndex"
           >
             <h3
-              class="uppercase text-[color:var(--color0)] border-b-[1px] border-[color:var(--color1)] mb-1"
+              class="uppercase text-[color:var(--resume-color0)] border-b-[1px] border-[color:var(--resume-color1)] mb-1"
             >
               {{ category.name }}
             </h3>
@@ -177,7 +197,7 @@ const { about, categories, contactDetails, socialLinks } =
             :class="category.layout === 'half' ? 'col-span-1' : 'col-span-2'"
           >
             <h3
-              class="uppercase text-[color:var(--color0)] border-b-[1px] border-[color:var(--color1)] mb-1"
+              class="uppercase text-[color:var(--resume-color0)] border-b-[1px] border-[color:var(--resume-color1)] mb-1"
             >
               {{ category.name }}
             </h3>

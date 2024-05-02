@@ -9,7 +9,8 @@ import LinkIcon from "@/components/LinkIcon.vue";
 
 const { documentType } = storeToRefs(useEditorStore());
 
-const { name, title } = storeToRefs(useProfileStore());
+const { isCustomizationForAllDocumentTypes, name, title } =
+  storeToRefs(useProfileStore());
 
 const { paragraphs, recipientDetails, reference, subject } =
   storeToRefs(useLetterStore());
@@ -20,7 +21,12 @@ const { about, categories, contactDetails, socialLinks } =
 
 <template>
   <div
-    class="bg-white text-[color:var(--color3)] h-full w-full flex flex-col p-12 font-sans"
+    class="bg-white h-full w-full flex flex-col font-sans"
+    :class="
+      documentType === 'letter' && !isCustomizationForAllDocumentTypes
+        ? 'text-[color:var(--letter-color3)] px-[var(--letter-margin0)] py-[var(--letter-margin1)]'
+        : 'text-[color:var(--resume-color3)] px-[var(--resume-margin0)] py-[var(--resume-margin1)]'
+    "
   >
     <template v-if="documentType === 'letter'">
       <header v-if="name">
@@ -59,8 +65,13 @@ const { about, categories, contactDetails, socialLinks } =
       </header>
 
       <ul
-        class="text-right border-t-[1px] border-[color:var(--color2)] py-6 leading-tight text-[color:var(--color1)] text-sm"
         v-if="recipientDetails.length"
+        class="text-right border-t-[1px] py-6 leading-tight text-sm"
+        :class="
+          !isCustomizationForAllDocumentTypes
+            ? 'border-[color:var(--letter-color2)] text-[color:var(--letter-color1)]'
+            : 'border-[color:var(--resume-color2)] text-[color:var(--resume-color1)]'
+        "
       >
         <li v-for="detail in recipientDetails" :key="detail">
           {{ detail }}
@@ -70,11 +81,23 @@ const { about, categories, contactDetails, socialLinks } =
         <header class="mb-6">
           <h3
             v-if="subject"
-            class="uppercase text-[color:var(--color0)] font-bold font-display text-base leading-tight mb-5"
+            class="uppercase font-bold font-display text-base leading-tight mb-5"
+            :class="
+              !isCustomizationForAllDocumentTypes
+                ? 'text-[color:var(--letter-color0)]'
+                : 'text-[color:var(--resume-color0)]'
+            "
           >
             {{ subject }}
           </h3>
-          <h4 v-if="reference" class="text-[color:var(--color1)]">
+          <h4
+            v-if="reference"
+            :class="
+              !isCustomizationForAllDocumentTypes
+                ? 'text-[color:var(--letter-color1)]'
+                : 'text-[color:var(--resume-color1)]'
+            "
+          >
             Reference TODO translate {{ reference }}
           </h4>
         </header>
@@ -122,7 +145,7 @@ const { about, categories, contactDetails, socialLinks } =
 
       <p
         v-if="about"
-        class="py-6 border-t-[1px] border-[color:var(--color2)] text-center font-display"
+        class="py-6 border-t-[1px] border-[color:var(--resume-color2)] text-center font-display"
       >
         {{ about }}
       </p>
@@ -140,7 +163,7 @@ const { about, categories, contactDetails, socialLinks } =
             class="mb-6"
           >
             <h3
-              class="font-display uppercase mb-5 text-xl text-[color:var(--color0)] font-bold"
+              class="font-display uppercase mb-5 text-xl text-[color:var(--resume-color0)] font-bold"
             >
               {{ category.name }}
             </h3>
@@ -149,24 +172,26 @@ const { about, categories, contactDetails, socialLinks } =
                 v-for="(entry, entryIndex) in category.entries"
                 :key="entryIndex"
               >
-                <div class="uppercase text-[color:var(--color0)] leading-none">
+                <div
+                  class="uppercase text-[color:var(--resume-color0)] leading-none"
+                >
                   {{ entry.title }}
                 </div>
                 <template v-if="entry.nature === 'experience'">
                   <div
-                    class="text-[color:var(--color1)] leading-tight"
+                    class="text-[color:var(--resume-color1)] leading-tight"
                     v-if="entry.organization"
                   >
                     {{ entry.organization }}
                   </div>
                   <div
-                    class="text-[color:var(--color1)] leading-tight"
+                    class="text-[color:var(--resume-color1)] leading-tight"
                     v-if="entry.location"
                   >
                     {{ entry.location }}
                   </div>
                   <div
-                    class="text-[color:var(--color1)] leading-tight"
+                    class="text-[color:var(--resume-color1)] leading-tight"
                     v-if="entry.startDate"
                   >
                     {{ entry.startDate }}
@@ -200,11 +225,11 @@ const { about, categories, contactDetails, socialLinks } =
               (category) => category.layout !== 'aside',
             )"
             :key="index"
-            class="py-6 border-t-[1px] border-[color:var(--color2)]"
+            class="py-6 border-t-[1px] border-[color:var(--resume-color2)]"
             :class="category.layout === 'half' ? 'col-span-1' : 'col-span-2'"
           >
             <h3
-              class="font-display uppercase mb-5 text-xl text-[color:var(--color0)] font-bold"
+              class="font-display uppercase mb-5 text-xl text-[color:var(--resume-color0)] font-bold"
             >
               {{ category.name }}
             </h3>
@@ -213,11 +238,13 @@ const { about, categories, contactDetails, socialLinks } =
                 v-for="(entry, entryIndex) in category.entries"
                 :key="entryIndex"
               >
-                <div class="uppercase text-[color:var(--color0)] leading-none">
+                <div
+                  class="uppercase text-[color:var(--resume-color0)] leading-none"
+                >
                   {{ entry.title }}
                 </div>
                 <template v-if="entry.nature === 'experience'">
-                  <div class="text-[color:var(--color1)] mb-1">
+                  <div class="text-[color:var(--resume-color1)] mb-1">
                     {{ entry.organization }} | {{ entry.location }}
                     <template v-if="entry.startDate">
                       |

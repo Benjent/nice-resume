@@ -12,7 +12,8 @@ const { documentType } = storeToRefs(useEditorStore());
 const { paragraphs, recipientDetails, reference, subject } =
   storeToRefs(useLetterStore());
 
-const { name, title } = storeToRefs(useProfileStore());
+const { isCustomizationForAllDocumentTypes, name, title } =
+  storeToRefs(useProfileStore());
 
 const { about, categories, contactDetails, socialLinks } =
   storeToRefs(useResumeStore());
@@ -20,11 +21,16 @@ const { about, categories, contactDetails, socialLinks } =
 
 <template>
   <div
-    class="bg-white text-[color:var(--color4)] h-full w-full flex flex-col font-body relative"
+    class="bg-white h-full w-full flex flex-col font-body relative"
+    :class="
+      documentType === 'letter' && !isCustomizationForAllDocumentTypes
+        ? 'text-[color:var(--letter-color4)] px-[var(--letter-margin0)] py-[var(--letter-margin1)]'
+        : 'text-[color:var(--resume-color4)] px-[var(--resume-margin0)] py-[var(--resume-margin1)]'
+    "
   >
     <template v-if="documentType === 'letter'">
       <header
-        class="text-[color:var(--color0)] border-b-4 border-[color:var(--color1)] flex gap-8 px-8 py-6"
+        class="text-[color:var(--resume-color0)] border-b-4 border-[color:var(--resume-color1)] flex gap-8 px-8 py-6"
       >
         <div class="">
           <h1 v-if="name" class="text-4xl tracking-[0.5rem] font-bold">
@@ -55,7 +61,7 @@ const { about, categories, contactDetails, socialLinks } =
         </ul>
       </header>
       <ul
-        class="px-8 mt-4 text-[color:var(--color0)] text-right text-xm leading-none font-light"
+        class="px-8 mt-4 text-[color:var(--resume-color0)] text-right text-xm leading-none font-light"
         v-if="recipientDetails.length"
       >
         <li v-for="detail in recipientDetails" :key="detail">
@@ -65,13 +71,13 @@ const { about, categories, contactDetails, socialLinks } =
       <div class="p-8 text-justify">
         <header class="text-center mb-6">
           <h3 v-if="subject" class="font-bold text-lg tracking-wider">
-            <span class="text-[color:var(--color1)]">
+            <span class="text-[color:var(--resume-color1)]">
               Objet TODO translate:
             </span>
             {{ subject }}
           </h3>
           <h4 v-if="reference" class="tracking-wide">
-            <span class="text-[color:var(--color0)] font-bold">
+            <span class="text-[color:var(--resume-color0)] font-bold">
               Ref. TODO translate:
             </span>
             {{ reference }}
@@ -90,7 +96,7 @@ const { about, categories, contactDetails, socialLinks } =
     </template>
     <template v-else>
       <header
-        class="bg-[color:var(--color0)] border-b-[1rem] border-[color:var(--color1)] text-[color:var(--color3)] flex gap-8 px-8 py-6"
+        class="bg-[color:var(--resume-color0)] border-b-[1rem] border-[color:var(--resume-color1)] text-[color:var(--resume-color3)] flex gap-8 px-8 py-6"
       >
         <div class="">
           <h1 v-if="name" class="text-4xl tracking-[0.5rem] font-bold">
@@ -147,7 +153,7 @@ const { about, categories, contactDetails, socialLinks } =
                   <div v-if="entry.nature === 'experience'">
                     <span
                       v-if="entry.startDate"
-                      class="text-[color:var(--color1)] text-lg leading-none"
+                      class="text-[color:var(--resume-color1)] text-lg leading-none"
                     >
                       {{ entry.startDate }}
                       <template v-if="entry.endDate">
@@ -159,8 +165,8 @@ const { about, categories, contactDetails, socialLinks } =
                     class="font-bold text-lg leading-none"
                     :class="
                       category.type === 'education'
-                        ? 'text-[color:var(--color2)]'
-                        : 'text-[color:var(--color4)]'
+                        ? 'text-[color:var(--resume-color2)]'
+                        : 'text-[color:var(--resume-color4)]'
                     "
                   >
                     {{ entry.title }}
@@ -174,7 +180,7 @@ const { about, categories, contactDetails, socialLinks } =
 
                   <p
                     v-if="entry.nature === 'experience' && entry.summary"
-                    class="text-[color:var(--color0)] font-bold leading-none mb-2"
+                    class="text-[color:var(--resume-color0)] font-bold leading-none mb-2"
                   >
                     {{ entry.summary }}
                   </p>
@@ -215,7 +221,7 @@ const { about, categories, contactDetails, socialLinks } =
                     <div v-if="entry.nature === 'experience'">
                       <span
                         v-if="entry.startDate"
-                        class="text-[color:var(--color1)] text-lg leading-none"
+                        class="text-[color:var(--resume-color1)] text-lg leading-none"
                       >
                         {{ entry.startDate }}
                         <template v-if="entry.endDate">
@@ -228,8 +234,8 @@ const { about, categories, contactDetails, socialLinks } =
                         class="font-bold text-lg leading-none"
                         :class="
                           category.type === 'education'
-                            ? 'text-[color:var(--color2)]'
-                            : 'text-[color:var(--color4)]'
+                            ? 'text-[color:var(--resume-color2)]'
+                            : 'text-[color:var(--resume-color4)]'
                         "
                       >
                         {{ entry.title }}
@@ -247,7 +253,7 @@ const { about, categories, contactDetails, socialLinks } =
 
                   <p
                     v-if="entry.nature === 'experience' && entry.summary"
-                    class="text-[color:var(--color0)] font-bold leading-none mb-2"
+                    class="text-[color:var(--resume-color0)] font-bold leading-none mb-2"
                   >
                     {{ entry.summary }}
                   </p>
@@ -271,7 +277,7 @@ const { about, categories, contactDetails, socialLinks } =
     </template>
     <div
       v-if="documentType === 'resume'"
-      class="-rotate-[10deg] w-full absolute -bottom-16 -right-16 h-20 bg-[color:var(--color2)] border-t-[1rem] border-[color:var(--color1)]"
+      class="-rotate-[10deg] w-full absolute -bottom-16 -right-16 h-20 bg-[color:var(--resume-color2)] border-t-[1rem] border-[color:var(--resume-color1)]"
     />
   </div>
 </template>

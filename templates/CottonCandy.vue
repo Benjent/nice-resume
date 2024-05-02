@@ -11,7 +11,8 @@ import LinkIcon from "@/components/LinkIcon.vue";
 
 const { documentType } = storeToRefs(useEditorStore());
 
-const { name, title } = storeToRefs(useProfileStore());
+const { isCustomizationForAllDocumentTypes, name, title } =
+  storeToRefs(useProfileStore());
 
 const { paragraphs, recipientDetails, reference, subject } =
   storeToRefs(useLetterStore());
@@ -58,20 +59,27 @@ function getSectionCategory(indexToGetFrom: number) {
 </script>
 
 <template>
-  <div class="h-full w-full flex flex-col text-[color:var(--color4)]">
+  <div
+    class="h-full w-full flex flex-col"
+    :class="
+      documentType === 'letter' && !isCustomizationForAllDocumentTypes
+        ? 'text-[color:var(--letter-color4)] px-[var(--letter-margin0)] py-[var(--letter-margin1)]'
+        : 'text-[color:var(--resume-color4)] px-[var(--resume-margin0)] py-[var(--resume-margin1)]'
+    "
+  >
     <template v-if="documentType === 'letter'">
       <header
-        class="flex items-start gap-10 py-8 px-10 bg-[color:var(--color3)] font-display"
+        class="flex items-start gap-10 py-8 px-10 bg-[color:var(--resume-color3)] font-display"
       >
         <div
-          class="flex flex-col place-items-center w-fit border-y-4 border-[color:var(--color0)] py-2 px-4"
+          class="flex flex-col place-items-center w-fit border-y-4 border-[color:var(--resume-color0)] py-2 px-4"
         >
           <h1 v-if="name" class="text-4xl uppercase">
             {{ name }}
           </h1>
           <h2 v-if="title" class="text-2xl uppercase">{{ title }}</h2>
         </div>
-        <div class="flex flex-col gap-2 text-[color:var(--color0)]">
+        <div class="flex flex-col gap-2 text-[color:var(--resume-color0)]">
           <ul class="leading-none">
             <li
               v-for="detail in contactDetails"
@@ -95,7 +103,7 @@ function getSectionCategory(indexToGetFrom: number) {
         </div>
       </header>
       <ul
-        class="px-10 text-[color:var(--color0)] text-right text-xs italic"
+        class="px-10 text-[color:var(--resume-color0)] text-right text-xs italic"
         v-if="recipientDetails.length"
       >
         <li v-for="detail in recipientDetails" :key="detail">
@@ -105,13 +113,15 @@ function getSectionCategory(indexToGetFrom: number) {
       <div class="py-8 px-10 text-justify text-sm">
         <header class="text-center mb-6">
           <h3 v-if="subject" class="font-bold">
-            <span class="text-[color:var(--color0)]">
+            <span class="text-[color:var(--resume-color0)]">
               Objet TODO translate:
             </span>
             {{ subject }}
           </h3>
           <h4 v-if="reference" class="text-xs">
-            <span class="text-[color:var(--color0)]">Ref. TODO translate:</span>
+            <span class="text-[color:var(--resume-color0)]">
+              Ref. TODO translate:
+            </span>
             {{ reference }}
           </h4>
         </header>
@@ -125,10 +135,10 @@ function getSectionCategory(indexToGetFrom: number) {
     <template v-else>
       <template v-if="name">
         <header
-          class="flex items-start gap-10 py-8 px-10 bg-[color:var(--color3)] font-display"
+          class="flex items-start gap-10 py-8 px-10 bg-[color:var(--resume-color3)] font-display"
         >
           <div
-            class="flex flex-col place-items-center w-fit border-y-4 border-[color:var(--color0)] py-2 px-4"
+            class="flex flex-col place-items-center w-fit border-y-4 border-[color:var(--resume-color0)] py-2 px-4"
           >
             <h1 v-if="name" class="text-center uppercase text-4xl">
               {{ name }}
@@ -137,7 +147,7 @@ function getSectionCategory(indexToGetFrom: number) {
               {{ title }}
             </h2>
           </div>
-          <div class="flex flex-col gap-2 text-[color:var(--color0)]">
+          <div class="flex flex-col gap-2 text-[color:var(--resume-color0)]">
             <ul class="leading-none">
               <li
                 v-for="detail in contactDetails"
@@ -167,16 +177,16 @@ function getSectionCategory(indexToGetFrom: number) {
 
         <p
           v-if="about"
-          class="pb-6 px-10 bg-[color:var(--color3)] font-display text-lg"
+          class="pb-6 px-10 bg-[color:var(--resume-color3)] font-display text-lg"
         >
           {{ about }}
         </p>
       </template>
 
-      <div class="flex flex-1 bg-[color:var(--color2)]">
+      <div class="flex flex-1 bg-[color:var(--resume-color2)]">
         <aside
           v-if="categories.some((category) => category.layout === 'aside')"
-          class="w-[20%] bg-[color:var(--color3)]"
+          class="w-[20%] bg-[color:var(--resume-color3)]"
         >
           <div
             v-for="(category, index) in categories.filter(
@@ -261,7 +271,7 @@ function getSectionCategory(indexToGetFrom: number) {
         <div class="flex flex-col flex-1">
           <div class="drop-shadow-lg">
             <div
-              class="w-full absolute left-0 right-0 -top-[2px] m-auto [clip-path:polygon(20%_0,_100%_0,_77%_100%)] bg-[color:var(--color3)] h-5"
+              class="w-full absolute left-0 right-0 -top-[2px] m-auto [clip-path:polygon(20%_0,_100%_0,_77%_100%)] bg-[color:var(--resume-color3)] h-5"
             />
           </div>
 
@@ -269,7 +279,7 @@ function getSectionCategory(indexToGetFrom: number) {
             <section
               v-for="(category, categoryIndex) in firstSectionCategories"
               :key="categoryIndex"
-              class="py-6 px-10 bg-[color:var(--color0)] text-[color:var(--color3)]"
+              class="py-6 px-10 bg-[color:var(--resume-color0)] text-[color:var(--resume-color3)]"
               :class="category.layout === 'half' ? 'col-span-1' : 'col-span-2'"
             >
               <h3 class="font-display uppercase mb-2 text-2xl">
@@ -348,7 +358,7 @@ function getSectionCategory(indexToGetFrom: number) {
 
             <div class="drop-shadow-lg col-span-full">
               <div
-                class="w-full absolute left-0 right-0 -top-[2px] m-auto [clip-path:polygon(20%_0,_100%_0,_77%_100%)] bg-[color:var(--color0)] h-5"
+                class="w-full absolute left-0 right-0 -top-[2px] m-auto [clip-path:polygon(20%_0,_100%_0,_77%_100%)] bg-[color:var(--resume-color0)] h-5"
               />
             </div>
           </div>
@@ -357,7 +367,7 @@ function getSectionCategory(indexToGetFrom: number) {
             <section
               v-for="(category, categoryIndex) in secondSectionCategories"
               :key="categoryIndex"
-              class="py-6 px-10 bg-[color:var(--color1)] text-[color:var(--color2)]"
+              class="py-6 px-10 bg-[color:var(--resume-color1)] text-[color:var(--resume-color2)]"
               :class="category.layout === 'half' ? 'col-span-1' : 'col-span-2'"
             >
               <h3 class="font-display uppercase mb-2 text-2xl">
@@ -420,7 +430,7 @@ function getSectionCategory(indexToGetFrom: number) {
 
             <div class="drop-shadow-lg col-span-full">
               <div
-                class="w-full absolute left-0 right-0 -top-[2px] m-auto [clip-path:polygon(20%_0,_100%_0,_77%_100%)] bg-[color:var(--color1)] h-5"
+                class="w-full absolute left-0 right-0 -top-[2px] m-auto [clip-path:polygon(20%_0,_100%_0,_77%_100%)] bg-[color:var(--resume-color1)] h-5"
               />
             </div>
           </div>
@@ -429,7 +439,7 @@ function getSectionCategory(indexToGetFrom: number) {
             <section
               v-for="(category, categoryIndex) in thirdSectionCategories"
               :key="categoryIndex"
-              class="py-6 px-10 bg-[color:var(--color2)] text-[color:var(--color1)]"
+              class="py-6 px-10 bg-[color:var(--resume-color2)] text-[color:var(--resume-color1)]"
               :class="category.layout === 'half' ? 'col-span-1' : 'col-span-2'"
             >
               <h3 class="font-display uppercase mb-2 text-2xl">

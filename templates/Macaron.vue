@@ -9,7 +9,8 @@ import LinkIcon from "@/components/LinkIcon.vue";
 
 const { documentType } = storeToRefs(useEditorStore());
 
-const { name, title } = storeToRefs(useProfileStore());
+const { isCustomizationForAllDocumentTypes, name, title } =
+  storeToRefs(useProfileStore());
 
 const { paragraphs, recipientDetails, reference, subject } =
   storeToRefs(useLetterStore());
@@ -20,11 +21,16 @@ const { about, categories, contactDetails, socialLinks } =
 
 <template>
   <div
-    class="bg-white text-[color:var(--color3)] h-full w-full flex flex-col font-body"
+    class="bg-white h-full w-full flex flex-col font-body"
+    :class="
+      documentType === 'letter' && !isCustomizationForAllDocumentTypes
+        ? 'text-[color:var(--letter-color3)] px-[var(--letter-margin0)] py-[var(--letter-margin1)]'
+        : 'text-[color:var(--resume-color3)] px-[var(--resume-margin0)] py-[var(--resume-margin1)]'
+    "
   >
     <template v-if="documentType === 'letter'">
       <header
-        class="flex items-start gap-4 py-8 px-10 bg-[color:var(--color0)] text-[color:var(--color2)]"
+        class="flex items-start gap-4 py-8 px-10 bg-[color:var(--resume-color0)] text-[color:var(--resume-color2)]"
       >
         <div class="flex flex-col font-bold">
           <h1 v-if="name" class="text-4xl">
@@ -43,7 +49,7 @@ const { about, categories, contactDetails, socialLinks } =
             <ContactIcon
               v-if="detail.icon"
               :icon="detail.icon"
-              class="w-4 text-[color:var(--color1)]"
+              class="w-4 text-[color:var(--resume-color1)]"
             />
             {{ detail.value }}
           </li>
@@ -55,7 +61,7 @@ const { about, categories, contactDetails, socialLinks } =
             <LinkIcon
               v-if="link.icon"
               :icon="link.icon"
-              class="w-4 text-[color:var(--color1)]"
+              class="w-4 text-[color:var(--resume-color1)]"
             />
             {{ link.url }}
           </li>
@@ -75,7 +81,10 @@ const { about, categories, contactDetails, socialLinks } =
           <h3 v-if="subject" class="text-lg font-bold">
             {{ subject }}
           </h3>
-          <h4 v-if="reference" class="text-sm text-[color:var(--color0)]">
+          <h4
+            v-if="reference"
+            class="text-sm text-[color:var(--resume-color0)]"
+          >
             <span class="">Ref. TODO translate:</span>
             {{ reference }}
           </h4>
@@ -90,7 +99,7 @@ const { about, categories, contactDetails, socialLinks } =
     <template v-else>
       <template v-if="name">
         <header
-          class="flex items-start gap-4 py-8 px-10 bg-[color:var(--color0)] text-[color:var(--color2)]"
+          class="flex items-start gap-4 py-8 px-10 bg-[color:var(--resume-color0)] text-[color:var(--resume-color2)]"
         >
           <div class="flex flex-col font-bold">
             <h1 v-if="name" class="text-4xl">
@@ -109,7 +118,7 @@ const { about, categories, contactDetails, socialLinks } =
               <ContactIcon
                 v-if="detail.icon"
                 :icon="detail.icon"
-                class="w-4 text-[color:var(--color1)]"
+                class="w-4 text-[color:var(--resume-color1)]"
               />
               {{ detail.value }}
             </li>
@@ -121,7 +130,7 @@ const { about, categories, contactDetails, socialLinks } =
               <LinkIcon
                 v-if="link.icon"
                 :icon="link.icon"
-                class="w-4 text-[color:var(--color1)]"
+                class="w-4 text-[color:var(--resume-color1)]"
               />
               {{ link.url }}
             </li>
@@ -130,7 +139,7 @@ const { about, categories, contactDetails, socialLinks } =
 
         <p
           v-if="about"
-          class="py-4 px-10 bg-[color:var(--color1)] text-center font-display font-bold text-2xl"
+          class="py-4 px-10 bg-[color:var(--resume-color1)] text-center font-display font-bold text-2xl"
         >
           {{ about }}
         </p>
@@ -139,7 +148,7 @@ const { about, categories, contactDetails, socialLinks } =
       <div class="flex flex-1 items-start">
         <aside
           v-if="categories.some((category) => category.layout === 'aside')"
-          class="w-[25%] h-full bg-[color:var(--color0)] text-[color:var(--color2)]"
+          class="w-[25%] h-full bg-[color:var(--resume-color0)] text-[color:var(--resume-color2)]"
         >
           <div
             v-for="(category, index) in categories.filter(
@@ -148,7 +157,9 @@ const { about, categories, contactDetails, socialLinks } =
             :key="index"
             class="p-10"
           >
-            <h3 class="font-bold text-[color:var(--color1)] text-2xl mb-4">
+            <h3
+              class="font-bold text-[color:var(--resume-color1)] text-2xl mb-4"
+            >
               {{ category.name }}
             </h3>
             <ul class="flex flex-col gap-3">
@@ -160,7 +171,7 @@ const { about, categories, contactDetails, socialLinks } =
                   <div v-if="entry.startDate && entry.title" class="font-bold">
                     <span
                       v-if="entry.startDate"
-                      class="text-[color:var(--color0)]"
+                      class="text-[color:var(--resume-color0)]"
                     >
                       {{ entry.startDate }}
                       <template v-if="entry.endDate">
@@ -213,7 +224,9 @@ const { about, categories, contactDetails, socialLinks } =
             :key="categoryIndex"
             :class="category.layout === 'half' ? 'col-span-1' : 'col-span-2'"
           >
-            <h3 class="font-bold text-[color:var(--color0)] text-2xl mb-4">
+            <h3
+              class="font-bold text-[color:var(--resume-color0)] text-2xl mb-4"
+            >
               {{ category.name }}
             </h3>
             <ul class="flex flex-col gap-3">
@@ -225,7 +238,7 @@ const { about, categories, contactDetails, socialLinks } =
                   <div v-if="entry.startDate && entry.title" class="font-bold">
                     <span
                       v-if="entry.startDate"
-                      class="text-[color:var(--color0)]"
+                      class="text-[color:var(--resume-color0)]"
                     >
                       {{ entry.startDate }}
                       <template v-if="entry.endDate">

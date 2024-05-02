@@ -15,6 +15,17 @@ export type Template =
 
 export type DocumentType = "letter" | "resume";
 
+export interface Theme {
+  colors: string[];
+  margins: number[];
+}
+
+export type TemplateTheme = {
+  [T in Template]: {
+    [DT in DocumentType]: Theme;
+  };
+};
+
 export interface Detail {
   icon: null | "default" | "address" | "drivingLicense" | "email" | "phone";
   value: string;

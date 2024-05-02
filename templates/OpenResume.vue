@@ -9,7 +9,8 @@ import LinkIcon from "@/components/LinkIcon.vue";
 
 const { documentType } = storeToRefs(useEditorStore());
 
-const { name, title } = storeToRefs(useProfileStore());
+const { isCustomizationForAllDocumentTypes, name, title } =
+  storeToRefs(useProfileStore());
 
 const { paragraphs, recipientDetails, reference, subject } =
   storeToRefs(useLetterStore());
@@ -20,13 +21,23 @@ const { about, categories, contactDetails, socialLinks } =
 
 <template>
   <div
-    class="bg-white text-[color:var(--color1)] h-full w-full flex flex-col py-6 px-12 border-t-8 border-[color:var(--color0)] font-body"
+    class="bg-white h-full w-full flex flex-col border-t-8 font-body"
+    :class="
+      documentType === 'letter' && !isCustomizationForAllDocumentTypes
+        ? 'text-[color:var(--letter-color1)] border-[color:var(--letter-color0)] px-[var(--letter-margin0)] py-[var(--letter-margin1)]'
+        : 'text-[color:var(--resume-color1)] border-[color:var(--resume-color0)] px-[var(--resume-margin0)] py-[var(--resume-margin1)]'
+    "
   >
     <template v-if="documentType === 'letter'">
       <header>
         <h1
           v-if="name"
-          class="text-3xl mb-2 text-[color:var(--color0)] font-bold"
+          class="text-3xl mb-2 font-bold"
+          :class="
+            !isCustomizationForAllDocumentTypes
+              ? 'text-[color:var(--letter-color0)] '
+              : 'text-[color:var(--resume-color0)]'
+          "
         >
           {{ name }}
         </h1>
@@ -63,7 +74,14 @@ const { about, categories, contactDetails, socialLinks } =
       </ul>
       <div class="mt-2 text-justify text-sm">
         <header class="mb-6 ml-12 font-bold">
-          <h4 v-if="reference" class="text-[color:var(--color0)]">
+          <h4
+            v-if="reference"
+            :class="
+              !isCustomizationForAllDocumentTypes
+                ? 'text-[color:var(--letter-color0)]'
+                : 'text-[color:var(--resume-color0)]'
+            "
+          >
             <span class="">Ref. TODO translate:</span>
             {{ reference }}
           </h4>
@@ -82,7 +100,8 @@ const { about, categories, contactDetails, socialLinks } =
       <header>
         <h1
           v-if="name"
-          class="text-3xl mb-2 text-[color:var(--color0)] font-bold"
+          class="text-3xl mb-2 font-bold"
+          :class="'text-[color:var(--resume-color0)]'"
         >
           {{ name }}
         </h1>
@@ -126,7 +145,7 @@ const { about, categories, contactDetails, socialLinks } =
             class="mt-6"
           >
             <h3
-              class="mb-2 font-bold before:content-[''] before:inline-block before:mr-3 before:relative before:bottom-1 before:w-12 before:h-1 before:bg-[color:var(--color0)]"
+              class="mb-2 font-bold before:content-[''] before:inline-block before:mr-3 before:relative before:bottom-1 before:w-12 before:h-1 before:bg-[color:var(--resume-color0)]"
             >
               {{ category.name }}
             </h3>
@@ -178,7 +197,7 @@ const { about, categories, contactDetails, socialLinks } =
             :class="category.layout === 'half' ? 'col-span-1' : 'col-span-2'"
           >
             <h3
-              class="mb-2 font-bold before:content-[''] before:inline-block before:mr-3 before:relative before:bottom-1 before:w-12 before:h-1 before:bg-[color:var(--color0)]"
+              class="mb-2 font-bold before:content-[''] before:inline-block before:mr-3 before:relative before:bottom-1 before:w-12 before:h-1 before:bg-[color:var(--resume-color0)]"
             >
               {{ category.name }}
             </h3>

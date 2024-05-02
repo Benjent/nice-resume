@@ -9,10 +9,11 @@ import LinkIcon from "@/components/LinkIcon.vue";
 
 const { documentType } = storeToRefs(useEditorStore());
 
+const { isCustomizationForAllDocumentTypes, name, title } =
+  storeToRefs(useProfileStore());
+
 const { paragraphs, recipientDetails, reference, subject } =
   storeToRefs(useLetterStore());
-
-const { name, title } = storeToRefs(useProfileStore());
 
 const { about, categories, contactDetails, socialLinks } =
   storeToRefs(useResumeStore());
@@ -20,11 +21,16 @@ const { about, categories, contactDetails, socialLinks } =
 
 <template>
   <div
-    class="bg-white text-[color:var(--color4)] h-full w-full flex flex-col font-body relative"
+    class="bg-white h-full w-full flex flex-col font-body relative"
+    :class="
+      documentType === 'letter' && !isCustomizationForAllDocumentTypes
+        ? 'text-[color:var(--letter-color4)] px-[var(--letter-margin0)] py-[var(--letter-margin1)]'
+        : 'text-[color:var(--resume-color4)] px-[var(--resume-margin0)] py-[var(--resume-margin1)]'
+    "
   >
     <template v-if="documentType === 'letter'">
       <header
-        class="text-[color:var(--color0)] flex justify-between gap-8 px-8 py-6"
+        class="text-[color:var(--resume-color0)] flex justify-between gap-8 px-8 py-6"
       >
         <div class="font-display">
           <h1 v-if="name" class="text-4xl tracking-[0.5rem] font-bold">
@@ -35,7 +41,7 @@ const { about, categories, contactDetails, socialLinks } =
           </h2>
         </div>
         <ul
-          class="flex flex-col self-center text-[color:var(--color1)] font-display font-bold text-sm tracking-wider"
+          class="flex flex-col self-center text-[color:var(--resume-color1)] font-display font-bold text-sm tracking-wider"
           v-if="contactDetails.length || socialLinks.length"
         >
           <li
@@ -56,11 +62,11 @@ const { about, categories, contactDetails, socialLinks } =
           </li>
         </ul>
       </header>
-      <div class="border-t-8 border-[color:var(--color1)]" />
-      <div class="border-t-8 border-[color:var(--color2)]" />
-      <div class="border-t-4 border-[color:var(--color0)]" />
+      <div class="border-t-8 border-[color:var(--resume-color1)]" />
+      <div class="border-t-8 border-[color:var(--resume-color2)]" />
+      <div class="border-t-4 border-[color:var(--resume-color0)]" />
       <ul
-        class="px-8 mt-4 text-[color:var(--color0)] text-right text-xm leading-none font-light"
+        class="px-8 mt-4 text-[color:var(--resume-color0)] text-right text-xm leading-none font-light"
         v-if="recipientDetails.length"
       >
         <li v-for="detail in recipientDetails" :key="detail">
@@ -70,13 +76,13 @@ const { about, categories, contactDetails, socialLinks } =
       <div class="p-8 text-justify">
         <header class="text-center mb-6">
           <h3 v-if="subject" class="font-bold text-lg tracking-wider">
-            <span class="text-[color:var(--color1)]">
+            <span class="text-[color:var(--resume-color1)]">
               Objet TODO translate:
             </span>
             {{ subject }}
           </h3>
           <h4 v-if="reference" class="tracking-wide">
-            <span class="text-[color:var(--color0)] font-bold">
+            <span class="text-[color:var(--resume-color0)] font-bold">
               Ref. TODO translate:
             </span>
             {{ reference }}
@@ -95,7 +101,7 @@ const { about, categories, contactDetails, socialLinks } =
     </template>
     <template v-else>
       <header
-        class="text-[color:var(--color0)] flex justify-between gap-8 px-8 py-6"
+        class="text-[color:var(--resume-color0)] flex justify-between gap-8 px-8 py-6"
       >
         <div class="font-display">
           <h1 v-if="name" class="text-4xl tracking-[0.5rem] font-bold">
@@ -104,12 +110,15 @@ const { about, categories, contactDetails, socialLinks } =
           <h2 v-if="title" class="text-2xl tracking-widest">
             {{ title }}
           </h2>
-          <p v-if="about" class="mt-5 text-xl text-[color:var(--color2)]">
+          <p
+            v-if="about"
+            class="mt-5 text-xl text-[color:var(--resume-color2)]"
+          >
             {{ about }}
           </p>
         </div>
         <ul
-          class="flex flex-col self-center text-[color:var(--color1)] font-display font-bold text-sm tracking-wider"
+          class="flex flex-col self-center text-[color:var(--resume-color1)] font-display font-bold text-sm tracking-wider"
           v-if="contactDetails.length || socialLinks.length"
         >
           <li
@@ -130,9 +139,9 @@ const { about, categories, contactDetails, socialLinks } =
           </li>
         </ul>
       </header>
-      <div class="border-t-8 border-[color:var(--color1)]" />
-      <div class="border-t-8 border-[color:var(--color2)]" />
-      <div class="border-t-4 border-[color:var(--color0)]" />
+      <div class="border-t-8 border-[color:var(--resume-color1)]" />
+      <div class="border-t-8 border-[color:var(--resume-color2)]" />
+      <div class="border-t-4 border-[color:var(--resume-color0)]" />
 
       <div class="p-8 flex flex-col gap-8">
         <section
@@ -140,7 +149,7 @@ const { about, categories, contactDetails, socialLinks } =
           :key="categoryIndex"
         >
           <h3
-            class="uppercase font-bold text-3xl mb-4 ml-20 font-display tracking-widest underline underline-offset-8 decoration-[color:var(--color2)]"
+            class="uppercase font-bold text-3xl mb-4 ml-20 font-display tracking-widest underline underline-offset-8 decoration-[color:var(--resume-color2)]"
           >
             {{ category.name }}
           </h3>
@@ -155,7 +164,7 @@ const { about, categories, contactDetails, socialLinks } =
                   <div class="text-base">
                     <span
                       v-if="entry.nature === 'experience' && entry.startDate"
-                      class="text-[color:var(--color1)] leading-none mr-2"
+                      class="text-[color:var(--resume-color1)] leading-none mr-2"
                     >
                       {{ entry.startDate }}
                       <template v-if="entry.endDate">
@@ -176,7 +185,7 @@ const { about, categories, contactDetails, socialLinks } =
               <div class="w-[60%]">
                 <p
                   v-if="entry.nature === 'experience' && entry.summary"
-                  class="text-[color:var(--color1)] leading-tight"
+                  class="text-[color:var(--resume-color1)] leading-tight"
                 >
                   {{ entry.summary }}
                 </p>
@@ -187,9 +196,9 @@ const { about, categories, contactDetails, socialLinks } =
                   <li
                     v-for="(highlight, highlightIndex) in entry.highlights"
                     :key="highlightIndex"
-                    class="text-[color:var(--color0)]"
+                    class="text-[color:var(--resume-color0)]"
                   >
-                    <span class="text-[color:var(--color3)]">
+                    <span class="text-[color:var(--resume-color3)]">
                       {{ highlight }}
                     </span>
                   </li>

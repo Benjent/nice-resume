@@ -9,7 +9,8 @@ import LinkIcon from "@/components/LinkIcon.vue";
 
 const { documentType } = storeToRefs(useEditorStore());
 
-const { name, title } = storeToRefs(useProfileStore());
+const { isCustomizationForAllDocumentTypes, name, title } =
+  storeToRefs(useProfileStore());
 
 const { paragraphs, recipientDetails, reference, subject } =
   storeToRefs(useLetterStore());
@@ -20,7 +21,12 @@ const { about, categories, contactDetails, socialLinks } =
 
 <template>
   <div
-    class="bg-white text-[color:var(--color1)] h-full w-full flex flex-col p-20 font-serif text-xs"
+    class="bg-white h-full w-full flex flex-col font-serif text-xs"
+    :class="
+      documentType === 'letter' && !isCustomizationForAllDocumentTypes
+        ? 'text-[color:var(--letter-color1)] px-[var(--letter-margin0)] py-[var(--letter-margin1)]'
+        : 'text-[color:var(--resume-color1)] px-[var(--resume-margin0)] py-[var(--resume-margin1)]'
+    "
   >
     <template v-if="documentType === 'letter'">
       <header v-if="name" class="pb-4">
@@ -48,7 +54,12 @@ const { about, categories, contactDetails, socialLinks } =
       </header>
 
       <ul
-        class="text-right border-t-2 border-dotted border-[color:var(--color0)] pt-4"
+        class="text-right border-t-2 border-dotted pt-4"
+        :class="
+          !isCustomizationForAllDocumentTypes
+            ? 'border-[color:var(--letter-color0)]'
+            : 'border-[color:var(--resume-color0)]'
+        "
         v-if="recipientDetails.length"
       >
         <li v-for="detail in recipientDetails" :key="detail">
@@ -96,7 +107,12 @@ const { about, categories, contactDetails, socialLinks } =
       </header>
       <p
         v-if="about"
-        class="border-t-2 border-dotted border-[color:var(--color0)] p-4 pl-0"
+        class="border-t-2 border-dotted p-4 pl-0"
+        :class="
+          !isCustomizationForAllDocumentTypes
+            ? 'border-[color:var(--letter-color0)]'
+            : 'border-[color:var(--resume-color0)]'
+        "
       >
         {{ about }}
       </p>
@@ -104,7 +120,12 @@ const { about, categories, contactDetails, socialLinks } =
       <section
         v-for="(category, index) in categories"
         :key="index"
-        class="border-t-2 border-dotted border-[color:var(--color0)] flex gap-4 p-4 pl-0"
+        class="border-t-2 border-dotted flex gap-4 p-4 pl-0"
+        :class="
+          !isCustomizationForAllDocumentTypes
+            ? 'border-[color:var(--letter-color0)]'
+            : 'border-[color:var(--resume-color0)]'
+        "
       >
         <h3 class="uppercase w-[20%]">
           {{ category.name }}
