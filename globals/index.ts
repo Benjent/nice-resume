@@ -67,6 +67,7 @@ export const resumeSettings: ResumeSettings = {
 };
 
 // TODO allow border radius edition
+// TODO allow bullet point edition (circle, hyphen, square, none, ...)
 // TODO for ANY element that is text, have below properties+letterSPacing
 export const letterSettings: LetterSettings = {
   document: {
