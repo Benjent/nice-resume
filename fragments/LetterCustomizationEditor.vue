@@ -205,6 +205,14 @@ watch(
               :disabled="!isThemeCustomized"
               v-model="settings.recipientDetails.borderColor"
             />
+            <Field
+              id="recipientDetailsBorderRadius"
+              class="w-[20%]"
+              type="number"
+              label="Border radius"
+              :disabled="!isThemeCustomized"
+              v-model="settings.recipientDetails.borderRadius"
+            />
           </div>
           <div class="flex gap-5 flex-wrap">
             <Field
@@ -273,6 +281,14 @@ watch(
               label="Border color"
               :disabled="!isThemeCustomized"
               v-model="settings.header.borderColor"
+            />
+            <Field
+              id="headerBorderRadius"
+              class="w-[20%]"
+              type="number"
+              label="Border radius"
+              :disabled="!isThemeCustomized"
+              v-model="settings.header.borderRadius"
             />
           </div>
           <div class="flex gap-5 flex-wrap">
@@ -389,6 +405,14 @@ watch(
               :disabled="!isThemeCustomized"
               v-model="settings.subject.borderColor"
             />
+            <Field
+              id="subjectBorderRadius"
+              class="w-[20%]"
+              type="number"
+              label="Border radius"
+              :disabled="!isThemeCustomized"
+              v-model="settings.subject.borderRadius"
+            />
           </div>
           <div class="flex gap-5 flex-wrap">
             <Field
@@ -503,6 +527,14 @@ watch(
               label="Border color"
               :disabled="!isThemeCustomized"
               v-model="settings.reference.borderColor"
+            />
+            <Field
+              id="referenceBorderRadius"
+              class="w-[20%]"
+              type="number"
+              label="Border radius"
+              :disabled="!isThemeCustomized"
+              v-model="settings.reference.borderRadius"
             />
           </div>
           <div class="flex gap-5 flex-wrap">

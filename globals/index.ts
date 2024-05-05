@@ -66,7 +66,6 @@ export const resumeSettings: ResumeSettings = {
   },
 };
 
-// TODO allow border radius edition
 // TODO allow bullet point edition (circle, hyphen, square, none, ...)
 // TODO for ANY element that is text, have below properties+letterSPacing
 export const letterSettings: LetterSettings = {
@@ -87,6 +86,7 @@ export const letterSettings: LetterSettings = {
     color: "currentColor",
     backgroundColor: "#ffffff",
     borderColor: "currentColor",
+    borderRadius: 0,
     margin: [40, 0, 40, 0],
     border: [0, 0, 0, 0],
     padding: [0, 0, 0, 0],
@@ -96,6 +96,7 @@ export const letterSettings: LetterSettings = {
     isCentered: true,
     backgroundColor: "#ffffff",
     borderColor: "currentColor",
+    borderRadius: 0,
     margin: [0, 0, 40, 0],
     border: [0, 0, 0, 0],
     padding: [0, 0, 0, 0],
@@ -111,6 +112,7 @@ export const letterSettings: LetterSettings = {
     color: "currentColor",
     backgroundColor: "#ffffff",
     borderColor: "currentColor",
+    borderRadius: 0,
     margin: [0, 0, 0, 0],
     border: [0, 0, 0, 0],
     padding: [0, 0, 0, 0],
@@ -125,6 +127,7 @@ export const letterSettings: LetterSettings = {
     color: "currentColor",
     backgroundColor: "#ffffff",
     borderColor: "currentColor",
+    borderRadius: 0,
     margin: [0, 0, 0, 0],
     border: [0, 0, 0, 0],
     padding: [0, 0, 0, 0],

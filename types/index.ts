@@ -28,6 +28,7 @@ export type Settings = {
   color: string;
   backgroundColor: string;
   borderColor: string;
+  borderRadius: number;
   margin: SideSetting;
   border: SideSetting;
   padding: SideSetting;
@@ -65,6 +66,7 @@ export type LetterSettings = {
     isCentered: boolean;
     backgroundColor: string;
     borderColor: string;
+    borderRadius: number;
     margin: SideSetting;
     border: SideSetting;
     padding: SideSetting;
