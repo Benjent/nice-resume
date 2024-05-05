@@ -1,33 +1,23 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { useEditorStore } from "@/stores/editor";
-import { useLetterStore } from "@/stores/letter";
 import { useProfileStore } from "@/stores/profile";
 import { useResumeStore } from "@/stores/resume";
 import ContactIcon from "@/components/ContactIcon.vue";
+import Document from "@/components/Document.vue";
+import LetterBody from "@/components/LetterBody.vue";
 import LinkIcon from "@/components/LinkIcon.vue";
 
 const { documentType } = storeToRefs(useEditorStore());
 
-const { isCustomizationForAllDocumentTypes, name, title } =
-  storeToRefs(useProfileStore());
-
-const { paragraphs, recipientDetails, reference, subject } =
-  storeToRefs(useLetterStore());
+const { name, title } = storeToRefs(useProfileStore());
 
 const { about, categories, contactDetails, socialLinks } =
   storeToRefs(useResumeStore());
 </script>
 
 <template>
-  <div
-    class="bg-white h-full w-full flex flex-col font-sans"
-    :class="
-      documentType === 'letter' && !isCustomizationForAllDocumentTypes
-        ? 'text-[color:var(--letter-color3)] px-[var(--letter-margin0)] py-[var(--letter-margin1)]'
-        : 'text-[color:var(--resume-color3)] px-[var(--resume-margin0)] py-[var(--resume-margin1)]'
-    "
-  >
+  <Document>
     <template v-if="documentType === 'letter'">
       <header v-if="name">
         <h1 v-if="name" class="text-2xl font-display">
@@ -63,49 +53,7 @@ const { about, categories, contactDetails, socialLinks } =
           </li>
         </ul>
       </header>
-
-      <ul
-        v-if="recipientDetails.length"
-        class="text-right border-t-[1px] py-6 leading-tight text-sm"
-        :class="
-          !isCustomizationForAllDocumentTypes
-            ? 'border-[color:var(--letter-color2)] text-[color:var(--letter-color1)]'
-            : 'border-[color:var(--resume-color2)] text-[color:var(--resume-color1)]'
-        "
-      >
-        <li v-for="detail in recipientDetails" :key="detail">
-          {{ detail }}
-        </li>
-      </ul>
-      <div class="text-sm">
-        <header class="mb-6">
-          <h3
-            v-if="subject"
-            class="uppercase font-bold font-display text-base leading-tight mb-5"
-            :class="
-              !isCustomizationForAllDocumentTypes
-                ? 'text-[color:var(--letter-color0)]'
-                : 'text-[color:var(--resume-color0)]'
-            "
-          >
-            {{ subject }}
-          </h3>
-          <h4
-            v-if="reference"
-            :class="
-              !isCustomizationForAllDocumentTypes
-                ? 'text-[color:var(--letter-color1)]'
-                : 'text-[color:var(--resume-color1)]'
-            "
-          >
-            Reference TODO translate {{ reference }}
-          </h4>
-        </header>
-        <p v-for="(paragraph, index) in paragraphs" :key="index" class="mb-2">
-          {{ paragraph }}
-        </p>
-        <div>{{ name }}</div>
-      </div>
+      <LetterBody />
     </template>
     <template v-else>
       <header v-if="name" class="mb-6">
@@ -269,7 +217,7 @@ const { about, categories, contactDetails, socialLinks } =
         </div>
       </div>
     </template>
-  </div>
+  </Document>
 </template>
 
 <style scoped>

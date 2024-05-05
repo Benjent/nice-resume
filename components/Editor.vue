@@ -5,9 +5,10 @@ import { useEditorStore } from "@/stores/editor";
 import { useProfileStore } from "@/stores/profile";
 import { useResumeStore } from "@/stores/resume";
 import { capitalize } from "@/utils/string";
-import CustomizationEditor from "@/fragments/CustomizationEditor.vue";
 import LetterBodyEditor from "@/fragments/LetterBodyEditor.vue";
+import LetterCustomizationEditor from "@/fragments/LetterCustomizationEditor.vue";
 import ResumeCategoriesEditor from "@/fragments/ResumeCategoriesEditor.vue";
+import ResumeCustomizationEditor from "@/fragments/ResumeCustomizationEditor.vue";
 import LetterHeaderEditor from "@/fragments/LetterHeaderEditor.vue";
 import PersonalDetailsEditor from "@/fragments/PersonalDetailsEditor.vue";
 import { discouragedLayoutTemplates, fixedLayoutTemplates } from "@/globals";
@@ -74,11 +75,12 @@ const discouragedLayoutText = computed(() => {
       <template v-if="documentType === 'letter'">
         <LetterHeaderEditor />
         <LetterBodyEditor />
+        <LetterCustomizationEditor />
       </template>
       <template v-else>
         <ResumeCategoriesEditor />
+        <ResumeCustomizationEditor />
       </template>
-      <CustomizationEditor />
     </div>
   </main>
 </template>

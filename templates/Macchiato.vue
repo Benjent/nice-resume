@@ -1,134 +1,61 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { useEditorStore } from "@/stores/editor";
-import { useLetterStore } from "@/stores/letter";
 import { useProfileStore } from "@/stores/profile";
 import { useResumeStore } from "@/stores/resume";
 import ContactIcon from "@/components/ContactIcon.vue";
+import Document from "@/components/Document.vue";
+import LetterBody from "@/components/LetterBody.vue";
 import LinkIcon from "@/components/LinkIcon.vue";
 
 const { documentType } = storeToRefs(useEditorStore());
 
-const { isCustomizationForAllDocumentTypes, name, title } =
-  storeToRefs(useProfileStore());
-
-const { paragraphs, recipientDetails, reference, subject } =
-  storeToRefs(useLetterStore());
+const { name, title } = storeToRefs(useProfileStore());
 
 const { about, categories, contactDetails, socialLinks } =
   storeToRefs(useResumeStore());
 </script>
 
 <template>
-  <div
-    class="bg-white h-full w-full flex flex-col border-t-[10px] font-body text-xs"
-    :class="
-      documentType === 'letter' && !isCustomizationForAllDocumentTypes
-        ? 'text-[color:var(--letter-color2)] border-[color:var(--letter-color0)] px-[var(--letter-margin0)] py-[var(--letter-margin1)]'
-        : 'text-[color:var(--resume-color2)] border-[color:var(--resume-color0)] px-[var(--resume-margin0)] py-[var(--resume-margin1)]'
-    "
-  >
-    <template v-if="documentType === 'letter'">
-      <header>
-        <h1 v-if="name" class="text-4xl font-display font-bold tracking-wide">
-          {{ name }}
-        </h1>
-        <h2
-          v-if="title"
-          class="text-xl mb-2 font-display font-light tracking-wider"
-        >
-          {{ title }}
-        </h2>
+  <Document>
+    <header class="p-12 pb-2">
+      <h1 v-if="name" class="text-4xl font-display font-bold tracking-wide">
+        {{ name }}
+      </h1>
+      <h2
+        v-if="title"
+        class="text-xl mb-2 font-display font-light tracking-wider"
+      >
+        {{ title }}
+      </h2>
+      <p v-if="about" class="mb-2">{{ about }}</p>
 
-        <ul v-if="contactDetails.length || socialLinks.length">
-          <li
-            v-for="detail in contactDetails"
-            :key="`${detail.value}${detail.icon}`"
-            class="flex gap-1 items-center"
-          >
-            <ContactIcon v-if="detail.icon" :icon="detail.icon" class="w-4" />
-            {{ detail.value }}
-          </li>
-          <li
-            v-for="link in socialLinks"
-            :key="`${link.url}${link.icon}`"
-            class="flex gap-2 items-center"
-          >
-            <LinkIcon v-if="link.icon" :icon="link.icon" class="w-3" />
-            {{ link.url }}
-          </li>
-        </ul>
-      </header>
-      <ul class="text-right" v-if="recipientDetails.length">
-        <li v-for="detail in recipientDetails" :key="detail">
-          {{ detail }}
+      <ul v-if="contactDetails.length || socialLinks.length">
+        <li
+          v-for="detail in contactDetails"
+          :key="`${detail.value}${detail.icon}`"
+          class="flex gap-1 items-center"
+        >
+          <ContactIcon v-if="detail.icon" :icon="detail.icon" class="w-4" />
+          {{ detail.value }}
+        </li>
+        <li
+          v-for="link in socialLinks"
+          :key="`${link.url}${link.icon}`"
+          class="flex gap-2 items-center"
+        >
+          <LinkIcon v-if="link.icon" :icon="link.icon" class="w-3" />
+          {{ link.url }}
         </li>
       </ul>
-      <div class="mt-10 text-justify text-sm">
-        <header class="text-center mb-6">
-          <h3 v-if="subject" class="text-lg font-display">
-            {{ subject }}
-          </h3>
-          <h4
-            v-if="reference"
-            class="text-xs text-[color:var(--resume-color0)]"
-          >
-            <span class="">Ref. TODO translate:</span>
-            {{ reference }}
-          </h4>
-        </header>
-        <p v-for="(paragraph, index) in paragraphs" :key="index" class="mb-4">
-          <span class="inline-block w-12" />
-          {{ paragraph }}
-        </p>
-        <div class="text-right">{{ name }}</div>
-      </div>
-    </template>
+    </header>
+    <LetterBody v-if="documentType === 'letter'" />
     <template v-else>
-      <header>
-        <h1 v-if="name" class="text-4xl font-display font-bold tracking-wide">
-          {{ name }}
-        </h1>
-        <h2
-          v-if="title"
-          class="text-xl mb-2 font-display font-light tracking-wider"
+      <div class="flex gap-12 px-12">
+        <aside
+          v-if="categories.some((category) => category.layout === 'aside')"
+          class="w-[20%] flex flex-col gap-4"
         >
-          {{ title }}
-        </h2>
-      </header>
-
-      <div class="flex gap-12">
-        <aside class="w-[20%] flex flex-col gap-4">
-          <div>
-            <h3
-              class="font-light tracking-wider after:content-[''] after:block after:border-b-[1px] after:border-[color:var(--resume-color0)] after:w-12 after:mt-2 after:mb-3"
-            >
-              About
-            </h3>
-            <p v-if="about" class="mb-2">{{ about }}</p>
-            <ul>
-              <li
-                v-for="detail in contactDetails"
-                :key="`${detail.value}${detail.icon}`"
-                class="flex gap-1 items-center"
-              >
-                <ContactIcon
-                  v-if="detail.icon"
-                  :icon="detail.icon"
-                  class="w-4"
-                />
-                {{ detail.value }}
-              </li>
-              <li
-                v-for="link in socialLinks"
-                :key="`${link.url}${link.icon}`"
-                class="flex gap-2 items-center"
-              >
-                <LinkIcon v-if="link.icon" :icon="link.icon" class="w-3" />
-                {{ link.url }}
-              </li>
-            </ul>
-          </div>
           <div
             v-for="(category, categoryIndex) in categories.filter(
               (category) => category.layout === 'aside',
@@ -217,7 +144,7 @@ const { about, categories, contactDetails, socialLinks } =
         </div>
       </div>
     </template>
-  </div>
+  </Document>
 </template>
 
 <style scoped>

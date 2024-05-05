@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { templateThemes, templates } from "@/globals";
+import { letterSettings } from "@/globals";
 
 // Use option API to take advantage of automatic persistence
 // @ts-expect-error - TS does not handle option API syntax
@@ -12,8 +12,7 @@ export const useLetterStore = defineStore("letter", {
     subject: "",
 
     // Design
-    colors: templateThemes[templates[0]].letter.colors,
-    margins: templateThemes[templates[0]].letter.margins,
+    settings: structuredClone(letterSettings),
   }),
   persist: true,
 });

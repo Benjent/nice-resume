@@ -1,159 +1,60 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { useEditorStore } from "@/stores/editor";
-import { useLetterStore } from "@/stores/letter";
 import { useProfileStore } from "@/stores/profile";
 import { useResumeStore } from "@/stores/resume";
 import ContactIcon from "@/components/ContactIcon.vue";
+import Document from "@/components/Document.vue";
+import LetterBody from "@/components/LetterBody.vue";
 import LinkIcon from "@/components/LinkIcon.vue";
 
 const { documentType } = storeToRefs(useEditorStore());
 
-const { isCustomizationForAllDocumentTypes, name, title } =
-  storeToRefs(useProfileStore());
-
-const { paragraphs, recipientDetails, reference, subject } =
-  storeToRefs(useLetterStore());
+const { name, title } = storeToRefs(useProfileStore());
 
 const { about, categories, contactDetails, socialLinks } =
   storeToRefs(useResumeStore());
 </script>
 
 <template>
-  <div
-    class="bg-white h-full w-full flex flex-col p-12 font-body"
-    :class="
-      documentType === 'letter' && !isCustomizationForAllDocumentTypes
-        ? 'text-[color:var(--letter-color3)] px-[var(--letter-margin0)] py-[var(--letter-margin1)]'
-        : 'text-[color:var(--resume-color3)] px-[var(--resume-margin0)] py-[var(--resume-margin1)]'
-    "
-  >
-    <template v-if="documentType === 'letter'">
-      <header>
-        <h1
-          v-if="name"
-          class="text-3xl mb-2 uppercase tracking-widest"
-          :class="
-            !isCustomizationForAllDocumentTypes
-              ? 'text-[color:var(--letter-color0)]'
-              : 'text-[color:var(--resume-color0)]'
-          "
-        >
-          {{ name }}
-        </h1>
-        <h2
-          v-if="title"
-          class="tracking-widest"
-          :class="
-            !isCustomizationForAllDocumentTypes
-              ? 'text-[color:var(--letter-color0)]'
-              : 'text-[color:var(--resume-color0)]'
-          "
-        >
-          {{ title }}
-        </h2>
-        <ul
-          class="flex flex-col gap-1 text-xs items-start border-l-2 mt-6 pl-6"
-          :class="
-            !isCustomizationForAllDocumentTypes
-              ? 'border-[color:var(--letter-color0)]'
-              : 'border-[color:var(--resume-color0)]'
-          "
-        >
-          <li
-            v-for="detail in contactDetails"
-            :key="`${detail.value}${detail.icon}`"
-            class="flex gap-1 items-center"
-          >
-            {{ detail.value }}
-            <ContactIcon v-if="detail.icon" :icon="detail.icon" class="w-4" />
-          </li>
-          <li
-            v-for="link in socialLinks"
-            :key="`${link.url}${link.icon}`"
-            class="flex gap-1 items-center"
-          >
-            {{ link.url }}
-            <LinkIcon v-if="link.icon" :icon="link.icon" class="w-4" />
-          </li>
-        </ul>
-      </header>
-
-      <ul
-        class="text-right text-xs border-r-2 mt-6 pr-6"
-        :class="
-          !isCustomizationForAllDocumentTypes
-            ? 'border-[color:var(--letter-color0)]'
-            : 'border-[color:var(--resume-color0)]'
-        "
-        v-if="recipientDetails.length"
+  <Document>
+    <header>
+      <h1
+        v-if="name"
+        class="text-3xl mb-2 text-[color:var(--resume-color0)] uppercase tracking-widest"
       >
-        <li v-for="detail in recipientDetails" :key="detail">
-          {{ detail }}
+        {{ name }}
+      </h1>
+      <ul
+        class="flex flex-col gap-1 text-xs border-[color:var(--resume-color0)]"
+        :class="
+          documentType === 'letter'
+            ? ['items-start', 'border-l-2', 'pl-6']
+            : ['items-end', 'border-r-2', 'pr-6']
+        "
+      >
+        <li
+          v-for="detail in contactDetails"
+          :key="`${detail.value}${detail.icon}`"
+          class="flex gap-1 items-center"
+          :class="documentType === 'letter' && 'flex-row-reverse'"
+        >
+          {{ detail.value }}
+          <ContactIcon v-if="detail.icon" :icon="detail.icon" class="w-4" />
+        </li>
+        <li
+          v-for="link in socialLinks"
+          :key="`${link.url}${link.icon}`"
+          class="flex gap-1 items-center"
+          :class="documentType === 'letter' && 'flex-row-reverse'"
+        >
+          {{ link.url }}
+          <LinkIcon v-if="link.icon" :icon="link.icon" class="w-4" />
         </li>
       </ul>
-      <div class="mt-10 text-justify text-sm">
-        <header class="text-center mb-10">
-          <h3
-            v-if="subject"
-            class="text-lg font-display"
-            :class="
-              !isCustomizationForAllDocumentTypes
-                ? 'text-[color:var(--letter-color0)]'
-                : 'text-[color:var(--resume-color0)]'
-            "
-          >
-            {{ subject }}
-          </h3>
-          <h4
-            v-if="reference"
-            class="text-sm"
-            :class="
-              !isCustomizationForAllDocumentTypes
-                ? 'text-[color:var(--letter-color2)]'
-                : 'text-[color:var(--resume-color2)]'
-            "
-          >
-            Ref. TODO translate: {{ reference }}
-          </h4>
-        </header>
-        <p v-for="(paragraph, index) in paragraphs" :key="index" class="mb-5">
-          <span class="inline-block w-12" />
-          {{ paragraph }}
-        </p>
-        <div class="text-right">{{ name }}</div>
-      </div>
-    </template>
+    </header>
+    <LetterBody v-if="documentType === 'letter'" />
     <template v-else>
-      <header>
-        <h1
-          v-if="name"
-          class="text-3xl mb-2 text-[color:var(--resume-color0)] uppercase tracking-widest"
-        >
-          {{ name }}
-        </h1>
-        <ul
-          class="flex flex-col gap-1 text-xs items-end border-r-2 border-[color:var(--resume-color0)] pr-6"
-        >
-          <li
-            v-for="detail in contactDetails"
-            :key="`${detail.value}${detail.icon}`"
-            class="flex gap-1 items-center"
-          >
-            {{ detail.value }}
-            <ContactIcon v-if="detail.icon" :icon="detail.icon" class="w-4" />
-          </li>
-          <li
-            v-for="link in socialLinks"
-            :key="`${link.url}${link.icon}`"
-            class="flex gap-1 items-center"
-          >
-            {{ link.url }}
-            <LinkIcon v-if="link.icon" :icon="link.icon" class="w-4" />
-          </li>
-        </ul>
-      </header>
-
       <div class="text-center my-12">
         <h2
           v-if="title"
@@ -313,7 +214,7 @@ const { about, categories, contactDetails, socialLinks } =
         </div>
       </div>
     </template>
-  </div>
+  </Document>
 </template>
 
 <style scoped>

@@ -2,20 +2,17 @@
 import { computed } from "vue";
 import { storeToRefs } from "pinia";
 import { useEditorStore } from "@/stores/editor";
-import { useLetterStore } from "@/stores/letter";
 import { useProfileStore } from "@/stores/profile";
 import { useResumeStore } from "@/stores/resume";
 import type { Category } from "@/types";
 import ContactIcon from "@/components/ContactIcon.vue";
+import Document from "@/components/Document.vue";
+import LetterBody from "@/components/LetterBody.vue";
 import LinkIcon from "@/components/LinkIcon.vue";
 
 const { documentType } = storeToRefs(useEditorStore());
 
-const { isCustomizationForAllDocumentTypes, name, title } =
-  storeToRefs(useProfileStore());
-
-const { paragraphs, recipientDetails, reference, subject } =
-  storeToRefs(useLetterStore());
+const { name, title } = storeToRefs(useProfileStore());
 
 const { about, categories, contactDetails, socialLinks } =
   storeToRefs(useResumeStore());
@@ -59,25 +56,20 @@ function getSectionCategory(indexToGetFrom: number) {
 </script>
 
 <template>
-  <div
-    class="h-full w-full flex flex-col"
-    :class="
-      documentType === 'letter' && !isCustomizationForAllDocumentTypes
-        ? 'text-[color:var(--letter-color4)] px-[var(--letter-margin0)] py-[var(--letter-margin1)]'
-        : 'text-[color:var(--resume-color4)] px-[var(--resume-margin0)] py-[var(--resume-margin1)]'
-    "
-  >
-    <template v-if="documentType === 'letter'">
+  <Document>
+    <template v-if="name">
       <header
         class="flex items-start gap-10 py-8 px-10 bg-[color:var(--resume-color3)] font-display"
       >
         <div
           class="flex flex-col place-items-center w-fit border-y-4 border-[color:var(--resume-color0)] py-2 px-4"
         >
-          <h1 v-if="name" class="text-4xl uppercase">
+          <h1 v-if="name" class="text-center uppercase text-4xl">
             {{ name }}
           </h1>
-          <h2 v-if="title" class="text-2xl uppercase">{{ title }}</h2>
+          <h2 v-if="title" class="text-center uppercase text-2xl">
+            {{ title }}
+          </h2>
         </div>
         <div class="flex flex-col gap-2 text-[color:var(--resume-color0)]">
           <ul class="leading-none">
@@ -102,87 +94,16 @@ function getSectionCategory(indexToGetFrom: number) {
           </ul>
         </div>
       </header>
-      <ul
-        class="px-10 text-[color:var(--resume-color0)] text-right text-xs italic"
-        v-if="recipientDetails.length"
+
+      <p
+        v-if="about"
+        class="pb-6 px-10 bg-[color:var(--resume-color3)] font-display text-lg"
       >
-        <li v-for="detail in recipientDetails" :key="detail">
-          {{ detail }}
-        </li>
-      </ul>
-      <div class="py-8 px-10 text-justify text-sm">
-        <header class="text-center mb-6">
-          <h3 v-if="subject" class="font-bold">
-            <span class="text-[color:var(--resume-color0)]">
-              Objet TODO translate:
-            </span>
-            {{ subject }}
-          </h3>
-          <h4 v-if="reference" class="text-xs">
-            <span class="text-[color:var(--resume-color0)]">
-              Ref. TODO translate:
-            </span>
-            {{ reference }}
-          </h4>
-        </header>
-        <p v-for="(paragraph, index) in paragraphs" :key="index" class="mb-4">
-          <span class="inline-block w-12" />
-          {{ paragraph }}
-        </p>
-        <div class="text-right">{{ name }}</div>
-      </div>
+        {{ about }}
+      </p>
     </template>
+    <LetterBody v-if="documentType === 'letter'" />
     <template v-else>
-      <template v-if="name">
-        <header
-          class="flex items-start gap-10 py-8 px-10 bg-[color:var(--resume-color3)] font-display"
-        >
-          <div
-            class="flex flex-col place-items-center w-fit border-y-4 border-[color:var(--resume-color0)] py-2 px-4"
-          >
-            <h1 v-if="name" class="text-center uppercase text-4xl">
-              {{ name }}
-            </h1>
-            <h2 v-if="title" class="text-center uppercase text-2xl">
-              {{ title }}
-            </h2>
-          </div>
-          <div class="flex flex-col gap-2 text-[color:var(--resume-color0)]">
-            <ul class="leading-none">
-              <li
-                v-for="detail in contactDetails"
-                :key="`${detail.value}${detail.icon}`"
-                class="flex gap-1 items-center"
-              >
-                <ContactIcon
-                  v-if="detail.icon"
-                  :icon="detail.icon"
-                  class="w-4"
-                />
-                {{ detail.value }}
-              </li>
-            </ul>
-            <ul class="leading-tight">
-              <li
-                v-for="link in socialLinks"
-                :key="`${link.url}${link.icon}`"
-                class="flex gap-1 items-center"
-              >
-                <LinkIcon v-if="link.icon" :icon="link.icon" class="w-4" />
-                {{ link.url }}
-              </li>
-            </ul>
-          </div>
-        </header>
-
-        <p
-          v-if="about"
-          class="pb-6 px-10 bg-[color:var(--resume-color3)] font-display text-lg"
-        >
-          {{ about }}
-        </p>
-      </template>
-
       <div class="flex flex-1 bg-[color:var(--resume-color2)]">
         <aside
           v-if="categories.some((category) => category.layout === 'aside')"
@@ -493,7 +414,7 @@ function getSectionCategory(indexToGetFrom: number) {
         </div>
       </div>
     </template>
-  </div>
+  </Document>
 </template>
 
 <style scoped>

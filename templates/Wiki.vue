@@ -1,133 +1,52 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { useEditorStore } from "@/stores/editor";
-import { useLetterStore } from "@/stores/letter";
 import { useProfileStore } from "@/stores/profile";
 import { useResumeStore } from "@/stores/resume";
 import ContactIcon from "@/components/ContactIcon.vue";
+import Document from "@/components/Document.vue";
+import LetterBody from "@/components/LetterBody.vue";
 import LinkIcon from "@/components/LinkIcon.vue";
 
 const { documentType } = storeToRefs(useEditorStore());
 
-const { isCustomizationForAllDocumentTypes, name, title } =
-  storeToRefs(useProfileStore());
-
-const { paragraphs, recipientDetails, reference, subject } =
-  storeToRefs(useLetterStore());
+const { name, title } = storeToRefs(useProfileStore());
 
 const { about, categories, contactDetails, socialLinks } =
   storeToRefs(useResumeStore());
 </script>
 
 <template>
-  <div
-    class="bg-white h-full w-full flex flex-col text-xs font-body"
-    :class="
-      documentType === 'letter' && !isCustomizationForAllDocumentTypes
-        ? 'text-[color:var(--letter-color1)] px-[var(--letter-margin0)] py-[var(--letter-margin1)]'
-        : 'text-[color:var(--resume-color1)] px-[var(--resume-margin0)] py-[var(--resume-margin1)]'
-    "
-  >
-    <template v-if="documentType === 'letter'">
-      <header class="flex mb-4">
-        <ul class="flex flex-col">
-          <li
-            v-for="detail in contactDetails"
-            :key="`${detail.value}${detail.icon}`"
-            class="flex gap-1 items-center"
-          >
-            <ContactIcon v-if="detail.icon" :icon="detail.icon" class="w-4" />
-            {{ detail.value }}
-          </li>
-        </ul>
-        <div class="flex-1 text-center mb-1 mx-1">
-          <h1 class="text-3xl font-bold">{{ name }}</h1>
-          <h2 class="text-xl">{{ title }}</h2>
-        </div>
-        <ul class="flex flex-col items-end">
-          <li
-            v-for="link in socialLinks"
-            :key="`${link.url}${link.icon}`"
-            class="flex gap-1 items-center"
-          >
-            <LinkIcon v-if="link.icon" :icon="link.icon" class="w-4" />
-            {{ link.url }}
-          </li>
-        </ul>
-      </header>
-
-      <ul class="text-right text-xs mb-6" v-if="recipientDetails.length">
-        <li v-for="detail in recipientDetails" :key="detail">
-          {{ detail }}
+  <Document>
+    <header class="flex mb-4">
+      <ul class="flex flex-col">
+        <li
+          v-for="detail in contactDetails"
+          :key="`${detail.value}${detail.icon}`"
+          class="flex gap-1 items-center"
+        >
+          <ContactIcon v-if="detail.icon" :icon="detail.icon" class="w-4" />
+          {{ detail.value }}
         </li>
       </ul>
-      <div class="text-justify text-xs px-4">
-        <header class="text-center text-sm mb-6">
-          <h3 v-if="subject" class="">
-            <span
-              class="uppercase"
-              :class="
-                !isCustomizationForAllDocumentTypes
-                  ? 'text-[color:var(--letter-color0)]'
-                  : 'text-[color:var(--resume-color0)]'
-              "
-            >
-              Objet TODO translate:{{ " " }}
-            </span>
-            <span class="italic">
-              {{ subject }}
-            </span>
-          </h3>
-          <h4 v-if="reference" class="text-xs">
-            <span
-              class="uppercase"
-              :class="
-                !isCustomizationForAllDocumentTypes
-                  ? 'text-[color:var(--letter-color0)]'
-                  : 'text-[color:var(--resume-color0)]'
-              "
-            >
-              Ref. TODO translate:{{ " " }}
-            </span>
-            <span class="italic">{{ reference }}</span>
-          </h4>
-        </header>
-        <p v-for="(paragraph, index) in paragraphs" :key="index" class="mb-2">
-          <span class="inline-block w-12" />
-          {{ paragraph }}
-        </p>
-        <div class="text-right">{{ name }}</div>
+      <div class="flex-1 text-center mb-1 mx-1">
+        <h1 class="text-3xl font-bold">{{ name }}</h1>
+        <h2 class="text-xl">{{ title }}</h2>
+        <p>{{ about }}</p>
       </div>
-    </template>
+      <ul class="flex flex-col items-end">
+        <li
+          v-for="link in socialLinks"
+          :key="`${link.url}${link.icon}`"
+          class="flex gap-1 items-center"
+        >
+          <LinkIcon v-if="link.icon" :icon="link.icon" class="w-4" />
+          {{ link.url }}
+        </li>
+      </ul>
+    </header>
+    <LetterBody v-if="documentType === 'letter'" />
     <template v-else>
-      <header class="flex mb-4">
-        <ul class="flex flex-col">
-          <li
-            v-for="detail in contactDetails"
-            :key="`${detail.value}${detail.icon}`"
-            class="flex gap-1 items-center"
-          >
-            <ContactIcon v-if="detail.icon" :icon="detail.icon" class="w-4" />
-            {{ detail.value }}
-          </li>
-        </ul>
-        <div class="flex-1 text-center mb-1 mx-1">
-          <h1 class="text-3xl font-bold">{{ name }}</h1>
-          <h2 class="text-xl">{{ title }}</h2>
-          <p>{{ about }}</p>
-        </div>
-        <ul class="flex flex-col items-end">
-          <li
-            v-for="link in socialLinks"
-            :key="`${link.url}${link.icon}`"
-            class="flex gap-1 items-center"
-          >
-            <LinkIcon v-if="link.icon" :icon="link.icon" class="w-4" />
-            {{ link.url }}
-          </li>
-        </ul>
-      </header>
-
       <div class="flex gap-6">
         <aside
           v-if="categories.some((category) => category.layout === 'aside')"
@@ -244,7 +163,7 @@ const { about, categories, contactDetails, socialLinks } =
         </div>
       </div>
     </template>
-  </div>
+  </Document>
 </template>
 
 <style scoped>
