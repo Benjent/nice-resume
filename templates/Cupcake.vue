@@ -126,8 +126,6 @@ const { about, categories, contactDetails, socialLinks } =
 </template>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans+COndensed:ital,wght@0,300..800;1,300..800&family=Yanone+Kaffeesatz:wght@200..700&display=swap");
-
 .font-body {
   font-family: "Open Sans Condensed";
 }

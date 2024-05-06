@@ -218,8 +218,6 @@ const { about, categories, contactDetails, socialLinks } =
 </template>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,100..900;1,100..900&display=swap");
-
 .font-body {
   font-family: "Libre Franklin";
 }

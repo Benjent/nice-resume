@@ -4,7 +4,7 @@ import { storeToRefs } from "pinia";
 import { useEditorStore } from "@/stores/editor";
 import { useLetterStore } from "@/stores/letter";
 import { useProfileStore } from "@/stores/profile";
-import { templateBaseSettings, templateSettings } from "@/globals";
+import { fonts, templateBaseSettings, templateSettings } from "@/globals";
 import { getSideIndexLabel } from "@/utils/editor";
 import Button from "@/components/Button.vue";
 import EditorCategory from "@/components/EditorCategory.vue";
@@ -112,6 +112,21 @@ watch(
             :disabled="!isThemeCustomized"
             v-model="settings.document.margin[i - 1]"
           />
+        </div>
+        <div class="flex gap-5">
+          <label class="flex flex-col" for="documentBodyFont">
+            <span class="opacity-60">Font</span>
+            <select
+              id="documentBodyFont"
+              class="select block"
+              :disabled="!isThemeCustomized"
+              v-model="settings.document.bodyFont"
+            >
+              <option v-for="font in fonts" :key="font" class="option">
+                {{ font }}
+              </option>
+            </select>
+          </label>
         </div>
       </li>
       <li class="border-b-2 border-white border-opacity-5 pb-12">

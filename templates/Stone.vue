@@ -221,8 +221,6 @@ const { about, categories, contactDetails, socialLinks } =
 </template>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Kaisei+Tokumin&display=swap");
-
 .font-display {
   font-family: "Kaisei Tokumin";
 }

@@ -148,9 +148,6 @@ const { about, categories, contactDetails, socialLinks } =
 </template>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
-@import "@/assets/styles/index.css";
-
 .font-body {
   font-family: "Lato";
 }

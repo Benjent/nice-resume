@@ -205,7 +205,6 @@ const { about, categories, contactDetails, socialLinks } =
 </template>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Caveat&family=Karla:ital,wght@0,200..800;1,200..800&display=swap");
 .font-body {
   font-family: "Karla";
 }

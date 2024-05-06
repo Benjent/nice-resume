@@ -15,6 +15,22 @@ import type {
 
 export const documentTypes: Array<DocumentType> = ["resume", "letter"];
 
+export const fonts: string[] = [
+  "Caveat",
+  "Fira Sans",
+  "Josefin Sans",
+  "Kaisei Tokumin",
+  "Karla",
+  "Lato",
+  "League Gothic",
+  "Libre Franklin",
+  "Mulish",
+  "Open Sans",
+  "Open Sans Condensed",
+  "Roboto",
+  "Yanone Kaffeesatz",
+];
+
 export const templates: Array<Template> = [
   "Aster",
   "CottonCandy",
