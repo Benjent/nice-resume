@@ -18,6 +18,7 @@ export const documentTypes: Array<DocumentType> = ["resume", "letter"];
 export const fonts: string[] = [
   "Caveat",
   "Fira Sans",
+  "Fira Sans Condensed",
   "Josefin Sans",
   "Kaisei Tokumin",
   "Karla",
@@ -28,6 +29,7 @@ export const fonts: string[] = [
   "Open Sans",
   "Open Sans Condensed",
   "Roboto",
+  "Roboto Condensed",
   "Yanone Kaffeesatz",
 ];
 
