@@ -142,6 +142,22 @@ watch(
               :disabled="!isThemeCustomized"
               v-model="settings.recipientDetails.color"
             />
+            <label class="flex flex-col" for="recipientDetailsFont">
+              <span class="opacity-60">Font</span>
+              <select
+                id="recipientDetailsFont"
+                class="select block"
+                :disabled="!isThemeCustomized"
+                v-model="settings.recipientDetails.font"
+              >
+                <option class="option" value="inherit">
+                  default (inherit from document font)
+                </option>
+                <option v-for="font in fonts" :key="font" class="option">
+                  {{ font }}
+                </option>
+              </select>
+            </label>
             <Field
               id="recipientDetailsFontSize"
               label="Font size"
@@ -340,6 +356,22 @@ watch(
               :disabled="!isThemeCustomized"
               v-model="settings.subject.color"
             />
+            <label class="flex flex-col" for="subjectFont">
+              <span class="opacity-60">Font</span>
+              <select
+                id="subjectFont"
+                class="select block"
+                :disabled="!isThemeCustomized"
+                v-model="settings.subject.font"
+              >
+                <option class="option" value="inherit">
+                  default (inherit from document font)
+                </option>
+                <option v-for="font in fonts" :key="font" class="option">
+                  {{ font }}
+                </option>
+              </select>
+            </label>
             <Field
               id="subjectFontSize"
               label="Font size"
@@ -463,6 +495,22 @@ watch(
               :disabled="!isThemeCustomized"
               v-model="settings.reference.color"
             />
+            <label class="flex flex-col" for="referenceFont">
+              <span class="opacity-60">Font</span>
+              <select
+                id="referenceFont"
+                class="select block"
+                :disabled="!isThemeCustomized"
+                v-model="settings.reference.font"
+              >
+                <option class="option" value="inherit">
+                  default (inherit from document font)
+                </option>
+                <option v-for="font in fonts" :key="font" class="option">
+                  {{ font }}
+                </option>
+              </select>
+            </label>
             <Field
               id="referenceFontSize"
               label="Font size"

@@ -96,8 +96,8 @@ export const letterSettings: LetterSettings = {
     border: [0, 0, 0, 0],
   },
   recipientDetails: {
+    font: "inherit",
     fontSize: 14,
-    // TODO fontfamily
     lineHeight: 1.5,
     fontWeight: 400, // TODO https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-weight#common_weight_name_mapping
     isItalic: false,
@@ -120,8 +120,8 @@ export const letterSettings: LetterSettings = {
     padding: [0, 0, 0, 0],
   },
   subject: {
+    font: "inherit",
     fontSize: 14,
-    // TODO fontfamily
     lineHeight: 1.5,
     fontWeight: 400, // TODO https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-weight#common_weight_name_mapping
     isItalic: false,
@@ -136,8 +136,8 @@ export const letterSettings: LetterSettings = {
     padding: [0, 0, 0, 0],
   },
   reference: {
+    font: "inherit",
     fontSize: 12,
-    // TODO fontfamily
     lineHeight: 1.5,
     fontWeight: 400, // TODO https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-weight#common_weight_name_mapping
     isItalic: false,

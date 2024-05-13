@@ -27,6 +27,7 @@ const settings = computed(() => {
     v-if="recipientDetails.length"
     class="text-right self-end"
     :style="{
+      fontFamily: settings.recipientDetails.font,
       fontSize: `${settings.recipientDetails.fontSize}px`,
       lineHeight: settings.recipientDetails.lineHeight,
       fontWeight: settings.recipientDetails.fontWeight,
@@ -104,6 +105,7 @@ const settings = computed(() => {
     <h4
       v-if="reference"
       :style="{
+        fontFamily: settings.reference.font,
         fontSize: `${settings.reference.fontSize}px`,
         lineHeight: settings.reference.lineHeight,
         fontWeight: settings.reference.fontWeight,
