@@ -1,0 +1,3 @@
+.splitpanes .splitpanes__pane {
+  overflow: auto !important;
+}

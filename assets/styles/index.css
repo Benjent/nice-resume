@@ -1,7 +1,3 @@
 @import "./tailwind.css";
 @import "./reset.css";
-
-.splitpanes__pane {
-  background-color: transparent !important;
-  overflow: scroll !important;
-}
+@import "./splitpanes.css";
