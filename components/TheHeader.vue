@@ -336,7 +336,11 @@ watch(documentType, (newValue) => {
       </label>
       <label for="documentType">
         Document
-        <select id="documentType" v-model="documentType" class="select block">
+        <select
+          id="documentType"
+          v-model="documentType"
+          class="select block capitalize"
+        >
           <option
             v-for="documentType in documentTypes"
             :key="documentType"
