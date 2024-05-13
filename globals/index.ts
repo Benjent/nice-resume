@@ -239,7 +239,6 @@ export const templateBaseSettings: TemplateBaseSettings = {
   },
 };
 
-// TODO allow any "Setting" to have its own font family (CF Cupcake theme which as several ones)
 // TODO allow letter spacing
 
 export const templateSettings: TemplateSettings = {
