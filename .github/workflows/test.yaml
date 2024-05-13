@@ -39,6 +39,8 @@ jobs:
             echo "::warning::$(cat ./audit.log)"
           fi
           rm ./audit.log
+      - name: ls
+        run: ls -al ./
       - name: Format
         run: pnpm run format:check:all
       - name: Lint
