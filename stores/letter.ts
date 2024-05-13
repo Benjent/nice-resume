@@ -6,9 +6,11 @@ import { letterSettings } from "@/globals";
 export const useLetterStore = defineStore("letter", {
   state: () => ({
     // Content
+    isHeaderSimple: false,
     paragraphs: [] as string[],
     recipientDetails: [] as string[],
     reference: "",
+    senderDetails: [] as string[],
     subject: "",
 
     // Design

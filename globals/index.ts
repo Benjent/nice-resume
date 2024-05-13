@@ -95,6 +95,21 @@ export const letterSettings: LetterSettings = {
     margin: [40, 40, 40, 40],
     border: [0, 0, 0, 0],
   },
+  senderDetails: {
+    font: "inherit",
+    fontSize: 14,
+    lineHeight: 1.5,
+    fontWeight: 400, // TODO https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-weight#common_weight_name_mapping
+    isItalic: false,
+    color: "currentColor",
+    backgroundColor: "#ffffff",
+    borderColor: "currentColor",
+    borderRadius: 0,
+    margin: [0, 0, 0, 0], // If sender details is used, it is the first element on the document (no need for margins)
+    border: [0, 0, 0, 0],
+    padding: [0, 0, 0, 0],
+    gap: 12,
+  },
   recipientDetails: {
     font: "inherit",
     fontSize: 14,
@@ -327,6 +342,8 @@ function scaffoldTemplateSettings(
     baseSettings.colors[baseSettings.colors.length - 1];
 
   if (isLetterMarginless) {
+    settings.letter.senderDetails.margin[1] = 64;
+    settings.letter.senderDetails.margin[3] = 64;
     settings.letter.recipientDetails.margin[1] = 64;
     settings.letter.recipientDetails.margin[3] = 64;
     settings.letter.header.margin[1] = 64;
@@ -348,6 +365,7 @@ Object.entries(templateBaseSettings).forEach(([key, value]) => {
 if (templateSettings.Aster.resume && templateSettings.Aster.letter) {
   templateSettings.Aster.resume.document.margin = [0, 0, 0, 0];
   templateSettings.Aster.letter.document.margin = [0, 0, 0, 0];
+  templateSettings.Aster.letter.senderDetails.fontWeight = 300;
   templateSettings.Aster.letter.recipientDetails.fontWeight = 300;
   templateSettings.Aster.letter.header.isCentered;
   templateSettings.Aster.letter.subject.fontSize = 18;
@@ -366,6 +384,12 @@ if (
 ) {
   templateSettings.CottonCandy.resume.document.margin = [0, 0, 0, 0];
   templateSettings.CottonCandy.letter.document.margin = [0, 0, 0, 0];
+  templateSettings.CottonCandy.letter.senderDetails.color =
+    templateBaseSettings.CottonCandy.colors[0];
+  templateSettings.CottonCandy.letter.senderDetails.margin[0] = 0;
+  templateSettings.CottonCandy.letter.senderDetails.margin[1] = 40;
+  templateSettings.CottonCandy.letter.senderDetails.margin[3] = 40;
+  templateSettings.CottonCandy.letter.senderDetails.isItalic = true;
   templateSettings.CottonCandy.letter.recipientDetails.color =
     templateBaseSettings.CottonCandy.colors[0];
   templateSettings.CottonCandy.letter.recipientDetails.margin[0] = 0;
@@ -383,6 +407,11 @@ if (
 if (templateSettings.Cupcake.resume && templateSettings.Cupcake.letter) {
   templateSettings.Cupcake.resume.document.margin = [0, 0, 0, 0];
   templateSettings.Cupcake.letter.document.margin = [0, 0, 0, 0];
+  templateSettings.Cupcake.letter.senderDetails.margin[0] = 24;
+  templateSettings.Cupcake.letter.senderDetails.margin[1] = 32;
+  templateSettings.Cupcake.letter.senderDetails.margin[3] = 32;
+  templateSettings.Cupcake.letter.senderDetails.fontSize = 16;
+  templateSettings.Cupcake.letter.senderDetails.lineHeight = 1;
   templateSettings.Cupcake.letter.recipientDetails.margin[0] = 24;
   templateSettings.Cupcake.letter.recipientDetails.margin[1] = 32;
   templateSettings.Cupcake.letter.recipientDetails.margin[3] = 32;
@@ -401,6 +430,7 @@ if (templateSettings.Cupcake.resume && templateSettings.Cupcake.letter) {
 if (templateSettings.Macaron.resume && templateSettings.Macaron.letter) {
   templateSettings.Macaron.resume.document.margin = [0, 0, 0, 0];
   templateSettings.Macaron.letter.document.margin = [0, 0, 0, 0];
+  templateSettings.Macaron.letter.senderDetails.margin[1] = 40;
   templateSettings.Macaron.letter.recipientDetails.margin[1] = 40;
   templateSettings.Macaron.letter.subject.fontWeight = 600;
   templateSettings.Macaron.letter.subject.fontSize = 19;
@@ -419,6 +449,8 @@ if (templateSettings.Macchiato.resume && templateSettings.Macchiato.letter) {
     templateBaseSettings.Macchiato.colors[0];
   templateSettings.Macchiato.letter.document.borderColor =
     templateBaseSettings.Macchiato.colors[0];
+  templateSettings.Macchiato.letter.senderDetails.margin = [0, 48, 48, 48];
+  templateSettings.Macchiato.letter.senderDetails.fontSize = 12;
   templateSettings.Macchiato.letter.recipientDetails.margin = [0, 48, 48, 48];
   templateSettings.Macchiato.letter.recipientDetails.fontSize = 12;
   templateSettings.Macchiato.letter.header.margin[1] = 48;
@@ -434,6 +466,8 @@ if (templateSettings.Macchiato.resume && templateSettings.Macchiato.letter) {
 if (templateSettings.Oilcloth.resume && templateSettings.Oilcloth.letter) {
   templateSettings.Oilcloth.resume.document.margin = [0, 0, 0, 0];
   templateSettings.Oilcloth.letter.document.margin = [0, 0, 0, 0];
+  templateSettings.Oilcloth.letter.senderDetails.color =
+    templateBaseSettings.Oilcloth.colors[0];
   templateSettings.Oilcloth.letter.recipientDetails.color =
     templateBaseSettings.Oilcloth.colors[0];
 }
@@ -448,6 +482,9 @@ if (templateSettings.OpenResume.resume && templateSettings.OpenResume.letter) {
   templateSettings.OpenResume.letter.document.border = [8, 0, 0, 0];
   templateSettings.OpenResume.letter.document.borderColor =
     templateBaseSettings.OpenResume.colors[0];
+  templateSettings.OpenResume.letter.senderDetails.isItalic = true;
+  templateSettings.OpenResume.letter.senderDetails.margin[0] = 24;
+  templateSettings.OpenResume.letter.senderDetails.margin[1] = 48;
   templateSettings.OpenResume.letter.recipientDetails.isItalic = true;
   templateSettings.OpenResume.letter.recipientDetails.margin[0] = 24;
   templateSettings.OpenResume.letter.recipientDetails.margin[1] = 48;
@@ -476,6 +513,10 @@ if (templateSettings.Paper.resume && templateSettings.Paper.letter) {
 if (templateSettings.Pharmacy.resume && templateSettings.Pharmacy.letter) {
   templateSettings.Pharmacy.resume.document.margin = [48, 48, 48, 48];
   templateSettings.Pharmacy.letter.document.margin = [48, 48, 48, 48];
+  templateSettings.Pharmacy.letter.senderDetails.borderColor =
+    templateBaseSettings.Pharmacy.colors[0];
+  templateSettings.Pharmacy.letter.senderDetails.border[3] = 2;
+  templateSettings.Pharmacy.letter.senderDetails.padding[3] = 20;
   templateSettings.Pharmacy.letter.recipientDetails.borderColor =
     templateBaseSettings.Pharmacy.colors[0];
   templateSettings.Pharmacy.letter.recipientDetails.border[1] = 2;
@@ -493,6 +534,11 @@ if (templateSettings.Red.resume && templateSettings.Red.letter) {
   // templateSettings.Red.letter.document.margin = [48, 26, 48, 26];
   templateSettings.Red.resume.document.margin = [0, 0, 0, 0];
   templateSettings.Red.letter.document.margin = [0, 0, 0, 0];
+  templateSettings.Red.letter.senderDetails.margin[0] = 0;
+  templateSettings.Red.letter.senderDetails.isItalic = true;
+  templateSettings.Red.letter.senderDetails.fontSize = 12;
+  templateSettings.Red.letter.senderDetails.color =
+    templateBaseSettings.Red.colors[0];
   templateSettings.Red.letter.recipientDetails.margin[0] = 0;
   templateSettings.Red.letter.recipientDetails.isItalic = true;
   templateSettings.Red.letter.recipientDetails.fontSize = 12;
@@ -505,6 +551,8 @@ if (templateSettings.Red.resume && templateSettings.Red.letter) {
 
 if (templateSettings.Stone.resume && templateSettings.Stone.letter) {
   templateSettings.Stone.letter.document.margin = [48, 48, 48, 48];
+  templateSettings.Stone.letter.senderDetails.color =
+    templateBaseSettings.Stone.colors[1];
   templateSettings.Stone.letter.recipientDetails.color =
     templateBaseSettings.Stone.colors[1];
   templateSettings.Stone.letter.recipientDetails.borderColor =
@@ -529,6 +577,10 @@ if (templateSettings.Stone.resume && templateSettings.Stone.letter) {
 if (templateSettings.Toothpaste.resume && templateSettings.Toothpaste.letter) {
   templateSettings.Toothpaste.resume.document.margin = [0, 0, 0, 0];
   templateSettings.Toothpaste.letter.document.margin = [0, 0, 0, 0];
+  templateSettings.Toothpaste.letter.senderDetails.fontSize = 12;
+  templateSettings.Toothpaste.letter.senderDetails.isItalic = true;
+  templateSettings.Toothpaste.letter.senderDetails.color =
+    templateBaseSettings.Toothpaste.colors[0];
   templateSettings.Toothpaste.letter.recipientDetails.fontSize = 12;
   templateSettings.Toothpaste.letter.recipientDetails.isItalic = true;
   templateSettings.Toothpaste.letter.recipientDetails.color =
@@ -541,6 +593,8 @@ if (templateSettings.Toothpaste.resume && templateSettings.Toothpaste.letter) {
 if (templateSettings.Wiki.resume && templateSettings.Wiki.letter) {
   templateSettings.Wiki.resume.document.margin = [24, 20, 24, 20];
   templateSettings.Wiki.letter.document.margin = [24, 20, 24, 20];
+  templateSettings.Wiki.letter.senderDetails.fontSize = 12;
+  templateSettings.Wiki.letter.senderDetails.lineHeight = 1.2;
   templateSettings.Wiki.letter.recipientDetails.fontSize = 12;
   templateSettings.Wiki.letter.recipientDetails.lineHeight = 1.2;
   templateSettings.Wiki.letter.header.margin[1] = 20;

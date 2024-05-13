@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { useEditorStore } from "@/stores/editor";
+import { useLetterStore } from "@/stores/letter";
 import { useProfileStore } from "@/stores/profile";
 import { useResumeStore } from "@/stores/resume";
 import ContactIcon from "@/components/ContactIcon.vue";
@@ -14,11 +15,16 @@ const { name, title } = storeToRefs(useProfileStore());
 
 const { about, categories, contactDetails, socialLinks } =
   storeToRefs(useResumeStore());
+
+const { isHeaderSimple } = storeToRefs(useLetterStore());
 </script>
 
 <template>
   <Document>
-    <header class="p-12 pb-2">
+    <header
+      v-if="documentType === 'resume' || !isHeaderSimple"
+      class="p-12 pb-2"
+    >
       <h1 v-if="name" class="text-4xl font-display font-bold tracking-wide">
         {{ name }}
       </h1>

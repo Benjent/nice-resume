@@ -61,6 +61,7 @@ export type ResumeSettings = {
 
 export type LetterSettings = {
   document: DocumentSettings;
+  senderDetails: Settings;
   recipientDetails: Settings;
   header: {
     isCentered: boolean;

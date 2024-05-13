@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { useEditorStore } from "@/stores/editor";
+import { useLetterStore } from "@/stores/letter";
 import { useProfileStore } from "@/stores/profile";
 import { useResumeStore } from "@/stores/resume";
 import ContactIcon from "@/components/ContactIcon.vue";
@@ -14,56 +15,60 @@ const { name, title } = storeToRefs(useProfileStore());
 
 const { about, categories, contactDetails, socialLinks } =
   storeToRefs(useResumeStore());
+
+const { isHeaderSimple } = storeToRefs(useLetterStore());
 </script>
 
 <template>
   <Document>
-    <template v-if="name">
-      <header
-        class="flex items-start gap-4 py-8 px-10 bg-[color:var(--resume-color0)] text-[color:var(--resume-color2)]"
-      >
-        <div class="flex flex-col font-bold">
-          <h1 v-if="name" class="text-4xl">
-            {{ name }}
-          </h1>
-          <h2 v-if="title" class="text-2xl">
-            {{ title }}
-          </h2>
-        </div>
-        <ul class="leading-tight text-sm text-right ml-auto">
-          <li
-            v-for="detail in contactDetails"
-            :key="`${detail.value}${detail.icon}`"
-            class="flex gap-1 items-center"
-          >
-            <ContactIcon
-              v-if="detail.icon"
-              :icon="detail.icon"
-              class="w-4 text-[color:var(--resume-color1)]"
-            />
-            {{ detail.value }}
-          </li>
-          <li
-            v-for="link in socialLinks"
-            :key="`${link.url}${link.icon}`"
-            class="flex gap-1 items-center"
-          >
-            <LinkIcon
-              v-if="link.icon"
-              :icon="link.icon"
-              class="w-4 text-[color:var(--resume-color1)]"
-            />
-            {{ link.url }}
-          </li>
-        </ul>
-      </header>
+    <template v-if="documentType === 'resume' || !isHeaderSimple">
+      <template v-if="name">
+        <header
+          class="flex items-start gap-4 py-8 px-10 bg-[color:var(--resume-color0)] text-[color:var(--resume-color2)]"
+        >
+          <div class="flex flex-col font-bold">
+            <h1 v-if="name" class="text-4xl">
+              {{ name }}
+            </h1>
+            <h2 v-if="title" class="text-2xl">
+              {{ title }}
+            </h2>
+          </div>
+          <ul class="leading-tight text-sm text-right ml-auto">
+            <li
+              v-for="detail in contactDetails"
+              :key="`${detail.value}${detail.icon}`"
+              class="flex gap-1 items-center"
+            >
+              <ContactIcon
+                v-if="detail.icon"
+                :icon="detail.icon"
+                class="w-4 text-[color:var(--resume-color1)]"
+              />
+              {{ detail.value }}
+            </li>
+            <li
+              v-for="link in socialLinks"
+              :key="`${link.url}${link.icon}`"
+              class="flex gap-1 items-center"
+            >
+              <LinkIcon
+                v-if="link.icon"
+                :icon="link.icon"
+                class="w-4 text-[color:var(--resume-color1)]"
+              />
+              {{ link.url }}
+            </li>
+          </ul>
+        </header>
 
-      <p
-        v-if="about"
-        class="py-4 px-10 bg-[color:var(--resume-color1)] text-center font-display font-bold text-2xl"
-      >
-        {{ about }}
-      </p>
+        <p
+          v-if="about"
+          class="py-4 px-10 bg-[color:var(--resume-color1)] text-center font-display font-bold text-2xl"
+        >
+          {{ about }}
+        </p>
+      </template>
     </template>
     <LetterBody v-if="documentType === 'letter'" />
     <template v-else>

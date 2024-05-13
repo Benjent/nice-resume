@@ -229,6 +229,11 @@ function generateStores() {
       layout: "half",
     },
   ];
+  letter.senderDetails.value = [
+    "Firstname Lastname",
+    "Streetnumber Streetname Street",
+    "Zip code City - Country",
+  ];
   letter.recipientDetails.value = [
     "Firstname Lastname",
     "Streetnumber Streetname Street",

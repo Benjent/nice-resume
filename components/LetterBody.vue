@@ -9,9 +9,11 @@ const { isThemeCustomized, name, template } = storeToRefs(useProfileStore());
 
 const {
   settings: storeSettings,
+  isHeaderSimple,
   paragraphs,
   recipientDetails,
   reference,
+  senderDetails,
   subject,
 } = storeToRefs(useLetterStore());
 
@@ -23,6 +25,36 @@ const settings = computed(() => {
 </script>
 
 <template>
+  <ul
+    v-if="isHeaderSimple"
+    class="self-start"
+    :style="{
+      fontFamily: settings.senderDetails.font,
+      fontSize: `${settings.senderDetails.fontSize}px`,
+      lineHeight: settings.senderDetails.lineHeight,
+      fontWeight: settings.senderDetails.fontWeight,
+      fontStyle: settings.senderDetails.isItalic ? 'italic' : 'initial',
+      color: settings.senderDetails.color,
+      backgroundColor: settings.senderDetails.backgroundColor,
+      marginTop: `${settings.senderDetails.margin[0]}px`,
+      marginRight: `${settings.senderDetails.margin[1]}px`,
+      marginBottom: `${settings.senderDetails.margin[2]}px`,
+      marginLeft: `${settings.senderDetails.margin[3]}px`,
+      borderTop: `solid ${settings.senderDetails.borderColor} ${settings.senderDetails.border[0]}px`,
+      borderRight: `solid ${settings.senderDetails.borderColor} ${settings.senderDetails.border[1]}px`,
+      borderBottom: `solid ${settings.senderDetails.borderColor} ${settings.senderDetails.border[2]}px`,
+      borderLeft: `solid ${settings.senderDetails.borderColor} ${settings.senderDetails.border[3]}px`,
+      borderRadius: `${settings.senderDetails.borderRadius}px`,
+      paddingTop: `${settings.senderDetails.padding[0]}px`,
+      paddingRight: `${settings.senderDetails.padding[1]}px`,
+      paddingBottom: `${settings.senderDetails.padding[2]}px`,
+      paddingLeft: `${settings.senderDetails.padding[3]}px`,
+    }"
+  >
+    <li v-for="detail in senderDetails" :key="detail">
+      {{ detail }}
+    </li>
+  </ul>
   <ul
     v-if="recipientDetails.length"
     class="text-right self-end"

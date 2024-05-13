@@ -2,6 +2,7 @@
 import { computed } from "vue";
 import { storeToRefs } from "pinia";
 import { useEditorStore } from "@/stores/editor";
+import { useLetterStore } from "@/stores/letter";
 import { useProfileStore } from "@/stores/profile";
 import { useResumeStore } from "@/stores/resume";
 import type { Category } from "@/types";
@@ -16,6 +17,8 @@ const { name, title } = storeToRefs(useProfileStore());
 
 const { about, categories, contactDetails, socialLinks } =
   storeToRefs(useResumeStore());
+
+const { isHeaderSimple } = storeToRefs(useLetterStore());
 
 const mainCategories = computed(() => {
   return categories.value.filter((category) => category.layout !== "aside");
@@ -57,7 +60,10 @@ function getSectionCategory(indexToGetFrom: number) {
 
 <template>
   <Document>
-    <header v-if="name" class="flex items-start gap-12 px-10 py-6 font-display">
+    <header
+      v-if="documentType === 'resume' || !isHeaderSimple"
+      class="flex items-start gap-12 px-10 py-6 font-display"
+    >
       <div
         class="flex flex-col place-items-center w-fit border-y-4 border-[color:var(--resume-color0)] py-2 px-4 flex-1"
       >

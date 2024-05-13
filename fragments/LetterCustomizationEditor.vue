@@ -131,6 +131,143 @@ watch(
       </li>
       <li class="border-b-2 border-white border-opacity-5 pb-12">
         <header>
+          <div class="uppercase font-bold text-lg mb-5">Sender</div>
+        </header>
+        <div class="flex flex-col gap-5">
+          <div class="flex gap-5 flex-wrap">
+            <Field
+              id="senderDetailsColor"
+              type="color"
+              label="Color"
+              :disabled="!isThemeCustomized"
+              v-model="settings.senderDetails.color"
+            />
+            <label class="flex flex-col" for="senderDetailsFont">
+              <span class="opacity-60">Font</span>
+              <select
+                id="senderDetailsFont"
+                class="select block"
+                :disabled="!isThemeCustomized"
+                v-model="settings.senderDetails.font"
+              >
+                <option class="option" value="inherit">
+                  default (inherit from document font)
+                </option>
+                <option v-for="font in fonts" :key="font" class="option">
+                  {{ font }}
+                </option>
+              </select>
+            </label>
+            <Field
+              id="senderDetailsFontSize"
+              label="Font size"
+              type="number"
+              :disabled="!isThemeCustomized"
+              v-model="settings.senderDetails.fontSize"
+            />
+            <Field
+              id="senderDetailsLineHeight"
+              label="Line height"
+              type="number"
+              :disabled="!isThemeCustomized"
+              v-model="settings.senderDetails.lineHeight"
+              step="0.1"
+            />
+          </div>
+          <div class="flex gap-5 flex-wrap">
+            <label class="flex flex-col" for="senderDetailsFontWeight">
+              <span class="opacity-60">Font weight</span>
+              <select
+                id="senderDetailsFontWeight"
+                v-model="settings.senderDetails.fontWeight"
+                class="select block"
+              >
+                <option v-for="i in 9" :key="i" class="option">
+                  {{ `${i}00` }}
+                </option>
+              </select>
+            </label>
+            <label for="senderDetailsIsItalic">
+              <input
+                id="senderDetailsIsItalic"
+                class="input"
+                type="checkbox"
+                :disabled="!isThemeCustomized"
+                v-model="settings.senderDetails.isItalic"
+              />
+              <span class="opacity-60">Italic</span>
+            </label>
+            <Field
+              id="senderDetailsGap"
+              label="Gap"
+              type="number"
+              :disabled="!isThemeCustomized"
+              v-model="settings.senderDetails.gap"
+            />
+          </div>
+          <div class="flex gap-5">
+            <Field
+              v-for="i in 4"
+              :key="i"
+              :id="`senderDetailsMargin${i}`"
+              class="w-[20%]"
+              type="number"
+              :label="`Margin ${getSideIndexLabel(i)}`"
+              :disabled="!isThemeCustomized"
+              v-model="settings.senderDetails.margin[i - 1]"
+            />
+          </div>
+          <div class="flex gap-5 flex-wrap">
+            <Field
+              v-for="i in 4"
+              :key="i"
+              :id="`senderDetailsBorder${i}`"
+              class="w-[20%]"
+              type="number"
+              :label="`Border ${getSideIndexLabel(i)}`"
+              :disabled="!isThemeCustomized"
+              v-model="settings.senderDetails.border[i - 1]"
+            />
+            <Field
+              id="senderDetailsBorderColor"
+              class="w-[20%]"
+              type="color"
+              label="Border color"
+              :disabled="!isThemeCustomized"
+              v-model="settings.senderDetails.borderColor"
+            />
+            <Field
+              id="senderDetailsBorderRadius"
+              class="w-[20%]"
+              type="number"
+              label="Border radius"
+              :disabled="!isThemeCustomized"
+              v-model="settings.senderDetails.borderRadius"
+            />
+          </div>
+          <div class="flex gap-5 flex-wrap">
+            <Field
+              v-for="i in 4"
+              :key="i"
+              :id="`senderDetailsPadding${i}`"
+              class="w-[20%]"
+              type="number"
+              :label="`Padding ${getSideIndexLabel(i)}`"
+              :disabled="!isThemeCustomized"
+              v-model="settings.senderDetails.padding[i - 1]"
+            />
+            <Field
+              id="senderDetailsBackgroundColor"
+              type="color"
+              label="Background color"
+              :disabled="!isThemeCustomized"
+              v-model="settings.senderDetails.backgroundColor"
+            />
+          </div>
+        </div>
+      </li>
+      <li class="border-b-2 border-white border-opacity-5 pb-12">
+        <header>
           <div class="uppercase font-bold text-lg mb-5">Recipient</div>
         </header>
         <div class="flex flex-col gap-5">

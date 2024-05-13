@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { useEditorStore } from "@/stores/editor";
+import { useLetterStore } from "@/stores/letter";
 import { useProfileStore } from "@/stores/profile";
 import { useResumeStore } from "@/stores/resume";
 import ContactIcon from "@/components/ContactIcon.vue";
@@ -14,40 +15,43 @@ const { name, title } = storeToRefs(useProfileStore());
 
 const { about, categories, contactDetails, socialLinks } =
   storeToRefs(useResumeStore());
+
+const { isHeaderSimple } = storeToRefs(useLetterStore());
 </script>
 
 <template>
   <Document>
-    <header v-if="name" class="pb-4">
-      <h1 v-if="name" class="text-xl">{{ name }}, {{ title }}</h1>
-      <ul class="flex gap-2">
-        <li
-          v-for="detail in contactDetails"
-          :key="`${detail.value}${detail.icon}`"
-          class="flex gap-1 items-center"
-        >
-          <ContactIcon v-if="detail.icon" :icon="detail.icon" class="w-4" />
-          {{ detail.value }}, {{ " " }}
-        </li>
-      </ul>
-      <ul class="flex gap-2">
-        <li
-          v-for="link in socialLinks"
-          :key="`${link.url}${link.icon}`"
-          class="flex gap-1 items-center"
-        >
-          <LinkIcon v-if="link.icon" :icon="link.icon" class="w-4" />
-          {{ link.url }}
-        </li>
-      </ul>
-    </header>
-    <p
-      v-if="about"
-      class="border-t-2 border-dotted border-[color:var(--resume-color0)] p-4 pl-0"
-    >
-      {{ about }}
-    </p>
-
+    <template v-if="documentType === 'resume' || !isHeaderSimple">
+      <header v-if="name" class="pb-4">
+        <h1 v-if="name" class="text-xl">{{ name }}, {{ title }}</h1>
+        <ul class="flex gap-2">
+          <li
+            v-for="detail in contactDetails"
+            :key="`${detail.value}${detail.icon}`"
+            class="flex gap-1 items-center"
+          >
+            <ContactIcon v-if="detail.icon" :icon="detail.icon" class="w-4" />
+            {{ detail.value }}, {{ " " }}
+          </li>
+        </ul>
+        <ul class="flex gap-2">
+          <li
+            v-for="link in socialLinks"
+            :key="`${link.url}${link.icon}`"
+            class="flex gap-1 items-center"
+          >
+            <LinkIcon v-if="link.icon" :icon="link.icon" class="w-4" />
+            {{ link.url }}
+          </li>
+        </ul>
+      </header>
+      <p
+        v-if="about"
+        class="border-t-2 border-dotted border-[color:var(--resume-color0)] p-4 pl-0"
+      >
+        {{ about }}
+      </p>
+    </template>
     <LetterBody v-if="documentType === 'letter'" />
     <template v-else>
       <section

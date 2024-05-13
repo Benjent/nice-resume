@@ -2,6 +2,7 @@
 import { computed } from "vue";
 import { storeToRefs } from "pinia";
 import { useEditorStore } from "@/stores/editor";
+import { useLetterStore } from "@/stores/letter";
 import { useProfileStore } from "@/stores/profile";
 import { useResumeStore } from "@/stores/resume";
 import type { Category } from "@/types";
@@ -16,6 +17,8 @@ const { name, title } = storeToRefs(useProfileStore());
 
 const { about, categories, contactDetails, socialLinks } =
   storeToRefs(useResumeStore());
+
+const { isHeaderSimple } = storeToRefs(useLetterStore());
 
 const mainCategories = computed(() => {
   return categories.value.filter((category) => category.layout !== "aside");
@@ -57,50 +60,56 @@ function getSectionCategory(indexToGetFrom: number) {
 
 <template>
   <Document>
-    <template v-if="name">
-      <header
-        class="flex items-start gap-10 py-8 px-10 bg-[color:var(--resume-color3)] font-display"
-      >
-        <div
-          class="flex flex-col place-items-center w-fit border-y-4 border-[color:var(--resume-color0)] py-2 px-4"
+    <template v-if="documentType === 'resume' || !isHeaderSimple">
+      <template v-if="name">
+        <header
+          class="flex items-start gap-10 py-8 px-10 bg-[color:var(--resume-color3)] font-display"
         >
-          <h1 v-if="name" class="text-center uppercase text-4xl">
-            {{ name }}
-          </h1>
-          <h2 v-if="title" class="text-center uppercase text-2xl">
-            {{ title }}
-          </h2>
-        </div>
-        <div class="flex flex-col gap-2 text-[color:var(--resume-color0)]">
-          <ul class="leading-none">
-            <li
-              v-for="detail in contactDetails"
-              :key="`${detail.value}${detail.icon}`"
-              class="flex gap-1 items-center"
-            >
-              <ContactIcon v-if="detail.icon" :icon="detail.icon" class="w-4" />
-              {{ detail.value }}
-            </li>
-          </ul>
-          <ul class="leading-tight">
-            <li
-              v-for="link in socialLinks"
-              :key="`${link.url}${link.icon}`"
-              class="flex gap-1 items-center"
-            >
-              <LinkIcon v-if="link.icon" :icon="link.icon" class="w-4" />
-              {{ link.url }}
-            </li>
-          </ul>
-        </div>
-      </header>
+          <div
+            class="flex flex-col place-items-center w-fit border-y-4 border-[color:var(--resume-color0)] py-2 px-4"
+          >
+            <h1 v-if="name" class="text-center uppercase text-4xl">
+              {{ name }}
+            </h1>
+            <h2 v-if="title" class="text-center uppercase text-2xl">
+              {{ title }}
+            </h2>
+          </div>
+          <div class="flex flex-col gap-2 text-[color:var(--resume-color0)]">
+            <ul class="leading-none">
+              <li
+                v-for="detail in contactDetails"
+                :key="`${detail.value}${detail.icon}`"
+                class="flex gap-1 items-center"
+              >
+                <ContactIcon
+                  v-if="detail.icon"
+                  :icon="detail.icon"
+                  class="w-4"
+                />
+                {{ detail.value }}
+              </li>
+            </ul>
+            <ul class="leading-tight">
+              <li
+                v-for="link in socialLinks"
+                :key="`${link.url}${link.icon}`"
+                class="flex gap-1 items-center"
+              >
+                <LinkIcon v-if="link.icon" :icon="link.icon" class="w-4" />
+                {{ link.url }}
+              </li>
+            </ul>
+          </div>
+        </header>
 
-      <p
-        v-if="about"
-        class="pb-6 px-10 bg-[color:var(--resume-color3)] font-display text-lg"
-      >
-        {{ about }}
-      </p>
+        <p
+          v-if="about"
+          class="pb-6 px-10 bg-[color:var(--resume-color3)] font-display text-lg"
+        >
+          {{ about }}
+        </p>
+      </template>
     </template>
     <LetterBody v-if="documentType === 'letter'" />
     <template v-else>
