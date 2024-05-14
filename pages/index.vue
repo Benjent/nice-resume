@@ -35,7 +35,7 @@ const description = ref(
           <i class="font-serif">that</i>
           simple
         </p>
-        <NuxtLink to="/editor">
+        <NuxtLink to="/resume">
           <Button class="block mx-auto mt-8">Get started</Button>
         </NuxtLink>
       </Card>

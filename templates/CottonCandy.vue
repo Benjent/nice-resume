@@ -7,17 +7,18 @@ import { useProfileStore } from "@/stores/profile";
 import { useResumeStore } from "@/stores/resume";
 import type { Category } from "@/types";
 import ContactIcon from "@/components/ContactIcon.vue";
+import Document from "@/components/Document.vue";
+import LetterBody from "@/components/LetterBody.vue";
 import LinkIcon from "@/components/LinkIcon.vue";
 
 const { documentType } = storeToRefs(useEditorStore());
 
 const { name, title } = storeToRefs(useProfileStore());
 
-const { paragraphs, recipientDetails, reference, subject } =
-  storeToRefs(useLetterStore());
-
 const { about, categories, contactDetails, socialLinks } =
   storeToRefs(useResumeStore());
+
+const { isHeaderSimple } = storeToRefs(useLetterStore());
 
 const mainCategories = computed(() => {
   return categories.value.filter((category) => category.layout !== "aside");
@@ -58,77 +59,14 @@ function getSectionCategory(indexToGetFrom: number) {
 </script>
 
 <template>
-  <div class="h-full w-full flex flex-col text-[color:var(--color4)]">
-    <template v-if="documentType === 'Letter'">
-      <header
-        class="flex items-start gap-10 py-8 px-10 bg-[color:var(--color3)] font-display"
-      >
-        <div
-          class="flex flex-col place-items-center w-fit border-y-4 border-[color:var(--color0)] py-2 px-4"
-        >
-          <h1 v-if="name" class="text-4xl uppercase">
-            {{ name }}
-          </h1>
-          <h2 v-if="title" class="text-2xl uppercase">{{ title }}</h2>
-        </div>
-        <div class="flex flex-col gap-2 text-[color:var(--color0)]">
-          <ul class="leading-none">
-            <li
-              v-for="detail in contactDetails"
-              :key="`${detail.value}${detail.icon}`"
-              class="flex gap-1 items-center"
-            >
-              <ContactIcon v-if="detail.icon" :icon="detail.icon" class="w-4" />
-              {{ detail.value }}
-            </li>
-          </ul>
-          <ul class="leading-tight">
-            <li
-              v-for="link in socialLinks"
-              :key="`${link.url}${link.icon}`"
-              class="flex gap-1 items-center"
-            >
-              <LinkIcon v-if="link.icon" :icon="link.icon" class="w-4" />
-              {{ link.url }}
-            </li>
-          </ul>
-        </div>
-      </header>
-      <ul
-        class="px-10 text-[color:var(--color0)] text-right text-xs italic"
-        v-if="recipientDetails.length"
-      >
-        <li v-for="detail in recipientDetails" :key="detail">
-          {{ detail }}
-        </li>
-      </ul>
-      <div class="py-8 px-10 text-justify text-sm">
-        <header class="text-center mb-6">
-          <h3 v-if="subject" class="font-bold">
-            <span class="text-[color:var(--color0)]">
-              Objet TODO translate:
-            </span>
-            {{ subject }}
-          </h3>
-          <h4 v-if="reference" class="text-xs">
-            <span class="text-[color:var(--color0)]">Ref. TODO translate:</span>
-            {{ reference }}
-          </h4>
-        </header>
-        <p v-for="(paragraph, index) in paragraphs" :key="index" class="mb-4">
-          <span class="inline-block w-12" />
-          {{ paragraph }}
-        </p>
-        <div class="text-right">{{ name }}</div>
-      </div>
-    </template>
-    <template v-else>
+  <Document>
+    <template v-if="documentType === 'resume' || !isHeaderSimple">
       <template v-if="name">
         <header
-          class="flex items-start gap-10 py-8 px-10 bg-[color:var(--color3)] font-display"
+          class="flex items-start gap-10 py-8 px-10 bg-[color:var(--resume-color3)] font-display"
         >
           <div
-            class="flex flex-col place-items-center w-fit border-y-4 border-[color:var(--color0)] py-2 px-4"
+            class="flex flex-col place-items-center w-fit border-y-4 border-[color:var(--resume-color0)] py-2 px-4"
           >
             <h1 v-if="name" class="text-center uppercase text-4xl">
               {{ name }}
@@ -137,7 +75,7 @@ function getSectionCategory(indexToGetFrom: number) {
               {{ title }}
             </h2>
           </div>
-          <div class="flex flex-col gap-2 text-[color:var(--color0)]">
+          <div class="flex flex-col gap-2 text-[color:var(--resume-color0)]">
             <ul class="leading-none">
               <li
                 v-for="detail in contactDetails"
@@ -167,16 +105,18 @@ function getSectionCategory(indexToGetFrom: number) {
 
         <p
           v-if="about"
-          class="pb-6 px-10 bg-[color:var(--color3)] font-display text-lg"
+          class="pb-6 px-10 bg-[color:var(--resume-color3)] font-display text-lg"
         >
           {{ about }}
         </p>
       </template>
-
-      <div class="flex flex-1 bg-[color:var(--color2)]">
+    </template>
+    <LetterBody v-if="documentType === 'letter'" />
+    <template v-else>
+      <div class="flex flex-1 bg-[color:var(--resume-color2)]">
         <aside
           v-if="categories.some((category) => category.layout === 'aside')"
-          class="w-[20%] bg-[color:var(--color3)]"
+          class="w-[20%] bg-[color:var(--resume-color3)]"
         >
           <div
             v-for="(category, index) in categories.filter(
@@ -201,11 +141,8 @@ function getSectionCategory(indexToGetFrom: number) {
                     {{ entry.title }}
                   </div>
                   <template v-if="entry.nature === 'experience'">
-                    <div v-if="entry.startDate" class="text-sm font-semibold">
-                      {{ entry.startDate }}
-                      <template v-if="entry.endDate">
-                        - {{ entry.endDate }}
-                      </template>
+                    <div v-if="entry.period" class="text-sm font-semibold">
+                      {{ entry.period }}
                     </div>
                     <div
                       v-if="entry.organization"
@@ -230,10 +167,8 @@ function getSectionCategory(indexToGetFrom: number) {
                     v-if="entry.nature === 'experience'"
                     class="text-sm font-semibold"
                   >
-                    {{ entry.startDate }}
-                    <template v-if="entry.endDate">
-                      - {{ entry.endDate }}
-                    </template>
+                    {{ entry.period }}
+
                     , {{ entry.organization }}, {{ entry.location }}
                   </div>
                 </div>
@@ -261,7 +196,7 @@ function getSectionCategory(indexToGetFrom: number) {
         <div class="flex flex-col flex-1">
           <div class="drop-shadow-lg">
             <div
-              class="w-full absolute left-0 right-0 -top-[2px] m-auto [clip-path:polygon(20%_0,_100%_0,_77%_100%)] bg-[color:var(--color3)] h-5"
+              class="w-full absolute left-0 right-0 -top-[2px] m-auto [clip-path:polygon(20%_0,_100%_0,_77%_100%)] bg-[color:var(--resume-color3)] h-5"
             />
           </div>
 
@@ -269,7 +204,7 @@ function getSectionCategory(indexToGetFrom: number) {
             <section
               v-for="(category, categoryIndex) in firstSectionCategories"
               :key="categoryIndex"
-              class="py-6 px-10 bg-[color:var(--color0)] text-[color:var(--color3)]"
+              class="py-6 px-10 bg-[color:var(--resume-color0)] text-[color:var(--resume-color3)]"
               :class="category.layout === 'half' ? 'col-span-1' : 'col-span-2'"
             >
               <h3 class="font-display uppercase mb-2 text-2xl">
@@ -293,11 +228,8 @@ function getSectionCategory(indexToGetFrom: number) {
                       <div class="font-display text-xl">
                         {{ entry.title }}
                       </div>
-                      <div v-if="entry.startDate" class="text-sm font-semibold">
-                        {{ entry.startDate }}
-                        <template v-if="entry.endDate">
-                          - {{ entry.endDate }}
-                        </template>
+                      <div v-if="entry.period" class="text-sm font-semibold">
+                        {{ entry.period }}
                       </div>
                       <div
                         v-if="entry.organization"
@@ -318,10 +250,8 @@ function getSectionCategory(indexToGetFrom: number) {
                         {{ entry.title }}
                       </div>
                       <div class="text-sm font-semibold">
-                        {{ entry.startDate }}
-                        <template v-if="entry.endDate">
-                          - {{ entry.endDate }}
-                        </template>
+                        {{ entry.period }}
+
                         , {{ entry.organization }}, {{ entry.location }}
                       </div>
                     </div>
@@ -348,7 +278,7 @@ function getSectionCategory(indexToGetFrom: number) {
 
             <div class="drop-shadow-lg col-span-full">
               <div
-                class="w-full absolute left-0 right-0 -top-[2px] m-auto [clip-path:polygon(20%_0,_100%_0,_77%_100%)] bg-[color:var(--color0)] h-5"
+                class="w-full absolute left-0 right-0 -top-[2px] m-auto [clip-path:polygon(20%_0,_100%_0,_77%_100%)] bg-[color:var(--resume-color0)] h-5"
               />
             </div>
           </div>
@@ -357,7 +287,7 @@ function getSectionCategory(indexToGetFrom: number) {
             <section
               v-for="(category, categoryIndex) in secondSectionCategories"
               :key="categoryIndex"
-              class="py-6 px-10 bg-[color:var(--color1)] text-[color:var(--color2)]"
+              class="py-6 px-10 bg-[color:var(--resume-color1)] text-[color:var(--resume-color2)]"
               :class="category.layout === 'half' ? 'col-span-1' : 'col-span-2'"
             >
               <h3 class="font-display uppercase mb-2 text-2xl">
@@ -382,7 +312,7 @@ function getSectionCategory(indexToGetFrom: number) {
                         {{ entry.title }}
                       </div>
                       <div class="text-sm font-semibold">
-                        {{ entry.startDate }} - {{ entry.endDate }}
+                        {{ entry.period }}
                       </div>
                       <div class="text-sm font-semibold">
                         {{ entry.organization }}, {{ entry.location }}
@@ -393,8 +323,8 @@ function getSectionCategory(indexToGetFrom: number) {
                         {{ entry.title }}
                       </div>
                       <div class="text-sm font-semibold">
-                        {{ entry.startDate }} - {{ entry.endDate }},
-                        {{ entry.organization }}, {{ entry.location }}
+                        {{ entry.period }}, {{ entry.organization }},
+                        {{ entry.location }}
                       </div>
                     </div>
                   </template>
@@ -420,7 +350,7 @@ function getSectionCategory(indexToGetFrom: number) {
 
             <div class="drop-shadow-lg col-span-full">
               <div
-                class="w-full absolute left-0 right-0 -top-[2px] m-auto [clip-path:polygon(20%_0,_100%_0,_77%_100%)] bg-[color:var(--color1)] h-5"
+                class="w-full absolute left-0 right-0 -top-[2px] m-auto [clip-path:polygon(20%_0,_100%_0,_77%_100%)] bg-[color:var(--resume-color1)] h-5"
               />
             </div>
           </div>
@@ -429,7 +359,7 @@ function getSectionCategory(indexToGetFrom: number) {
             <section
               v-for="(category, categoryIndex) in thirdSectionCategories"
               :key="categoryIndex"
-              class="py-6 px-10 bg-[color:var(--color2)] text-[color:var(--color1)]"
+              class="py-6 px-10 bg-[color:var(--resume-color2)] text-[color:var(--resume-color1)]"
               :class="category.layout === 'half' ? 'col-span-1' : 'col-span-2'"
             >
               <h3 class="font-display uppercase mb-2 text-2xl">
@@ -454,7 +384,7 @@ function getSectionCategory(indexToGetFrom: number) {
                         {{ entry.title }}
                       </div>
                       <div class="text-sm font-semibold">
-                        {{ entry.startDate }} - {{ entry.endDate }}
+                        {{ entry.period }}
                       </div>
                       <div class="text-sm font-semibold">
                         {{ entry.organization }}, {{ entry.location }}
@@ -465,8 +395,8 @@ function getSectionCategory(indexToGetFrom: number) {
                         {{ entry.title }}
                       </div>
                       <div class="text-sm font-semibold">
-                        {{ entry.startDate }} - {{ entry.endDate }},
-                        {{ entry.organization }}, {{ entry.location }}
+                        {{ entry.period }}, {{ entry.organization }},
+                        {{ entry.location }}
                       </div>
                     </div>
                   </template>
@@ -493,12 +423,10 @@ function getSectionCategory(indexToGetFrom: number) {
         </div>
       </div>
     </template>
-  </div>
+  </Document>
 </template>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=League+Gothic&family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap");
-
 .font-body {
   font-family: "Mulish";
 }

@@ -5,31 +5,34 @@ import { useLetterStore } from "@/stores/letter";
 import { useProfileStore } from "@/stores/profile";
 import { useResumeStore } from "@/stores/resume";
 import ContactIcon from "@/components/ContactIcon.vue";
+import Document from "@/components/Document.vue";
+import LetterBody from "@/components/LetterBody.vue";
 import LinkIcon from "@/components/LinkIcon.vue";
 
 const { documentType } = storeToRefs(useEditorStore());
-
-const { paragraphs, recipientDetails, reference, subject } =
-  storeToRefs(useLetterStore());
 
 const { name, title } = storeToRefs(useProfileStore());
 
 const { about, categories, contactDetails, socialLinks } =
   storeToRefs(useResumeStore());
+
+const { isHeaderSimple } = storeToRefs(useLetterStore());
 </script>
 
 <template>
-  <div
-    class="bg-white text-[color:var(--color1)] h-full w-full flex flex-col font-body relative"
-  >
+  <Document>
     <div class="-rotate-[9deg] w-full absolute -top-16 -left-16">
-      <div class="bg-[color:var(--color0)] h-10" />
-      <div class="bg-[color:var(--color0)] h-1 mt-2" v-for="i in 3" :key="i" />
+      <div class="bg-[color:var(--resume-color0)] h-10" />
+      <div
+        class="bg-[color:var(--resume-color0)] h-1 mt-2"
+        v-for="i in 3"
+        :key="i"
+      />
     </div>
-    <template v-if="documentType === 'Letter'">
+    <template v-if="documentType === 'resume' || !isHeaderSimple">
       <header class="flex mx-auto mt-8 p-8">
         <div
-          class="flex flex-col place-items-center w-fit border-y-4 border-[color:var(--color0)] p-2 font-display text-center tracking-wider"
+          class="flex flex-col place-items-center w-fit border-y-4 border-[color:var(--resume-color0)] p-2 font-display text-center tracking-wider"
         >
           <h1 v-if="name" class="text-4xl uppercase">
             {{ name }}
@@ -37,67 +40,7 @@ const { about, categories, contactDetails, socialLinks } =
           <h2 v-if="title" class="text-2xl">{{ title }}</h2>
         </div>
         <ul
-          class="flex flex-col self-center border-l-2 border-[color:var(--color0)] ml-8 pl-2 py-1 text-[color:var(--color0)] text-xs italic"
-          v-if="contactDetails.length || socialLinks.length"
-        >
-          <li
-            v-for="detail in contactDetails"
-            :key="`${detail.value}${detail.icon}`"
-            class="flex gap-1 items-center"
-          >
-            <ContactIcon v-if="detail.icon" :icon="detail.icon" class="w-4" />
-            {{ detail.value }}
-          </li>
-          <li
-            v-for="link in socialLinks"
-            :key="`${link.url}${link.icon}`"
-            class="flex gap-1 items-center"
-          >
-            <LinkIcon v-if="link.icon" :icon="link.icon" class="w-4" />
-            {{ link.url }}
-          </li>
-        </ul>
-      </header>
-      <ul
-        class="px-8 text-[color:var(--color0)] text-right text-xs italic"
-        v-if="recipientDetails.length"
-      >
-        <li v-for="detail in recipientDetails" :key="detail">
-          {{ detail }}
-        </li>
-      </ul>
-      <div class="p-8 text-justify text-sm">
-        <header class="text-center mb-6">
-          <h3 v-if="subject" class="font-bold">
-            <span class="text-[color:var(--color0)]">
-              Objet TODO translate:
-            </span>
-            {{ subject }}
-          </h3>
-          <h4 v-if="reference" class="text-xs">
-            <span class="text-[color:var(--color0)]">Ref. TODO translate:</span>
-            {{ reference }}
-          </h4>
-        </header>
-        <p v-for="(paragraph, index) in paragraphs" :key="index" class="mb-4">
-          <span class="inline-block w-12" />
-          {{ paragraph }}
-        </p>
-        <div class="text-right">{{ name }}</div>
-      </div>
-    </template>
-    <template v-else>
-      <header class="flex mx-auto mt-8 p-8">
-        <div
-          class="flex flex-col place-items-center w-fit border-y-4 border-[color:var(--color0)] p-2 font-display text-center tracking-wider"
-        >
-          <h1 v-if="name" class="text-4xl uppercase">
-            {{ name }}
-          </h1>
-          <h2 v-if="title" class="text-2xl">{{ title }}</h2>
-        </div>
-        <ul
-          class="flex flex-col self-center border-l-2 border-[color:var(--color0)] ml-8 pl-2 py-1 text-[color:var(--color0)] text-xs italic"
+          class="flex flex-col self-center border-l-2 border-[color:var(--resume-color0)] ml-8 pl-2 py-1 text-[color:var(--resume-color0)] text-xs italic"
           v-if="contactDetails.length || socialLinks.length"
         >
           <li
@@ -119,7 +62,9 @@ const { about, categories, contactDetails, socialLinks } =
         </ul>
       </header>
       <p v-if="about" class="text-center p-8">{{ about }}</p>
-
+    </template>
+    <LetterBody v-if="documentType === 'letter'" />
+    <template v-else>
       <div class="flex gap-6 p-8">
         <aside
           v-if="categories.some((category) => category.layout === 'aside')"
@@ -138,7 +83,7 @@ const { about, categories, contactDetails, socialLinks } =
               <li
                 v-for="(entry, entryIndex) in category.entries"
                 :key="entryIndex"
-                class="flex items-baseline before:content-[''] before:inline-block before:mr-2 before:size-2 before:bg-[color:var(--color0)]"
+                class="flex items-baseline before:content-[''] before:inline-block before:mr-2 before:size-2 before:bg-[color:var(--resume-color0)]"
               >
                 <div class="flex flex-col">
                   <div>
@@ -147,17 +92,14 @@ const { about, categories, contactDetails, socialLinks } =
                       v-if="entry.nature === 'experience' && entry.organization"
                     >
                       -
-                      <span class="text-[color:var(--color0)]">
+                      <span class="text-[color:var(--resume-color0)]">
                         {{ entry.organization }}
                       </span>
                     </template>
                   </div>
                   <div v-if="entry.nature === 'experience'">
-                    <span v-if="entry.startDate">
-                      {{ entry.startDate }}
-                      <template v-if="entry.endDate">
-                        - {{ entry.endDate }}
-                      </template>
+                    <span v-if="entry.period">
+                      {{ entry.period }}
                     </span>
                     <template v-if="entry.location">
                       , {{ entry.location }}
@@ -200,7 +142,7 @@ const { about, categories, contactDetails, socialLinks } =
               <li
                 v-for="(entry, entryIndex) in category.entries"
                 :key="entryIndex"
-                class="flex items-baseline before:content-[''] before:inline-block before:mr-2 before:size-2 before:bg-[color:var(--color0)]"
+                class="flex items-baseline before:content-[''] before:inline-block before:mr-2 before:size-2 before:bg-[color:var(--resume-color0)]"
               >
                 <div class="flex flex-col">
                   <div>
@@ -209,17 +151,14 @@ const { about, categories, contactDetails, socialLinks } =
                       v-if="entry.nature === 'experience' && entry.organization"
                     >
                       -
-                      <span class="text-[color:var(--color0)]">
+                      <span class="text-[color:var(--resume-color0)]">
                         {{ entry.organization }}
                       </span>
                     </template>
                   </div>
                   <div v-if="entry.nature === 'experience'">
-                    <span v-if="entry.startDate">
-                      {{ entry.startDate }}
-                      <template v-if="entry.endDate">
-                        - {{ entry.endDate }}
-                      </template>
+                    <span v-if="entry.period">
+                      {{ entry.period }}
                     </span>
                     <template v-if="entry.location">
                       , {{ entry.location }}
@@ -246,7 +185,7 @@ const { about, categories, contactDetails, socialLinks } =
               </li>
             </ul>
             <div
-              class="bg-[color:var(--color0)] h-1 w-full -rotate-[9deg] my-10"
+              class="bg-[color:var(--resume-color0)] h-1 w-full -rotate-[9deg] my-10"
               v-if="
                 (category.layout === 'half' &&
                   categoryIndex <
@@ -265,15 +204,17 @@ const { about, categories, contactDetails, socialLinks } =
       </div>
     </template>
     <div class="-rotate-[9deg] w-full absolute -bottom-16 -right-16">
-      <div class="bg-[color:var(--color0)] h-1 mb-2" v-for="i in 3" :key="i" />
-      <div class="bg-[color:var(--color0)] h-10" />
+      <div
+        class="bg-[color:var(--resume-color0)] h-1 mb-2"
+        v-for="i in 3"
+        :key="i"
+      />
+      <div class="bg-[color:var(--resume-color0)] h-10" />
     </div>
-  </div>
+  </Document>
 </template>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=League+Gothic&family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap");
-
 .font-body {
   font-family: "Mulish";
 }

@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
+import { navigateTo } from "nuxt/app";
 import { storeToRefs } from "pinia";
 import {
   ArrowDownOnSquareIcon,
   ArrowUpOnSquareIcon,
   ArrowPathIcon,
+  ClipboardDocumentIcon,
 } from "@heroicons/vue/24/outline";
 import { useEditorStore } from "@/stores/editor";
 import { useLetterStore } from "@/stores/letter";
@@ -98,11 +100,166 @@ function importFromJson(event: Event) {
   }
 }
 
+function generateStores() {
+  profile.name.value = "Firstname Lastname";
+  profile.title.value = "Title";
+  resume.about.value = "About";
+  resume.contactDetails.value = [
+    { icon: "drivingLicense", value: "Driving license" },
+    { icon: "address", value: "Address" },
+    { icon: "email", value: "email@email.com" },
+    { icon: "phone", value: "061122334455" },
+  ];
+  resume.socialLinks.value = [
+    { icon: "gitHub", url: "github.com" },
+    { icon: "linkedIn", url: "linkedin.com" },
+    { icon: "viadeo", url: "viadeo.com" },
+  ];
+  resume.categories.value = [
+    {
+      nature: "experience",
+      type: "work",
+      name: "Work experience",
+      entries: [
+        {
+          nature: "experience",
+          type: "work",
+          title: "Title",
+          organization: "Company",
+          location: "Location",
+          period: "Since",
+          summary:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          highlights: ["- A", "- B", "- C"],
+        },
+        {
+          nature: "experience",
+          type: "work",
+          title: "Title",
+          organization: "Company",
+          location: "Location",
+          period: "From - To",
+          summary:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          highlights: ["- A", "- B"],
+        },
+      ],
+      layout: "full",
+    },
+    {
+      nature: "experience",
+      type: "education",
+      name: "Education",
+      entries: [
+        {
+          nature: "experience",
+          type: "education",
+          title: "Title",
+          organization: "Institution",
+          location: "Location",
+          period: "From - To",
+          summary:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          highlights: ["- A", "- B", "- C"],
+        },
+        {
+          nature: "experience",
+          type: "education",
+          title: "Title",
+          organization: "Institution",
+          location: "Location",
+          period: "From - To",
+          summary:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          highlights: [],
+        },
+      ],
+      layout: "full",
+    },
+    {
+      nature: "asset",
+      type: "skill",
+      name: "Skills",
+      entries: [
+        {
+          nature: "asset",
+          type: "skill",
+          title: "Title",
+          highlights: ["- A", "- B", "- C"],
+        },
+        {
+          nature: "asset",
+          type: "skill",
+          title: "Title",
+          highlights: ["- A", "- B", "- C"],
+        },
+        {
+          nature: "asset",
+          type: "skill",
+          title: "Title",
+          highlights: ["- A", "- B"],
+        },
+      ],
+      layout: "half",
+    },
+    {
+      nature: "asset",
+      type: "language",
+      name: "Languages",
+      entries: [
+        {
+          nature: "asset",
+          type: "language",
+          title: "Title",
+          highlights: ["- A", "- B", "- C"],
+        },
+        {
+          nature: "asset",
+          type: "language",
+          title: "Title",
+          highlights: ["- A", "- B", "- C"],
+        },
+        {
+          nature: "asset",
+          type: "language",
+          title: "Title",
+          highlights: ["- A", "- B"],
+        },
+      ],
+      layout: "half",
+    },
+  ];
+  letter.senderDetails.value = [
+    "Firstname Lastname",
+    "Streetnumber Streetname Street",
+    "Zip code City - Country",
+  ];
+  letter.recipientDetails.value = [
+    "Firstname Lastname",
+    "Streetnumber Streetname Street",
+    "Zip code City - Country",
+  ];
+  letter.subject.value = "Cover letter subject";
+  letter.reference.value = "Ref.: Application reference";
+  letter.paragraphs.value = [
+    "Salutation,",
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
+    "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
+    "Outroduction.",
+    "Regards.",
+  ];
+}
+
 function resetStores() {
   profileStore.$reset();
-  letterStore.$reset();
   resumeStore.$reset();
+  letterStore.$reset();
 }
+
+watch(documentType, (newValue) => {
+  newValue === "letter" ? navigateTo("/letter") : navigateTo("/resume");
+});
 </script>
 
 <template>
@@ -120,6 +277,13 @@ function resetStores() {
       </h1>
     </NuxtLink>
     <div class="flex items-end gap-8 h-[60%]">
+      <button
+        class="text-blue-500 flex items-center gap-1"
+        @click="generateStores"
+      >
+        <ClipboardDocumentIcon class="h-6" />
+        Generate
+      </button>
       <button
         class="text-blue-500 flex items-center gap-1"
         @click="resetStores"
@@ -177,7 +341,11 @@ function resetStores() {
       </label>
       <label for="documentType">
         Document
-        <select id="documentType" v-model="documentType" class="select block">
+        <select
+          id="documentType"
+          v-model="documentType"
+          class="select block capitalize"
+        >
           <option
             v-for="documentType in documentTypes"
             :key="documentType"

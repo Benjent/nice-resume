@@ -5,121 +5,63 @@ import { useLetterStore } from "@/stores/letter";
 import { useProfileStore } from "@/stores/profile";
 import { useResumeStore } from "@/stores/resume";
 import ContactIcon from "@/components/ContactIcon.vue";
+import Document from "@/components/Document.vue";
+import LetterBody from "@/components/LetterBody.vue";
 import LinkIcon from "@/components/LinkIcon.vue";
 
 const { documentType } = storeToRefs(useEditorStore());
 
 const { name, title } = storeToRefs(useProfileStore());
 
-const { paragraphs, recipientDetails, reference, subject } =
-  storeToRefs(useLetterStore());
-
 const { about, categories, contactDetails, socialLinks } =
   storeToRefs(useResumeStore());
+
+const { isHeaderSimple } = storeToRefs(useLetterStore());
 </script>
 
 <template>
-  <div
-    class="bg-white text-[color:var(--color2)] h-full w-full flex flex-col p-12 border-t-[10px] border-[color:var(--color0)] font-body text-xs"
-  >
-    <template v-if="documentType === 'Letter'">
-      <header>
-        <h1 v-if="name" class="text-4xl font-display font-bold tracking-wide">
-          {{ name }}
-        </h1>
-        <h2
-          v-if="title"
-          class="text-xl mb-2 font-display font-light tracking-wider"
-        >
-          {{ title }}
-        </h2>
+  <Document>
+    <header
+      v-if="documentType === 'resume' || !isHeaderSimple"
+      class="p-12 pb-2"
+    >
+      <h1 v-if="name" class="text-4xl font-display font-bold tracking-wide">
+        {{ name }}
+      </h1>
+      <h2
+        v-if="title"
+        class="text-xl mb-2 font-display font-light tracking-wider"
+      >
+        {{ title }}
+      </h2>
+      <p v-if="about" class="mb-2">{{ about }}</p>
 
-        <ul v-if="contactDetails.length || socialLinks.length">
-          <li
-            v-for="detail in contactDetails"
-            :key="`${detail.value}${detail.icon}`"
-            class="flex gap-1 items-center"
-          >
-            <ContactIcon v-if="detail.icon" :icon="detail.icon" class="w-4" />
-            {{ detail.value }}
-          </li>
-          <li
-            v-for="link in socialLinks"
-            :key="`${link.url}${link.icon}`"
-            class="flex gap-2 items-center"
-          >
-            <LinkIcon v-if="link.icon" :icon="link.icon" class="w-3" />
-            {{ link.url }}
-          </li>
-        </ul>
-      </header>
-      <ul class="text-right" v-if="recipientDetails.length">
-        <li v-for="detail in recipientDetails" :key="detail">
-          {{ detail }}
+      <ul v-if="contactDetails.length || socialLinks.length">
+        <li
+          v-for="detail in contactDetails"
+          :key="`${detail.value}${detail.icon}`"
+          class="flex gap-1 items-center"
+        >
+          <ContactIcon v-if="detail.icon" :icon="detail.icon" class="w-4" />
+          {{ detail.value }}
+        </li>
+        <li
+          v-for="link in socialLinks"
+          :key="`${link.url}${link.icon}`"
+          class="flex gap-2 items-center"
+        >
+          <LinkIcon v-if="link.icon" :icon="link.icon" class="w-3" />
+          {{ link.url }}
         </li>
       </ul>
-      <div class="mt-10 text-justify text-sm">
-        <header class="text-center mb-6">
-          <h3 v-if="subject" class="text-lg font-display">
-            {{ subject }}
-          </h3>
-          <h4 v-if="reference" class="text-xs text-[color:var(--color0)]">
-            <span class="">Ref. TODO translate:</span>
-            {{ reference }}
-          </h4>
-        </header>
-        <p v-for="(paragraph, index) in paragraphs" :key="index" class="mb-4">
-          <span class="inline-block w-12" />
-          {{ paragraph }}
-        </p>
-        <div class="text-right">{{ name }}</div>
-      </div>
-    </template>
+    </header>
+    <LetterBody v-if="documentType === 'letter'" />
     <template v-else>
-      <header>
-        <h1 v-if="name" class="text-4xl font-display font-bold tracking-wide">
-          {{ name }}
-        </h1>
-        <h2
-          v-if="title"
-          class="text-xl mb-2 font-display font-light tracking-wider"
+      <div class="flex gap-12 px-12">
+        <aside
+          v-if="categories.some((category) => category.layout === 'aside')"
+          class="w-[20%] flex flex-col gap-4"
         >
-          {{ title }}
-        </h2>
-      </header>
-
-      <div class="flex gap-12">
-        <aside class="w-[20%] flex flex-col gap-4">
-          <div>
-            <h3
-              class="font-light tracking-wider after:content-[''] after:block after:border-b-[1px] after:border-[color:var(--color0)] after:w-12 after:mt-2 after:mb-3"
-            >
-              About
-            </h3>
-            <p v-if="about" class="mb-2">{{ about }}</p>
-            <ul>
-              <li
-                v-for="detail in contactDetails"
-                :key="`${detail.value}${detail.icon}`"
-                class="flex gap-1 items-center"
-              >
-                <ContactIcon
-                  v-if="detail.icon"
-                  :icon="detail.icon"
-                  class="w-4"
-                />
-                {{ detail.value }}
-              </li>
-              <li
-                v-for="link in socialLinks"
-                :key="`${link.url}${link.icon}`"
-                class="flex gap-2 items-center"
-              >
-                <LinkIcon v-if="link.icon" :icon="link.icon" class="w-3" />
-                {{ link.url }}
-              </li>
-            </ul>
-          </div>
           <div
             v-for="(category, categoryIndex) in categories.filter(
               (category) => category.layout === 'aside',
@@ -127,7 +69,7 @@ const { about, categories, contactDetails, socialLinks } =
             :key="categoryIndex"
           >
             <h3
-              class="font-light tracking-wider after:content-[''] after:block after:border-b-[1px] after:border-[color:var(--color0)] after:w-12 after:mt-2 after:mb-3"
+              class="font-light tracking-wider after:content-[''] after:block after:border-b-[1px] after:border-[color:var(--resume-color0)] after:w-12 after:mt-2 after:mb-3"
             >
               {{ category.name }}
             </h3>
@@ -138,12 +80,9 @@ const { about, categories, contactDetails, socialLinks } =
               >
                 <div
                   class="italic font-light"
-                  v-if="entry.nature === 'experience' && entry.startDate"
+                  v-if="entry.nature === 'experience' && entry.period"
                 >
-                  {{ entry.startDate }}
-                  <template v-if="entry.endDate">
-                    - {{ entry.endDate }}
-                  </template>
+                  {{ entry.period }}
                 </div>
                 <div class="font-bold">{{ entry.title }}</div>
                 <template v-if="entry.nature === 'experience'">
@@ -155,7 +94,7 @@ const { about, categories, contactDetails, socialLinks } =
                   <li
                     v-for="(highlight, highlightIndex) in entry.highlights"
                     :key="highlightIndex"
-                    class="bg-[color:var(--color1)] p-[0.1rem] rounded"
+                    class="bg-[color:var(--resume-color1)] p-[0.1rem] rounded"
                   >
                     {{ highlight }}
                   </li>
@@ -173,7 +112,7 @@ const { about, categories, contactDetails, socialLinks } =
             :class="category.layout === 'half' ? 'col-span-1' : 'col-span-2'"
           >
             <h3
-              class="font-light tracking-wider after:content-[''] after:block after:border-b-[1px] after:border-[color:var(--color0)] after:w-12 after:mt-2 after:mb-3"
+              class="font-light tracking-wider after:content-[''] after:block after:border-b-[1px] after:border-[color:var(--resume-color0)] after:w-12 after:mt-2 after:mb-3"
             >
               {{ category.name }}
             </h3>
@@ -184,12 +123,9 @@ const { about, categories, contactDetails, socialLinks } =
               >
                 <div
                   class="italic text-right font-light"
-                  v-if="entry.nature === 'experience' && entry.startDate"
+                  v-if="entry.nature === 'experience' && entry.period"
                 >
-                  {{ entry.startDate }}
-                  <template v-if="entry.endDate">
-                    - {{ entry.endDate }}
-                  </template>
+                  {{ entry.period }}
                 </div>
                 <div class="font-light">{{ entry.title }}</div>
                 <template v-if="entry.nature === 'experience'">
@@ -214,13 +150,10 @@ const { about, categories, contactDetails, socialLinks } =
         </div>
       </div>
     </template>
-  </div>
+  </Document>
 </template>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
-@import "@/assets/styles/index.css";
-
 .font-body {
   font-family: "Lato";
 }

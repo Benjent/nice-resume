@@ -5,109 +5,54 @@ import { useLetterStore } from "@/stores/letter";
 import { useProfileStore } from "@/stores/profile";
 import { useResumeStore } from "@/stores/resume";
 import ContactIcon from "@/components/ContactIcon.vue";
+import Document from "@/components/Document.vue";
+import LetterBody from "@/components/LetterBody.vue";
 import LinkIcon from "@/components/LinkIcon.vue";
 
 const { documentType } = storeToRefs(useEditorStore());
 
 const { name, title } = storeToRefs(useProfileStore());
 
-const { paragraphs, recipientDetails, reference, subject } =
-  storeToRefs(useLetterStore());
-
 const { about, categories, contactDetails, socialLinks } =
   storeToRefs(useResumeStore());
+
+const { isHeaderSimple } = storeToRefs(useLetterStore());
 </script>
 
 <template>
-  <div
-    class="bg-white text-[color:var(--color1)] h-full w-full flex flex-col py-5 px-6 text-xs font-body"
-  >
-    <template v-if="documentType === 'Letter'">
-      <header class="flex mb-4">
-        <ul class="flex flex-col">
-          <li
-            v-for="detail in contactDetails"
-            :key="`${detail.value}${detail.icon}`"
-            class="flex gap-1 items-center"
-          >
-            <ContactIcon v-if="detail.icon" :icon="detail.icon" class="w-4" />
-            {{ detail.value }}
-          </li>
-        </ul>
-        <div class="flex-1 text-center mb-1 mx-1">
-          <h1 class="text-3xl font-bold">{{ name }}</h1>
-          <h2 class="text-xl">{{ title }}</h2>
-        </div>
-        <ul class="flex flex-col items-end">
-          <li
-            v-for="link in socialLinks"
-            :key="`${link.url}${link.icon}`"
-            class="flex gap-1 items-center"
-          >
-            <LinkIcon v-if="link.icon" :icon="link.icon" class="w-4" />
-            {{ link.url }}
-          </li>
-        </ul>
-      </header>
-
-      <ul class="text-right text-xs mb-6" v-if="recipientDetails.length">
-        <li v-for="detail in recipientDetails" :key="detail">
-          {{ detail }}
+  <Document>
+    <header
+      v-if="documentType === 'resume' || !isHeaderSimple"
+      class="flex mb-4"
+    >
+      <ul class="flex flex-col">
+        <li
+          v-for="detail in contactDetails"
+          :key="`${detail.value}${detail.icon}`"
+          class="flex gap-1 items-center"
+        >
+          <ContactIcon v-if="detail.icon" :icon="detail.icon" class="w-4" />
+          {{ detail.value }}
         </li>
       </ul>
-      <div class="text-justify text-xs px-4">
-        <header class="text-center text-sm mb-6">
-          <h3 v-if="subject" class="">
-            <span class="text-[color:var(--color0)] uppercase">
-              Objet TODO translate:{{ " " }}
-            </span>
-            <span class="italic">
-              {{ subject }}
-            </span>
-          </h3>
-          <h4 v-if="reference" class="text-xs">
-            <span class="text-[color:var(--color0)] uppercase">
-              Ref. TODO translate:{{ " " }}
-            </span>
-            <span class="italic">{{ reference }}</span>
-          </h4>
-        </header>
-        <p v-for="(paragraph, index) in paragraphs" :key="index" class="mb-2">
-          <span class="inline-block w-12" />
-          {{ paragraph }}
-        </p>
-        <div class="text-right">{{ name }}</div>
+      <div class="flex-1 text-center mb-1 mx-1">
+        <h1 class="text-3xl font-bold">{{ name }}</h1>
+        <h2 class="text-xl">{{ title }}</h2>
+        <p>{{ about }}</p>
       </div>
-    </template>
+      <ul class="flex flex-col items-end">
+        <li
+          v-for="link in socialLinks"
+          :key="`${link.url}${link.icon}`"
+          class="flex gap-1 items-center"
+        >
+          <LinkIcon v-if="link.icon" :icon="link.icon" class="w-4" />
+          {{ link.url }}
+        </li>
+      </ul>
+    </header>
+    <LetterBody v-if="documentType === 'letter'" />
     <template v-else>
-      <header class="flex mb-4">
-        <ul class="flex flex-col">
-          <li
-            v-for="detail in contactDetails"
-            :key="`${detail.value}${detail.icon}`"
-            class="flex gap-1 items-center"
-          >
-            <ContactIcon v-if="detail.icon" :icon="detail.icon" class="w-4" />
-            {{ detail.value }}
-          </li>
-        </ul>
-        <div class="flex-1 text-center mb-1 mx-1">
-          <h1 class="text-3xl font-bold">{{ name }}</h1>
-          <h2 class="text-xl">{{ title }}</h2>
-          <p>{{ about }}</p>
-        </div>
-        <ul class="flex flex-col items-end">
-          <li
-            v-for="link in socialLinks"
-            :key="`${link.url}${link.icon}`"
-            class="flex gap-1 items-center"
-          >
-            <LinkIcon v-if="link.icon" :icon="link.icon" class="w-4" />
-            {{ link.url }}
-          </li>
-        </ul>
-      </header>
-
       <div class="flex gap-6">
         <aside
           v-if="categories.some((category) => category.layout === 'aside')"
@@ -120,7 +65,7 @@ const { about, categories, contactDetails, socialLinks } =
             :key="categoryIndex"
           >
             <h3
-              class="uppercase text-[color:var(--color0)] border-b-[1px] border-[color:var(--color1)] mb-1"
+              class="uppercase text-[color:var(--resume-color0)] border-b-[1px] border-[color:var(--resume-color1)] mb-1"
             >
               {{ category.name }}
             </h3>
@@ -144,11 +89,8 @@ const { about, categories, contactDetails, socialLinks } =
                     v-if="entry.nature === 'experience'"
                     class="flex flex-col text-right"
                   >
-                    <div v-if="entry.startDate">
-                      {{ entry.startDate }}
-                      <template v-if="entry.endDate">
-                        - {{ entry.endDate }}
-                      </template>
+                    <div v-if="entry.period">
+                      {{ entry.period }}
                     </div>
                     <div class="italic">{{ entry.location }}</div>
                   </div>
@@ -177,7 +119,7 @@ const { about, categories, contactDetails, socialLinks } =
             :class="category.layout === 'half' ? 'col-span-1' : 'col-span-2'"
           >
             <h3
-              class="uppercase text-[color:var(--color0)] border-b-[1px] border-[color:var(--color1)] mb-1"
+              class="uppercase text-[color:var(--resume-color0)] border-b-[1px] border-[color:var(--resume-color1)] mb-1"
             >
               {{ category.name }}
             </h3>
@@ -201,11 +143,8 @@ const { about, categories, contactDetails, socialLinks } =
                     v-if="entry.nature === 'experience'"
                     class="flex flex-col text-right"
                   >
-                    <div v-if="entry.startDate">
-                      {{ entry.startDate }}
-                      <template v-if="entry.endDate">
-                        - {{ entry.endDate }}
-                      </template>
+                    <div v-if="entry.period">
+                      {{ entry.period }}
                     </div>
                     <div class="italic">{{ entry.location }}</div>
                   </div>
@@ -230,13 +169,10 @@ const { about, categories, contactDetails, socialLinks } =
         </div>
       </div>
     </template>
-  </div>
+  </Document>
 </template>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-@import "@/assets/styles/index.css";
-
 .font-body {
   font-family: "Fira Sans";
 }

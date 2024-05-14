@@ -7,17 +7,18 @@ import { useProfileStore } from "@/stores/profile";
 import { useResumeStore } from "@/stores/resume";
 import type { Category } from "@/types";
 import ContactIcon from "@/components/ContactIcon.vue";
+import Document from "@/components/Document.vue";
+import LetterBody from "@/components/LetterBody.vue";
 import LinkIcon from "@/components/LinkIcon.vue";
 
 const { documentType } = storeToRefs(useEditorStore());
 
 const { name, title } = storeToRefs(useProfileStore());
 
-const { paragraphs, recipientDetails, reference, subject } =
-  storeToRefs(useLetterStore());
-
 const { about, categories, contactDetails, socialLinks } =
   storeToRefs(useResumeStore());
+
+const { isHeaderSimple } = storeToRefs(useLetterStore());
 
 const mainCategories = computed(() => {
   return categories.value.filter((category) => category.layout !== "aside");
@@ -58,112 +59,52 @@ function getSectionCategory(indexToGetFrom: number) {
 </script>
 
 <template>
-  <div
-    class="bg-white text-[color:var(--color3)] h-full w-full flex flex-col font-body"
-  >
-    <template v-if="documentType === 'Letter'">
-      <header class="flex items-baseline mx-auto mt-8 p-8">
-        <div
-          class="flex flex-col place-items-center w-fit border-y-4 border-[color:var(--color0)] py-2 px-4 font-display text-center"
-        >
-          <h1 v-if="name" class="text-4xl uppercase">
-            {{ name }}
-          </h1>
-          <h2 v-if="title" class="text-2xl">{{ title }}</h2>
-        </div>
-        <ul
-          class="flex flex-col self-center ml-8 pl-2 py-1 text-xs italic"
-          v-if="contactDetails.length || socialLinks.length"
-        >
+  <Document>
+    <header
+      v-if="documentType === 'resume' || !isHeaderSimple"
+      class="flex items-start gap-12 px-10 py-6 font-display"
+    >
+      <div
+        class="flex flex-col place-items-center w-fit border-y-4 border-[color:var(--resume-color0)] py-2 px-4 flex-1"
+      >
+        <h1 v-if="name" class="text-center uppercase text-4xl">
+          {{ name }}
+        </h1>
+        <h2 v-if="title" class="text-center text-2xl">
+          {{ title }}
+        </h2>
+      </div>
+      <div class="flex flex-col gap-2 flex-1">
+        <ul class="leading-none font-body text-xs italic">
           <li
             v-for="detail in contactDetails"
             :key="`${detail.value}${detail.icon}`"
             class="flex gap-1 items-center"
           >
-            <ContactIcon v-if="detail.icon" :icon="detail.icon" class="w-3" />
+            <ContactIcon v-if="detail.icon" :icon="detail.icon" class="w-4" />
             {{ detail.value }}
           </li>
+        </ul>
+        <ul class="leading-tight">
           <li
             v-for="link in socialLinks"
             :key="`${link.url}${link.icon}`"
             class="flex gap-1 items-center"
           >
-            <LinkIcon v-if="link.icon" :icon="link.icon" class="w-3" />
+            <LinkIcon v-if="link.icon" :icon="link.icon" class="w-4" />
             {{ link.url }}
           </li>
         </ul>
-      </header>
-      <ul
-        class="px-8 text-[color:var(--color0)] text-right text-xs italic"
-        v-if="recipientDetails.length"
-      >
-        <li v-for="detail in recipientDetails" :key="detail">
-          {{ detail }}
-        </li>
-      </ul>
-      <div class="p-8 text-justify text-sm">
-        <header class="text-center mb-6">
-          <h3 v-if="subject" class="font-bold">
-            <span class="text-[color:var(--color0)]">
-              Objet TODO translate:
-            </span>
-            {{ subject }}
-          </h3>
-          <h4 v-if="reference" class="text-xs">
-            <span class="text-[color:var(--color0)]">Ref. TODO translate:</span>
-            {{ reference }}
-          </h4>
-        </header>
-        <p v-for="(paragraph, index) in paragraphs" :key="index" class="mb-4">
-          <span class="inline-block w-12" />
-          {{ paragraph }}
-        </p>
-        <div class="text-right">{{ name }}</div>
       </div>
-    </template>
+      <p v-if="about" class="flex-1">
+        <span class="text-3xl text-[color:var(--resume-color1)] leading-4">
+          “
+        </span>
+        {{ about }}
+      </p>
+    </header>
+    <LetterBody v-if="documentType === 'letter'" />
     <template v-else>
-      <header
-        v-if="name"
-        class="flex items-start gap-12 px-10 py-6 font-display"
-      >
-        <div
-          class="flex flex-col place-items-center w-fit border-y-4 border-[color:var(--color0)] py-2 px-4 flex-1"
-        >
-          <h1 v-if="name" class="text-center uppercase text-4xl">
-            {{ name }}
-          </h1>
-          <h2 v-if="title" class="text-center text-2xl">
-            {{ title }}
-          </h2>
-        </div>
-        <div class="flex flex-col gap-2 flex-1">
-          <ul class="leading-none font-body text-xs italic">
-            <li
-              v-for="detail in contactDetails"
-              :key="`${detail.value}${detail.icon}`"
-              class="flex gap-1 items-center"
-            >
-              <ContactIcon v-if="detail.icon" :icon="detail.icon" class="w-4" />
-              {{ detail.value }}
-            </li>
-          </ul>
-          <ul class="leading-tight">
-            <li
-              v-for="link in socialLinks"
-              :key="`${link.url}${link.icon}`"
-              class="flex gap-1 items-center"
-            >
-              <LinkIcon v-if="link.icon" :icon="link.icon" class="w-4" />
-              {{ link.url }}
-            </li>
-          </ul>
-        </div>
-        <p v-if="about" class="flex-1">
-          <span class="text-3xl text-[color:var(--color1)] leading-4">“</span>
-          {{ about }}
-        </p>
-      </header>
-
       <div class="flex bg-white">
         <aside
           v-if="categories.some((category) => category.layout === 'aside')"
@@ -192,11 +133,8 @@ function getSectionCategory(indexToGetFrom: number) {
                     {{ entry.title }}
                   </div>
                   <template v-if="entry.nature === 'experience'">
-                    <div v-if="entry.startDate" class="text-sm font-semibold">
-                      {{ entry.startDate }}
-                      <template v-if="entry.endDate">
-                        - {{ entry.endDate }}
-                      </template>
+                    <div v-if="entry.period" class="text-sm font-semibold">
+                      {{ entry.period }}
                     </div>
                     <div
                       v-if="entry.organization"
@@ -221,10 +159,8 @@ function getSectionCategory(indexToGetFrom: number) {
                     v-if="entry.nature === 'experience'"
                     class="text-sm font-semibold"
                   >
-                    {{ entry.startDate }}
-                    <template v-if="entry.endDate">
-                      - {{ entry.endDate }}
-                    </template>
+                    {{ entry.period }}
+
                     , {{ entry.organization }}, {{ entry.location }}
                   </div>
                 </div>
@@ -254,11 +190,11 @@ function getSectionCategory(indexToGetFrom: number) {
             <section
               v-for="(category, categoryIndex) in firstSectionCategories"
               :key="categoryIndex"
-              class="px-10 py-6 border-t-2 border-[color:var(--color0)]"
+              class="px-10 py-6 border-t-2 border-[color:var(--resume-color0)]"
               :class="category.layout === 'half' ? 'col-span-1' : 'col-span-2'"
             >
               <h3
-                class="font-display uppercase mb-2 text-2xl text-[color:var(--color0)]"
+                class="font-display uppercase mb-2 text-2xl text-[color:var(--resume-color0)]"
               >
                 {{ category.name }}
               </h3>
@@ -269,18 +205,15 @@ function getSectionCategory(indexToGetFrom: number) {
                 >
                   <div class="flex items-baseline">
                     <div
-                      class="text-[color:var(--color0)] flex-1 font-display text-xl"
+                      class="text-[color:var(--resume-color0)] flex-1 font-display text-xl"
                     >
                       {{ entry.title }}
                     </div>
                     <template v-if="entry.nature === 'experience'">
                       <div>
                         {{ entry.organization }}
-                        <template v-if="entry.startDate">
-                          · {{ entry.startDate }}
-                          <template v-if="entry.endDate">
-                            - {{ entry.endDate }}
-                          </template>
+                        <template v-if="entry.period">
+                          · {{ entry.period }}
                         </template>
                         <template v-if="entry.location">
                           · {{ entry.location }}
@@ -311,11 +244,11 @@ function getSectionCategory(indexToGetFrom: number) {
             <section
               v-for="(category, categoryIndex) in secondSectionCategories"
               :key="categoryIndex"
-              class="px-10 py-6 border-t-2 border-[color:var(--color1)]"
+              class="px-10 py-6 border-t-2 border-[color:var(--resume-color1)]"
               :class="category.layout === 'half' ? 'col-span-1' : 'col-span-2'"
             >
               <h3
-                class="font-display uppercase mb-2 text-2xl text-[color:var(--color1)]"
+                class="font-display uppercase mb-2 text-2xl text-[color:var(--resume-color1)]"
               >
                 {{ category.name }}
               </h3>
@@ -326,16 +259,14 @@ function getSectionCategory(indexToGetFrom: number) {
                 >
                   <div class="flex items-baseline">
                     <div
-                      class="text-[color:var(--color1)] flex-1 font-display text-xl"
+                      class="text-[color:var(--resume-color1)] flex-1 font-display text-xl"
                     >
                       {{ entry.title }}
                     </div>
                     <template v-if="entry.nature === 'experience'">
                       <div>
-                        {{ entry.organization }} · {{ entry.startDate }}
-                        <template v-if="entry.endDate">
-                          - {{ entry.endDate }}
-                        </template>
+                        {{ entry.organization }} · {{ entry.period }}
+
                         ·
                         {{ entry.location }}
                       </div>
@@ -364,11 +295,11 @@ function getSectionCategory(indexToGetFrom: number) {
             <section
               v-for="(category, categoryIndex) in thirdSectionCategories"
               :key="categoryIndex"
-              class="px-10 py-6 border-t-2 border-[color:var(--color2)]"
+              class="px-10 py-6 border-t-2 border-[color:var(--resume-color2)]"
               :class="category.layout === 'half' ? 'col-span-1' : 'col-span-2'"
             >
               <h3
-                class="font-display uppercase mb-2 text-2xl text-[color:var(--color2)]"
+                class="font-display uppercase mb-2 text-2xl text-[color:var(--resume-color2)]"
               >
                 {{ category.name }}
               </h3>
@@ -379,14 +310,13 @@ function getSectionCategory(indexToGetFrom: number) {
                 >
                   <div class="flex items-baseline">
                     <div
-                      class="text-[color:var(--color2)] flex-1 font-display text-xl"
+                      class="text-[color:var(--resume-color2)] flex-1 font-display text-xl"
                     >
                       {{ entry.title }}
                     </div>
                     <template v-if="entry.nature === 'experience'">
                       <div>
-                        {{ entry.organization }} · {{ entry.startDate }} -
-                        {{ entry.endDate }} ·
+                        {{ entry.organization }} · {{ entry.period }} ·
                         {{ entry.location }}
                       </div>
                     </template>
@@ -412,12 +342,10 @@ function getSectionCategory(indexToGetFrom: number) {
         </div>
       </div>
     </template>
-  </div>
+  </Document>
 </template>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=League+Gothic&family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap");
-
 .font-body {
   font-family: "Mulish";
 }

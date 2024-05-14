@@ -13,7 +13,87 @@ export type Template =
   | "Toothpaste"
   | "Wiki";
 
-export type DocumentType = "Letter" | "Resume";
+export type DocumentType = "letter" | "resume";
+
+export type SideSetting = number[];
+
+export type Settings = {
+  font?: string;
+  fontSize: number;
+  lineHeight: number;
+  fontWeight: number; // TODO https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-weight#common_weight_name_mapping
+  isItalic: boolean;
+  isUppercase?: boolean;
+  isCentered?: boolean;
+  color: string;
+  backgroundColor: string;
+  borderColor: string;
+  borderRadius: number;
+  margin: SideSetting;
+  border: SideSetting;
+  padding: SideSetting;
+  gap?: number;
+};
+
+export type BaseSettings = {
+  isLetterMarginless: boolean;
+  colors: string[];
+  bodyFont: string;
+  displayFont?: string;
+};
+
+export type TemplateBaseSettings = {
+  [T in Template]: BaseSettings;
+};
+
+export type DocumentSettings = {
+  bodyFont: string;
+  color: string;
+  backgroundColor: string;
+  borderColor: string;
+  margin: SideSetting;
+  border: SideSetting;
+};
+
+export type ResumeSettings = {
+  document: DocumentSettings;
+};
+
+export type LetterSettings = {
+  document: DocumentSettings;
+  senderDetails: Settings;
+  recipientDetails: Settings;
+  header: {
+    isCentered: boolean;
+    backgroundColor: string;
+    borderColor: string;
+    borderRadius: number;
+    margin: SideSetting;
+    border: SideSetting;
+    padding: SideSetting;
+  };
+  subject: Settings;
+  reference: Settings;
+  body: {
+    fontSize: number;
+    lineHeight: number;
+    fontWeight: number; // TODO https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-weight#common_weight_name_mapping
+    color: string;
+    indentation: number;
+    isJustified: boolean;
+    margin: SideSetting;
+    gap: number;
+    isSignatureRightAligned: boolean;
+  };
+};
+
+export type TemplateSettings = {
+  [T in Template]: {
+    base: BaseSettings;
+    resume: ResumeSettings;
+    letter: LetterSettings;
+  };
+};
 
 export interface Detail {
   icon: null | "default" | "address" | "drivingLicense" | "email" | "phone";
@@ -50,8 +130,7 @@ export interface Experience extends Entry {
   type: "education" | "project" | "voluntary" | "work";
   organization: string; // Institution, Company, ...
   location: string;
-  startDate: string; // No strict format to allow custom values
-  endDate: string;
+  period: string; // No strict format to allow custom values
   summary: string;
 }
 

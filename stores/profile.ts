@@ -1,16 +1,18 @@
 import { defineStore } from "pinia";
-import type { Template } from "@/types";
-import { templateColors, templates } from "@/globals";
+import { templateBaseSettings, templates } from "@/globals";
 
 // Use option API to take advantage of automatic persistence
 // @ts-expect-error - TS does not handle option API syntax
 export const useProfileStore = defineStore("profile", {
   state: () => ({
-    colors: templateColors[templates[0]],
-    isThemeCustomized: false,
+    // Content
     name: "",
-    template: templates[0] as Template,
     title: "",
+
+    // Design
+    isThemeCustomized: false,
+    template: templates[0],
+    customColors: structuredClone(templateBaseSettings[templates[0]].colors),
   }),
   persist: true,
 });
