@@ -13,6 +13,26 @@ env:
   IMAGE_NAME: nice-resume
 
 jobs:
+  node_vulnerabilities:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Run Snyk to check for Node vulnerabilities
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+  docker_vulnerabilities:
+    needs: container_build_push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Snyk to check Docker image for vulnerabilities
+        uses: snyk/actions/docker@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
+
   build:
     timeout-minutes: 5
     runs-on: ubuntu-latest
